@@ -40,16 +40,16 @@ public class Person {
 
     public void removeFromInventory(int item) {
         for(int i = 0; i < this.inventory.length; i++) {
-            if(inventory[i] == item) {
-                inventory[i] = 0;
+            if(this.inventory[i] == item) {
+                this.inventory[i] = 0;
             }
         }
     }
 
     public void swapFromInventory(int item) {
         for(int i = 0; i < this.inventory.length; i++) {
-            if(inventory[i] == item) {
-                inventory[i] = item;
+            if(this.inventory[i] == item) {
+                this.inventory[i] = item;
             }
         }
     }

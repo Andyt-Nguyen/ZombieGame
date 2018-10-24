@@ -21,6 +21,7 @@ public class Map {
     }
 
     public void setPlayerPos(int x, int y) {
+        int curr = this.grid[x][y];
         this.grid[x][y] = 1;
     }
 
