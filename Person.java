@@ -10,6 +10,14 @@ public class Person {
         System.out.println(this.hp);
     }
 
+    public void decreaseHp(int num) {
+        this.hp -= num;
+    }
+
+    public void increaseHp(int num) {
+        this.hp += num;
+    }
+
     public void moveForward() {
         this.xpos++;
     }
