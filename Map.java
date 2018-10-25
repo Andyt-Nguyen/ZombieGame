@@ -8,7 +8,7 @@ public class Map {
         this.grid = new int[num][num];
     }
 
-    public void getGrid() {
+    public void displayMap() {
         for(int i = 0; i < this.grid.length; i++) {
             System.out.print("[");
             for(int j = 0; j < this.grid[i].length; j++) {
@@ -20,9 +20,17 @@ public class Map {
         }
     }
 
+
+    public void prevPostion(int x, int y, int val) {
+        this.grid[y][x] = val;
+    }
+
     public void setPlayerPos(int x, int y) {
-        int curr = this.grid[x][y];
-        this.grid[x][y] = 1;
+        this.grid[y][x] = 1;
+    }
+
+    public int[][] getGrid() {
+        return this.grid;
     }
 
 }

@@ -18,24 +18,24 @@ public class Person {
         this.hp += num;
     }
 
+    public double getUserHp() {
+        return this.hp;
+    }
+
     public void moveForward() {
         this.xpos++;
     }
-
+    
     public void moveDown() {
         this.ypos++;
     }
-
+    
     public void moveLeft() {
         this.xpos--;
     }
-
+    
     public void moveUp() {
         this.ypos--;
-    }
-
-    public void getXPos() {
-        System.out.println(xpos);
     }
 
     public void removeFromInventory(int item) {
