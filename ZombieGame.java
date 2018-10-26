@@ -14,6 +14,7 @@ class ZombieGame {
             System.out.println("* 3. Move backward               *");
             System.out.println("* 4. Display map                 *");
             System.out.println("**********************************");
+            
             int userInput = IR5.getInteger("Selction option");
             System.out.println("");
             switch(userInput) {
