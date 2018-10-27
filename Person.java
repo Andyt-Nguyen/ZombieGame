@@ -1,13 +1,38 @@
 public class Person {
-    private int username;
+    private String username;
     private int hp = 100;
-    private int endurance = 100;
+    private int endurance;
     private int[] inventory = new int[10];
-    private int bulletCount = 0;
-    private int knifeCount = 0;
-    public  int xpos = 0;
-    public  int ypos = 0;
+    private int bulletCount;
+    private int knifeCount;
+    private int appleCount;
+    private int steakCount;
+    public  int xpos;
+    public  int ypos;
 
+    public Person() {
+        this.username = "Unknown";
+        hp = 100;
+        bulletCount = 0;
+        bulletCount = 0;
+        knifeCount = 0;
+        appleCount = 0;
+        steakCount = 0;
+        xpos = 0;
+        ypos = 0;
+    }
+
+    public Person(String username, int xpos, int ypos) {
+        this.username = username;
+        this.xpos = xpos;
+        this.ypos = ypos;
+        hp = 100;
+        bulletCount = 0;
+        bulletCount = 0;
+        knifeCount = 0;
+        appleCount = 0;
+        steakCount = 0;
+    }
 
     public void displayHp() {
         System.out.println(this.hp);
@@ -51,6 +76,10 @@ public class Person {
     
     public void moveUp() {
         this.ypos--;
+    }
+
+    public void addToBullets() {
+        bulletCount++;
     }
 
     public void removeFromInventory(int item) {
