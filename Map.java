@@ -9,6 +9,9 @@ public class Map {
     }
 
     public void displayMap() {
+        System.out.println("--------------------------------");
+        System.out.println("              Map");
+        System.out.println("--------------------------------");
         for(int i = 0; i < this.grid.length; i++) {
             System.out.print("[");
             for(int j = 0; j < this.grid[i].length; j++) {
@@ -18,6 +21,7 @@ public class Map {
             System.out.print("]");
             System.out.println("");
         }
+        System.out.println("--------------------------------");
     }
 
 
