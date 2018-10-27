@@ -3,15 +3,30 @@ public class Person {
     private int hp = 100;
     private int endurance = 100;
     private int[] inventory = new int[10];
+    private int bulletCount = 0;
+    private int knifeCount = 0;
     public  int xpos = 0;
     public  int ypos = 0;
+
 
     public void displayHp() {
         System.out.println(this.hp);
     }
 
+    public void setXpos(int xpos) {
+        this.xpos = xpos;
+    }
+
+    public void setYpos(int xpos) {
+        this.xpos = xpos;
+    }
+    
     public void decreaseHp(int num) {
         this.hp -= num;
+    }
+
+    public void increaseBulletCount() {
+        this.bulletCount++;
     }
 
     public void increaseHp(int num) {

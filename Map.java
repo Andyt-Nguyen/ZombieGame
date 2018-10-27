@@ -25,8 +25,8 @@ public class Map {
         this.grid[y][x] = val;
     }
 
-    public void setPlayerPos(int x, int y) {
-        this.grid[y][x] = 1;
+    public void setPos(int x, int y, int val) {
+        this.grid[y][x] = val;
     }
 
     public int[][] getGrid() {
