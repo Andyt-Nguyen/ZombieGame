@@ -19,17 +19,7 @@ class ZombieGame {
 
         int userInput = 0;
         while(player.getUserHp() > 0 && userInput != 101) {
-            System.out.println("");
-            System.out.println("                                       ----------------------------------");
-            System.out.println("                                                     Options            ");
-            System.out.println("                                        1. Move forward                ");
-            System.out.println("                                        2. Move backward               ");
-            System.out.println("                                        3. Move upward                 ");
-            System.out.println("                                        4. Move downward               ");
-            System.out.println("                                        5. Display map                 ");
-            System.out.println("                                        6. View inventory              ");
-            System.out.println("                                        101. Exit                      ");
-            System.out.println("                                       ----------------------------------");
+            displayUserOptions();
             
 
             userInput = getInteger("Select option: ");
@@ -222,11 +212,11 @@ class ZombieGame {
                     System.out.println("** You've encountered a zombie do you fight or run? **");
                     fighterMenu(player.getUserHp());
 
-                    int fightingOption = getInteger("* Choose option: ");
+                    int fightingOption = 0;
                     while(zombie.getHp() > 0 && fightingOption != 2) {
                         if(fightingOption == 1) weaponary(player, zombie);
-                        fighterMenu(player.getUserHp());
                         fightingOption = getInteger("* Choose option: ");
+                        fighterMenu(player.getUserHp());
                     }
 
 
@@ -267,28 +257,50 @@ class ZombieGame {
         }
         
 
+        public static void displayUserOptions() {
+            System.out.println("");
+            System.out.println("                                       ----------------------------------");
+            System.out.println("                                                     Options             ");
+            System.out.println("                                        1. Move forward                  ");
+            System.out.println("                                        2. Move backward                 ");
+            System.out.println("                                        3. Move upward                   ");
+            System.out.println("                                        4. Move downward                 ");
+            System.out.println("                                        5. Display map                   ");
+            System.out.println("                                        6. View inventory                ");
+            System.out.println("                                        101. Exit                        ");
+            System.out.println("                                       ----------------------------------");
+        }
 
+
+        public static void displayWeaponOfChoice() {
+            System.out.println("                                       -----------------------------------------   ");
+            System.out.println("                                       |             WEAPON OF CHOICE           |  ");
+            System.out.println("                                       -----------------------------------------   ");
+            System.out.println("                                       |  Weapon        |   DMG    | Durability |  ");
+            System.out.println("                                       -----------------------------------------   ");
+            System.out.println("                                       | 1. Gun         |  25-50  |     1       |  ");
+            System.out.println("                                       | 2. Rusty Knife |   5-7   |     3       |  ");
+            System.out.println("                                       | 3. Hands       |   2-5   | unlimited   |  ");
+            System.out.println("                                       -----------------------------------------   ");
+        }
+        
         public static void weaponary(Person player, Zombie zombie) {
+            displayWeaponOfChoice();
             int weaponChoice = 0;
             while(true) {
-                System.out.println("                                       --------------------------------------   ");
-                System.out.println("                                       |             WEAPON OF CHOICE        |  ");
-                System.out.println("                                       --------------------------------------   ");
-                System.out.println("                                       |  Weapon      |  DMG    | Durability |  ");
-                System.out.println("                                       --------------------------------------   ");
-                System.out.println("                                       1. Gun         |  25-50  |    1          ");
-                System.out.println("                                       2. Rusty Knife |   5-7   |    3          ");
-                System.out.println("                                       3. Hands       |   2-5   | unlimited     ");
-                System.out.println("                                       -------------------------------------    ");
                 weaponChoice = getInteger("* Select weapon of choice: ");
                 if(weaponChoice == 1) {
-                    System.out.println("* You swiftly pull out your gun and shot in the dead of night!");
+                    System.out.println("* You swiftly pull out your gun and shoot in the dead of night!");
                     int zmbAtk = zombie.atk();
                     int userAtk = player.atkGun();
-                    zombie.decreaseHp(userAtk);
+                    if(zmbAtk == 0) {
+                        System.out.println("The zombie missed you");
+                    } else {
+                        System.out.println("* Zombie made a quick swipe at you!");
+                        zombie.decreaseHp(userAtk);
+                        System.out.println("* You suffered " + zmbAtk + " points from your hp");
+                    }
                     player.decreaseHp(zmbAtk);
-                    System.out.println("* Zombie made a quick swipe at you!");
-                    System.out.println("* You suffered " + zmbAtk + " points from your hp");
                     break;
                 } else if(weaponChoice == 2) {
                     System.out.println("* You stabbed the zombie");
