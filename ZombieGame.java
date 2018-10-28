@@ -209,7 +209,9 @@ class ZombieGame {
                     player.addToBullets();
                     playerMoveDownward(player, grid);
                 } else if(grid[player.ypos + 1][player.xpos] == ZOMBIE) {
+                    System.out.println("**                                                  **");
                     System.out.println("** You've encountered a zombie do you fight or run? **");
+                    System.out.println("**                                                  **");
                     fighterMenu(player.getUserHp());
 
                     int fightingOption = 0;
@@ -224,7 +226,9 @@ class ZombieGame {
                         System.out.println("* You ran from the zombie for now but he will be back for more");
                     } else {
                         playerMoveDownward(player, grid);
+                        System.out.println("**                   **");
                         System.out.println("** ZOMBIE ELIMINATED **");
+                        System.out.println("**                   **");
                         System.out.println("* You step over the zombies dead courpse in disgust");
                     }
 
@@ -273,15 +277,15 @@ class ZombieGame {
 
 
         public static void displayWeaponOfChoice() {
-            System.out.println("                                       -----------------------------------------   ");
-            System.out.println("                                       |             WEAPON OF CHOICE           |  ");
-            System.out.println("                                       -----------------------------------------   ");
-            System.out.println("                                       |  Weapon        |   DMG    | Durability |  ");
-            System.out.println("                                       -----------------------------------------   ");
-            System.out.println("                                       | 1. Gun         |  25-50  |     1       |  ");
-            System.out.println("                                       | 2. Rusty Knife |   5-7   |     3       |  ");
-            System.out.println("                                       | 3. Hands       |   2-5   | unlimited   |  ");
-            System.out.println("                                       -----------------------------------------   ");
+            System.out.println("                                   -----------------------------------------   ");
+            System.out.println("                                   |             WEAPON OF CHOICE           |  ");
+            System.out.println("                                   -----------------------------------------   ");
+            System.out.println("                                   |  Weapon        |   DMG    | Durability |  ");
+            System.out.println("                                   -----------------------------------------   ");
+            System.out.println("                                   | 1. Gun         |  25-50  |     1       |  ");
+            System.out.println("                                   | 2. Rusty Knife |   5-7   |     3       |  ");
+            System.out.println("                                   | 3. Hands       |   2-5   | unlimited   |  ");
+            System.out.println("                                   -----------------------------------------   ");
         }
         
         public static void weaponary(Person player, Zombie zombie) {
