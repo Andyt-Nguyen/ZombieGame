@@ -75,9 +75,7 @@ class ZombieGame {
                     System.out.println("* You've picked up a bullet");
                     player.addToBullets();
                     playerMoveForward(player, grid);
-                }
-                
-                if(grid[player.ypos][player.xpos + 1] == ZOMBIE) {
+                } else if(grid[player.ypos][player.xpos + 1] == ZOMBIE) {
                     System.out.println("** You've encountered a zombie do you fight or run? **");
                     fighterMenu(player.getUserHp());
 
@@ -124,9 +122,7 @@ class ZombieGame {
                     System.out.println("* You've picked up a bullet");
                     player.addToBullets();
                     playerMoveBackward(player, grid);
-                }
-                
-                if(grid[player.ypos][player.xpos - 1] == ZOMBIE) {
+                } else if(grid[player.ypos][player.xpos - 1] == ZOMBIE) {
                     System.out.println("** You've encountered a zombie do you fight or run? **");
                     fighterMenu(player.getUserHp());
 
@@ -174,9 +170,7 @@ class ZombieGame {
                     System.out.println("* You've picked up a bullet");
                     player.addToBullets();
                     playerMoveUpward(player, grid);
-                }
-                
-                if(grid[player.ypos - 1][player.xpos] == ZOMBIE) {
+                } else if(grid[player.ypos - 1][player.xpos] == ZOMBIE) {
                     System.out.println("** You've encountered a zombie do you fight or run? **");
                     fighterMenu(player.getUserHp());
 
@@ -224,9 +218,7 @@ class ZombieGame {
                     System.out.println("* You've picked up a bullet");
                     player.addToBullets();
                     playerMoveDownward(player, grid);
-                }
-                
-                if(grid[player.ypos + 1][player.xpos] == ZOMBIE) {
+                } else if(grid[player.ypos + 1][player.xpos] == ZOMBIE) {
                     System.out.println("** You've encountered a zombie do you fight or run? **");
                     fighterMenu(player.getUserHp());
 
