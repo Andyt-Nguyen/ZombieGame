@@ -121,5 +121,17 @@ public class Person {
         return counter == inventory.length;
     }
 
+    public int atkHands() {
+        return IR5.getRandomNumber(0,2);
+    }
+
+    public int atkGun() {
+        return IR5.getRandomNumber(25,50);
+    }
+
+    public int atkKnife() {
+        return IR5.getRandomNumber(5,7);
+    }
+
 
 }

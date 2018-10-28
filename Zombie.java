@@ -40,7 +40,7 @@ public class Zombie {
         this.hp = hp;
     }
 
-    public int attack() {
+    public int atk() {
         return IR5.getRandomNumber(0, 15);
     }
 
