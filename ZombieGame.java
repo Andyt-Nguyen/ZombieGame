@@ -222,7 +222,6 @@ class ZombieGame {
                     System.out.println("** You've encountered a zombie do you fight or run? **");
                     fighterMenu(player.getUserHp());
 
-                    
                     int fightingOption = getInteger("* Choose option: ");
                     while(zombie.getHp() > 0 && fightingOption != 2) {
                         if(fightingOption == 1) weaponary(player, zombie);
@@ -312,7 +311,7 @@ class ZombieGame {
                 } 
             }
         }
-
+        
 
         public static void playerMoveForward(Person player, int[][] grid) {
             grid[player.ypos][player.xpos] = 0;

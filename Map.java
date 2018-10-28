@@ -13,12 +13,19 @@ public class Map {
         System.out.println("              Map");
         System.out.println("--------------------------------");
         for(int i = 0; i < this.grid.length; i++) {
-            System.out.print("[");
+            // System.out.print("[");
             for(int j = 0; j < this.grid[i].length; j++) {
-                if(j < this.grid.length - 1) System.out.print(grid[i][j] + ", ");
-                else System.out.print(grid[i][j]); 
+                if(grid[i][j] == 3) {
+                    System.out.print("B ");
+                } else if(grid[i][j] == 2) {
+                    System.out.print("Z ");
+                } else if(grid[i][j] == 1) {
+                    System.out.print("P ");
+                } else {
+                    System.out.print(". ");
+                }
             }
-            System.out.print("]");
+            // System.out.print("]");
             System.out.println("");
         }
         System.out.println("--------------------------------");
