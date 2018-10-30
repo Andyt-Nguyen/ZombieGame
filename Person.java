@@ -12,7 +12,7 @@ public class Person {
 
     public Person() {
         this.username = "Unknown";
-        hp = 100;
+        hp = 10;
         bulletCount = 0;
         bulletCount = 0;
         knifeCount = 0;
