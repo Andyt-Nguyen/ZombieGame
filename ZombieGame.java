@@ -12,15 +12,14 @@ class ZombieGame {
         map.setGrid(10);
 
         int[][] grid = map.getGrid();
-        map.setPos(player.xpos, player.ypos, PLAYER);
-        map.setPos(zombie.xpos, zombie.ypos, ZOMBIE);
+        map.setPos(player.xpos,  player.ypos,  PLAYER);
+        map.setPos(zombie.xpos,  zombie.ypos,  ZOMBIE);
         map.setPos(zombie2.xpos, zombie2.ypos, ZOMBIE);
         map.setPos(3, 0, BULLETS);
 
         int userInput = 0;
-        while(player.getUserHp() > 0 && userInput != 101) {
+        while(player.getHp() > 0 && userInput != 101) {
             map.displayMap();
-            
 
             userInput = getInteger("Your move(type 5 to view full options): ");
             switch(userInput) {
@@ -57,43 +56,43 @@ class ZombieGame {
     }
 
     // When a user encounters a zombie moving forward
-     public static void zombieEncounterF(Person player, Zombie zombie, int[][] grid) {
-            // Player Moves
-            if(player.xpos + 1 > grid[0].length - 1) {
-                System.out.println("* You hit a wall");
-            } else {
-                if(grid[player.ypos][player.xpos + 1] == BULLETS) {
-                    System.out.println("* You've picked up a bullet");
-                    player.addToBullets();
-                    playerMoveForward(player, grid);
-                } else if(grid[player.ypos][player.xpos + 1] == ZOMBIE) {
-                    int isFight = zombieFight(player, zombie);
-                    if(isFight == 1) {
-                        gameOverMsg();
-                        return;
-                    } else if(isFight == 2) {
-                        System.out.println("* You ran from the zombie for now but he will be back for more");                    
-                    } else {
-                        playerMoveForward(player, grid);
-                        eliminationMsg();
-                    }
-
+    public static void zombieEncounterF(Person player, Zombie zombie, int[][] grid) {
+        // Player Moves
+        if(player.xpos + 1 > grid[0].length - 1) {
+            System.out.println("* You hit a wall");
+        } else {
+            if(grid[player.ypos][player.xpos + 1] == BULLETS) {
+                System.out.println("* You've picked up a bullet");
+                player.addToBullets();
+                playerMoveForward(player, grid);
+            } else if(grid[player.ypos][player.xpos + 1] == ZOMBIE) {
+                int isFight = zombieFight(player, zombie);
+                if(isFight == 1) {
+                    gameOverMsg();
+                    return;
+                } else if(isFight == 2) {
+                    System.out.println("* You ran from the zombie for now but he will be back for more");                    
                 } else {
-                    if(player.xpos + 2 < grid[0].length) {
-                        if(grid[player.ypos][player.xpos + 2] == ZOMBIE) {
-                            System.out.println("* You hear a deep breaths");
-                            playerMoveForward(player, grid);
-                        } else {
-                            System.out.println("* You take a step forward");                        
-                            playerMoveForward(player, grid);
-                        }
+                    playerMoveForward(player, grid);
+                    eliminationMsg();
+                }
+
+            } else {
+                if(player.xpos + 2 < grid[0].length) {
+                    if(grid[player.ypos][player.xpos + 2] == ZOMBIE) {
+                        System.out.println("* You hear a deep breaths");
+                        playerMoveForward(player, grid);
                     } else {
-                        System.out.println("* You take a step forward");
+                        System.out.println("* You take a step forward");                        
                         playerMoveForward(player, grid);
                     }
+                } else {
+                    System.out.println("* You take a step forward");
+                    playerMoveForward(player, grid);
                 }
             }
         }
+    }
 
 
     // When a user encounters a zombie moving backwards        
@@ -136,7 +135,8 @@ class ZombieGame {
         }
     }
 
-        // When a user encounters a zombie moving upwards                
+
+    // When a user encounters a zombie moving upwards                
     public static void zombieEncounterU(Person player, Zombie zombie, int[][] grid) {
         if(player.ypos - 1 < 0) {
             System.out.println("* You hit a wall");
@@ -176,6 +176,7 @@ class ZombieGame {
         }
     }
 
+
     // When a user encounters a zombie moving downwards                
     public static void zombieEncounterD(Person player, Zombie zombie, int[][] grid) {
         if(player.ypos + 1 > grid[0].length - 1) {
@@ -188,9 +189,7 @@ class ZombieGame {
             } else if(grid[player.ypos + 1][player.xpos] == ZOMBIE) {
                 int isFight = zombieFight(player, zombie);
                 if(isFight == 1) {
-                    System.out.println("* You have gone unconcious and feeling your flesh");
-                    System.out.println(" being pulled away from you piece By piece");
-                    System.out.println("Game Over");
+                    gameOverMsg();
                     return;
                 } else if(isFight == 2) {
                     System.out.println("* You ran from the zombie for now but he will be back for more");                    
@@ -218,12 +217,10 @@ class ZombieGame {
         }
     }
 
-
-        
-        
-        // Displays the selection of guns the user can use to fight the zombie
+  
+    // Displays the selection of guns the user can use to fight the zombie
     public static void weaponary(Person player, Zombie zombie) {
-        displayWeaponOfChoice();
+        displayWeaponOfChoice(player.getBulletCount(), player.getKnifeCount());
         while(true) {
             int weaponChoice = getInteger("* Select weapon of choice: ");
             if(weaponChoice == 1) {
@@ -260,27 +257,28 @@ class ZombieGame {
             } 
         }
     }
+
             
-        // User option to fight zombie
+    // User option to fight zombie
     public static int zombieFight(Person player, Zombie zombie) {
         System.out.println("** You've encountered a zombie do you fight or run? **");
-        fighterMenu(player.getUserHp());
+        fighterMenu(player.getHp());
         int fightingOption = getInteger("* Choose option: ");
         
-        while(player.getUserHp() > 0 && zombie.getHp() > 0) {
+        while(player.getHp() > 0 && zombie.getHp() > 0) {
             System.out.println("Zombie hp: " + zombie.getHp());
             if(fightingOption == 1) {
                 weaponary(player, zombie);
             } else if(fightingOption == 2) {
                 return 2;
             }
-            if(player.getUserHp() > 0 && zombie.getHp() > 0) {
-                fighterMenu(player.getUserHp());
+            if(player.getHp() > 0 && zombie.getHp() > 0) {
+                fighterMenu(player.getHp());
                 fightingOption = getInteger("* Select option: ");
             } else {break;}
         }
         
-        if(player.getUserHp() <= 0) {
+        if(player.getHp() <= 0) {
             return 1;
         } else {
             return 3;
@@ -373,15 +371,27 @@ class ZombieGame {
     }
 
     // Msg to display the weapon of choices
-    public static void displayWeaponOfChoice() {
-        System.out.println("                                   -----------------------------------------   ");
-        System.out.println("                                   |             WEAPON OF CHOICE           |  ");
-        System.out.println("                                   -----------------------------------------   ");
-        System.out.println("                                   |  Weapon        |   DMG    | Durability |  ");
-        System.out.println("                                   -----------------------------------------   ");
-        System.out.println("                                   | 1. Gun         |  25-50  |     1       |  ");
-        System.out.println("                                   | 2. Rusty Knife |   5-7   |     3       |  ");
-        System.out.println("                                   | 3. Hands       |   2-5   | unlimited   |  ");
-        System.out.println("                                   -----------------------------------------   ");
+    public static void displayWeaponOfChoice(int bulletCount, int knifeCount) {
+        System.out.println("                                   ----------------------------------------- ");
+        System.out.println("                                   |             WEAPON OF CHOICE           |");
+        System.out.println("                                   ----------------------------------------- ");
+        System.out.println("                                   |  Weapon        |   DMG    | Durability |");
+        System.out.println("                                   ----------------------------------------- ");
+        System.out.println("                                   | 1. Gun         |  25-50  |     " + bulletCount + "       |");
+        System.out.println("                                   | 2. Rusty Knife |   5-7   |     " + knifeCount  + "       |");
+        System.out.println("                                   | 3. Hands       |   2-5   | unlimited   |");
+        System.out.println("                                   ----------------------------------------- ");
+    }
+
+    public static void viewInventory(Person player) {
+        System.out.println("----------------------------");
+        System.out.println("|        Inventory         |");
+        System.out.println("----------------------------");
+        System.out.println("| Item         |   Amount  |");
+        System.out.println("----------------------------");
+        System.out.println("| Apple        |     " + player.getAppleCount() + "     |");
+        System.out.println("| Steak        |     " + player.getSteakCount() + "     |");
+        System.out.println("| Gun          |     " + player.getBulletCount()    + "     |");
+        System.out.println("| Rusty Knife  |     " + player.getKnifeCount()      + "     |");
     }
 }

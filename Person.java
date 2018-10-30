@@ -1,6 +1,6 @@
 public class Person {
     private String username;
-    private int hp = 100;
+    private int hp;
     private int endurance;
     private int[] inventory = new int[10];
     private int bulletCount;
@@ -26,7 +26,7 @@ public class Person {
         this.username = username;
         this.xpos = xpos;
         this.ypos = ypos;
-        hp = 100;
+        hp = 10;
         bulletCount = 0;
         bulletCount = 0;
         knifeCount = 0;
@@ -37,6 +37,38 @@ public class Person {
     public void displayHp() {
         System.out.println(this.hp);
     }
+
+    public int getBulletCount() {
+        return bulletCount;
+    }
+
+    public int getKnifeCount() {
+        return knifeCount;
+    }
+
+    public int getAppleCount() {
+        return appleCount;
+    }
+
+    public int getSteakCount() {
+        return steakCount;
+    }
+
+    public void setBulletCount(int bulletCount) {
+        this.bulletCount = bulletCount;
+    }
+
+    public void setKnifeCount(int knifeCount) {
+        this.knifeCount = knifeCount;
+    }
+
+    public void setAppleCount(int appleCount) {
+        this.appleCount = appleCount;
+    }
+
+    public void setSteakCount(int steakCount) {
+        this.steakCount = steakCount;
+    } 
 
     public void setXpos(int xpos) {
         this.xpos = xpos;
@@ -58,7 +90,7 @@ public class Person {
         this.hp += num;
     }
 
-    public double getUserHp() {
+    public double getHp() {
         return this.hp;
     }
 
