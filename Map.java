@@ -1,7 +1,4 @@
 public class Map {
-    private int rows;
-    private int cols;
-    private int names;
     private int[][] grid;
 
     public void setGrid(int num) {

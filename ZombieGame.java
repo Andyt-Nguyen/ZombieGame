@@ -31,18 +31,22 @@ class ZombieGame {
 
                 case 2: // Move left
                     zombieEncounterB(player, zombie, grid);
+                    //Zombie Moves
                     break;
 
                 case 3: // Move up
                     zombieEncounterU(player, zombie, grid);
+                    //Zombie Moves
                     break;
 
                 case 4: // Move downward
                     zombieEncounterD(player, zombie, grid);
+                    //Zombie Moves
                     break;
 
                 case 5: // displays user options
                     displayUserOptions();
+                    //Zombie Moves
                     break;
                 
                 case 101: // exit program
@@ -314,20 +318,6 @@ class ZombieGame {
         grid[player.ypos][player.xpos] = PLAYER;
     }
     
-    
-    public static int getInteger(String msg) {
-        int userInput;
-        System.out.print(msg);
-        while (true) {
-            try {
-                userInput = Integer.parseInt(scanner.nextLine());
-                break;
-            } catch(Exception e) {
-                System.err.println("* Number must be an integer. Try again. ");
-            }
-        }
-        return userInput;
-    }
 
     // Displays msg when zombie is eliminated
     public static void eliminationMsg() {
@@ -383,6 +373,7 @@ class ZombieGame {
         System.out.println("                                   ----------------------------------------- ");
     }
 
+    // MSG to view inventory
     public static void viewInventory(Person player) {
         System.out.println("----------------------------");
         System.out.println("|        Inventory         |");
@@ -394,4 +385,22 @@ class ZombieGame {
         System.out.println("| Gun          |     " + player.getBulletCount()    + "     |");
         System.out.println("| Rusty Knife  |     " + player.getKnifeCount()      + "     |");
     }
+
+
+
+    // Manipulated IR5 method
+    public static int getInteger(String msg) {
+        int userInput;
+        System.out.print(msg);
+        while (true) {
+            try {
+                userInput = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch(Exception e) {
+                System.err.println("* Number must be an integer. Try again. ");
+            }
+        }
+        return userInput;
+    }
+
 }
