@@ -34,7 +34,8 @@ class ZombieGame {
         // Set Zombie position
         map.setPos(zombieArr[0].xpos, zombieArr[0].ypos, zombieArr[0].getId());
         map.setPos(zombieArr[1].xpos, zombieArr[1].ypos, zombieArr[1].getId());
-        map.setPos(1, 1, DOOR);
+        // map.setPos(1, 1, DOOR);
+        map.setPos(1, 1, WALL);
 
 
         // Set Items
@@ -92,43 +93,44 @@ class ZombieGame {
         if(player.xpos - 1 < 0) {
             System.out.println("* You hit a wall");
         } else {
-            
-            if(grid[player.ypos][player.xpos - 1] == BULLETS) {
-                System.out.println("* You've picked up a bullet");
-                player.addToBullets();
-                playerMovements(player, grid, "left");
-            } else if(grid[player.ypos][player.xpos - 1] == KEY) {
-                System.out.println("* You've picked up a key");
-                player.addToKey();
-                playerMovements(player, grid, "left");
-            } else if(grid[player.ypos][player.xpos - 1] == DOOR) {
-                if(player.getKeyCount() < 1) {
-                    System.out.println("* Door is locked");
-                } else {
-                    System.out.println("* You have unlocked the door");
-                    player.removeKey();
+            if(grid[player.ypos][player.xpos - 1] != WALL) {
+                if(grid[player.ypos][player.xpos - 1] == BULLETS) {
+                    System.out.println("* You've picked up a bullet");
+                    player.addToBullets();
                     playerMovements(player, grid, "left");
-                }
-            }
-            
-            else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
-                for(int i = 0; i < zombieArr.length; i++) {
-                    if(zombieArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
-                        zombieFightOutcome(player,zombieArr[i], grid, "left");
-                        break;
+                } else if(grid[player.ypos][player.xpos - 1] == KEY) {
+                    System.out.println("* You've picked up a key");
+                    player.addToKey();
+                    playerMovements(player, grid, "left");
+                } else if(grid[player.ypos][player.xpos - 1] == DOOR) {
+                    if(player.getKeyCount() < 1) {
+                        System.out.println("* Door is locked");
+                    } else {
+                        System.out.println("* You have unlocked the door");
+                        player.removeKey();
+                        playerMovements(player, grid, "left");
                     }
                 }
-            } 
-            
-            else {
-                if(player.xpos - 2 > 0) {
-                    if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left", grid, player);
+                
+                else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
+                    for(int i = 0; i < zombieArr.length; i++) {
+                        if(zombieArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
+                            zombieFightOutcome(player,zombieArr[i], grid, "left");
+                            break;
+                        }
+                    }
+                } 
+                
+                else {
+                    if(player.xpos - 2 > 0) {
+                        if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left", grid, player);
+                        else mvmAndMsg("* You take a step left", "left", grid, player);
+                    }
                     else mvmAndMsg("* You take a step left", "left", grid, player);
                 }
-                else mvmAndMsg("* You take a step left", "left", grid, player);
+            } else {
+                System.out.println("* You hit a wall");
             }
-            
-            
         }
     }
     
@@ -139,39 +141,42 @@ class ZombieGame {
         if(player.xpos + 1 > grid[0].length - 1) {
             System.out.println("* You hit a wall");
         } else {
-
-            if(grid[player.ypos][player.xpos + 1] == BULLETS) {
-                System.out.println("* You've picked up a bullet");
-                player.addToBullets();
-                playerMovements(player, grid, "right");
-            } else if(grid[player.ypos][player.xpos + 1] == KEY) {
-                System.out.println("* You've picked up a key");
-                player.addToKey();
-                playerMovements(player, grid, "right");
-            } else if(grid[player.ypos][player.xpos + 1] == DOOR) {
-                if(player.getKeyCount() < 1) {
-                    System.out.println("* Door is locked");
-                } else {
-                    System.out.println("* You have unlocked the door");
-                    player.removeKey();
+            if(grid[player.ypos][player.xpos + 1] != WALL) {
+                if(grid[player.ypos][player.xpos + 1] == BULLETS) {
+                    System.out.println("* You've picked up a bullet");
+                    player.addToBullets();
                     playerMovements(player, grid, "right");
-                }
-            }
-            
-            else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
-                for(int i = 0; i < zombieArr.length; i++) {
-                    if(zombieArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
-                        zombieFightOutcome(player,zombieArr[i], grid, "right");
-                        break;
+                } else if(grid[player.ypos][player.xpos + 1] == KEY) {
+                    System.out.println("* You've picked up a key");
+                    player.addToKey();
+                    playerMovements(player, grid, "right");
+                } else if(grid[player.ypos][player.xpos + 1] == DOOR) {
+                    if(player.getKeyCount() < 1) {
+                        System.out.println("* Door is locked");
+                    } else {
+                        System.out.println("* You have unlocked the door");
+                        player.removeKey();
+                        playerMovements(player, grid, "right");
                     }
                 }
-            } 
                 
-            else {
-                if(player.xpos + 2 < grid[0].length) {
-                    if(grid[player.ypos][player.xpos + 2] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "right", grid, player);
-                    else mvmAndMsg("* You take a step right", "right", grid, player);
-                } else mvmAndMsg("* You take a step right", "right", grid, player);
+                else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
+                    for(int i = 0; i < zombieArr.length; i++) {
+                        if(zombieArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
+                            zombieFightOutcome(player,zombieArr[i], grid, "right");
+                            break;
+                        }
+                    }
+                } 
+                    
+                else {
+                    if(player.xpos + 2 < grid[0].length) {
+                        if(grid[player.ypos][player.xpos + 2] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "right", grid, player);
+                        else mvmAndMsg("* You take a step right", "right", grid, player);
+                    } else mvmAndMsg("* You take a step right", "right", grid, player);
+                }
+            } else {
+                System.out.println("* You hit a wall");
             }
         }
     }
@@ -181,39 +186,43 @@ class ZombieGame {
         if(player.ypos - 1 < 0) {
             System.out.println("* You hit a wall");
         } else {
-            if(grid[player.ypos - 1][player.xpos] == BULLETS) {
-                System.out.println("* You've picked up a bullet");
-                player.addToBullets();
-                playerMovements(player, grid, "up");
-            } else if(grid[player.ypos - 1][player.xpos] == KEY) {
-                System.out.println("* You've picked up a key");
-                player.addToKey();
-                playerMovements(player, grid, "up");
-            } else if(grid[player.ypos - 1][player.xpos] == DOOR) {
-                if(player.getKeyCount() < 1) {
-                    System.out.println("* Door is locked");
-                } else {
-                    System.out.println("* You have unlocked the door");
-                    player.removeKey();
+            if(grid[player.ypos - 1][player.xpos] != WALL) {
+                if(grid[player.ypos - 1][player.xpos] == BULLETS) {
+                    System.out.println("* You've picked up a bullet");
+                    player.addToBullets();
                     playerMovements(player, grid, "up");
-                }
-            }
-
-            else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
-                for(int i = 0; i < zombieArr.length; i++) {
-                    if(zombieArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
-                        zombieFightOutcome(player,zombieArr[i], grid, "up");
-                        break;
+                } else if(grid[player.ypos - 1][player.xpos] == KEY) {
+                    System.out.println("* You've picked up a key");
+                    player.addToKey();
+                    playerMovements(player, grid, "up");
+                } else if(grid[player.ypos - 1][player.xpos] == DOOR) {
+                    if(player.getKeyCount() < 1) {
+                        System.out.println("* Door is locked");
+                    } else {
+                        System.out.println("* You have unlocked the door");
+                        player.removeKey();
+                        playerMovements(player, grid, "up");
                     }
                 }
-            }  
-            
-            else {
-                if(player.ypos - 2 > 0) {
-                    if(grid[player.ypos - 2][player.xpos] <= ZOMBIE) mvmAndMsg("* You hear deep breaths", "up", grid, player);
+    
+                else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
+                    for(int i = 0; i < zombieArr.length; i++) {
+                        if(zombieArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
+                            zombieFightOutcome(player,zombieArr[i], grid, "up");
+                            break;
+                        }
+                    }
+                }  
+                
+                else {
+                    if(player.ypos - 2 > 0) {
+                        if(grid[player.ypos - 2][player.xpos] <= ZOMBIE) mvmAndMsg("* You hear deep breaths", "up", grid, player);
+                        else mvmAndMsg("* You take a step up", "up", grid, player);
+                    }
                     else mvmAndMsg("* You take a step up", "up", grid, player);
                 }
-                else mvmAndMsg("* You take a step up", "up", grid, player);
+            } else {
+                System.out.println("* You hit a wall");
             }
         }
     }
@@ -224,39 +233,43 @@ class ZombieGame {
         if(player.ypos + 1 > grid[0].length - 1) {
             System.out.println("* You hit a wall");
         } else {
-            if(grid[player.ypos + 1][player.xpos] == BULLETS) {
-                System.out.println("* You've picked up a bullet");
-                player.addToBullets();
-                playerMovements(player, grid, "down");
-            } else if(grid[player.ypos + 1][player.xpos] == KEY) {
-                System.out.println("* You've picked up a bullet");
-                player.addToKey();
-                playerMovements(player, grid, "down");
-            } else if(grid[player.ypos + 1][player.xpos] == DOOR) {
-                if(player.getKeyCount() < 1) {
-                    System.out.println("* Door is locked");
-                } else {
-                    System.out.println("* You have unlocked the door");
-                    player.removeKey();
+            if(grid[player.ypos + 1][player.xpos] != WALL) {
+                if(grid[player.ypos + 1][player.xpos] == BULLETS) {
+                    System.out.println("* You've picked up a bullet");
+                    player.addToBullets();
                     playerMovements(player, grid, "down");
-                }
-            }
-            
-            else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
-                for(int i = 0; i < zombieArr.length; i++) {
-                    if(zombieArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
-                        zombieFightOutcome(player,zombieArr[i], grid, "down");
-                        break;
+                } else if(grid[player.ypos + 1][player.xpos] == KEY) {
+                    System.out.println("* You've picked up a bullet");
+                    player.addToKey();
+                    playerMovements(player, grid, "down");
+                } else if(grid[player.ypos + 1][player.xpos] == DOOR) {
+                    if(player.getKeyCount() < 1) {
+                        System.out.println("* Door is locked");
+                    } else {
+                        System.out.println("* You have unlocked the door");
+                        player.removeKey();
+                        playerMovements(player, grid, "down");
                     }
                 }
-            }  
-            
-            else {
-                if(player.ypos + 2 < grid[0].length) {
-                    if(grid[player.ypos + 2][player.xpos] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "down", grid, player);
+                
+                else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
+                    for(int i = 0; i < zombieArr.length; i++) {
+                        if(zombieArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
+                            zombieFightOutcome(player,zombieArr[i], grid, "down");
+                            break;
+                        }
+                    }
+                }  
+                
+                else {
+                    if(player.ypos + 2 < grid[0].length) {
+                        if(grid[player.ypos + 2][player.xpos] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "down", grid, player);
+                        else mvmAndMsg("* You take a step down", "down", grid, player);
+                    }
                     else mvmAndMsg("* You take a step down", "down", grid, player);
                 }
-                else mvmAndMsg("* You take a step down", "down", grid, player);
+            } else {
+                System.out.println("* You hit a wall");
             }
         }
     }
