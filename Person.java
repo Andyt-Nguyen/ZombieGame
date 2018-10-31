@@ -57,6 +57,10 @@ public class Person {
         return steakCount;
     }
 
+    public int getKeyCount() {
+        return keyCount;
+    }
+
     public void setBulletCount(int bulletCount) {
         this.bulletCount = bulletCount;
     }
@@ -115,6 +119,10 @@ public class Person {
 
     public void addToBullets() {
         bulletCount++;
+    }
+
+    public void addToKey() {
+        keyCount++;
     }
 
     public void removeFromInventory(int item) {

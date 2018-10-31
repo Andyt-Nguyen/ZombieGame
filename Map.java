@@ -7,10 +7,11 @@ public class Map {
     }
 
     public void displayMap() {
-        System.out.println("\n----------------------------");
-        System.out.println("              Map");
-        System.out.println("----------------------------");
+        System.out.println("\n                                       ---------------------------------------");
+        System.out.println("                                                        Map");
+        System.out.println("                                       ---------------------------------------");
         for(int i = 0; i < this.grid.length; i++) {
+            System.out.print("                                       ");
             for(int j = 0; j < this.grid[i].length; j++) {
                 if(grid[i][j] == 3) {
                     System.out.print("B ");
@@ -25,9 +26,9 @@ public class Map {
             }
             System.out.println("");
         }
-        System.out.println("----------------------------");
-        System.out.println(" W=Wall I=Item P=Player Z=Zombie .=Empty");
-        System.out.println("----------------------------");
+        System.out.println("                                       ----------------------------------------");
+        System.out.println("                                        W-Wall I-Item P-Player Z-Zombie .-Empty");
+        System.out.println("                                       ----------------------------------------");
     }
 
 

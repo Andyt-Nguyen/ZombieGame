@@ -38,10 +38,10 @@ class ZombieGame {
 
 
         String userInput = "";
-        while(player.getHp() > 0 && !userInput.equals("101")) {
+        while(player.getHp() > 0 && !userInput.equals("ex")) {
             map.displayMap();
 
-            userInput = getString("Your move (type 5 to view full options): ").toLowerCase();
+            userInput = getString("Your move (type o to view full options): ").toLowerCase();
             switch(userInput) {
 
                 case "d": // Move forward
@@ -64,16 +64,16 @@ class ZombieGame {
                     //Zombie Moves
                     break;
 
-                case "5": // displays user options
+                case "o": // displays user options
                     displayUserOptions();
                     //Zombie Moves
                     break;
                 
-                case "6": // View inventory
+                case "i": // View inventory
                     viewInventory(player);
                     break;
                 
-                case "101": // exit program
+                case "ex": // exit program
                     break;
                 
                 default: 
@@ -169,8 +169,8 @@ class ZombieGame {
             }  
             
             else {
-                if(player.ypos - 2 < grid[0].length) {
-                    if(grid[player.ypos - 2][player.xpos] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "up", grid, player);
+                if(player.ypos - 2 > 0) {
+                    if(grid[player.ypos - 2][player.xpos] <= ZOMBIE) mvmAndMsg("* You hear deep breaths", "up", grid, player);
                     else mvmAndMsg("* You take a step up", "up", grid, player);
                 }
                 else mvmAndMsg("* You take a step up", "up", grid, player);
@@ -339,13 +339,12 @@ class ZombieGame {
         System.out.println("");
         System.out.println("                                       ----------------------------------");
         System.out.println("                                                     Options             ");
-        System.out.println("                                        1. Move right                    ");
-        System.out.println("                                        2. Move left                     ");
-        System.out.println("                                        3. Move up                       ");
-        System.out.println("                                        4. Move down                     ");
-        System.out.println("                                        5. Display map                   ");
-        System.out.println("                                        6. View inventory                ");
-        System.out.println("                                        101. Exit                        ");
+        System.out.println("                                        w- Move up                       ");
+        System.out.println("                                        a- Move left                     ");
+        System.out.println("                                        s- Move down                     ");
+        System.out.println("                                        d- Move right                    ");
+        System.out.println("                                        i- View inventory                ");
+        System.out.println("                                        ex- Exit                        ");
         System.out.println("                                       ----------------------------------");
     }
 
@@ -364,15 +363,17 @@ class ZombieGame {
 
     // MSG to view inventory
     public static void viewInventory(Person player) {
-        System.out.println("----------------------------");
-        System.out.println("|        Inventory         |");
-        System.out.println("----------------------------");
-        System.out.println("| Item         |   Amount  |");
-        System.out.println("----------------------------");
-        System.out.println("| Apple        |     " + player.getAppleCount() + "     |");
-        System.out.println("| Steak        |     " + player.getSteakCount() + "     |");
-        System.out.println("| Gun          |     " + player.getBulletCount()    + "     |");
-        System.out.println("| Rusty Knife  |     " + player.getKnifeCount()      + "     |");
+        System.out.println("                                       ----------------------------");
+        System.out.println("                                       |        Inventory         |");
+        System.out.println("                                       ----------------------------");
+        System.out.println("                                       | Item         |   Amount  |");
+        System.out.println("                                       ----------------------------");
+        System.out.println("                                       | Apple        |     " + player.getAppleCount() + "     |");
+        System.out.println("                                       | Steak        |     " + player.getSteakCount() + "     |");
+        System.out.println("                                       | Gun          |     " + player.getBulletCount()    + "     |");
+        System.out.println("                                       | Rusty Knife  |     " + player.getKnifeCount()      + "     |");
+        System.out.println("                                       | Keys         |     " + player.getKeyCount()      + "     |");
+        System.out.println("                                       ----------------------------");
     }
 
 
