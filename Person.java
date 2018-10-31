@@ -7,6 +7,7 @@ public class Person {
     private int knifeCount;
     private int appleCount;
     private int steakCount;
+    private int keyCount;
     public  int xpos;
     public  int ypos;
 
@@ -18,16 +19,18 @@ public class Person {
         knifeCount = 0;
         appleCount = 0;
         steakCount = 0;
+        keyCount = 0;
         xpos = 0;
         ypos = 0;
     }
-
+    
     public Person(String username, int xpos, int ypos) {
         this.username = username;
         this.xpos = xpos;
         this.ypos = ypos;
         hp = 100;
         bulletCount = 0;
+        keyCount = 0;
         bulletCount = 0;
         knifeCount = 0;
         appleCount = 0;

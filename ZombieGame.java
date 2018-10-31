@@ -82,7 +82,41 @@ class ZombieGame {
             
         }  
     }
-
+    
+    // When a user encounters a zombie moving backwards        
+    public static void zombieEncounterL(Person player, Zombie[] zombieArr, int[][] grid) {
+        if(player.xpos - 1 < 0) {
+            System.out.println("* You hit a wall");
+        } else {
+            
+            if(grid[player.ypos][player.xpos - 1] == BULLETS) {
+                System.out.println("* You've picked up a bullet");
+                player.addToBullets();
+                playerMovements(player, grid, "left");
+            } 
+            
+            else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
+                for(int i = 0; i < zombieArr.length; i++) {
+                    if(zombieArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
+                        zombieFightOutcome(player,zombieArr[i], grid, "left");
+                        break;
+                    }
+                }
+            } 
+            
+            else {
+                if(player.xpos - 2 > 0) {
+                    if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left", grid, player);
+                    else mvmAndMsg("* You take a step left", "left", grid, player);
+                }
+                else mvmAndMsg("* You take a step left", "left", grid, player);
+            }
+            
+            
+        }
+    }
+    
+    
     // When a user encounters a zombie moving forward
     public static void zombieEncounterR(Person player, Zombie[] zombieArr, int[][] grid) {
         // Player Moves
@@ -104,7 +138,7 @@ class ZombieGame {
                     }
                 }
             } 
-             
+                
             else {
                 if(player.xpos + 2 < grid[0].length) {
                     if(grid[player.ypos][player.xpos + 2] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "right", grid, player);
@@ -113,41 +147,6 @@ class ZombieGame {
             }
         }
     }
-
-    // When a user encounters a zombie moving backwards        
-    public static void zombieEncounterL(Person player, Zombie[] zombieArr, int[][] grid) {
-        if(player.xpos - 1 < 0) {
-            System.out.println("* You hit a wall");
-        } else {
-
-            if(grid[player.ypos][player.xpos - 1] == BULLETS) {
-                System.out.println("* You've picked up a bullet");
-                player.addToBullets();
-                playerMovements(player, grid, "left");
-            } 
-            
-            else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
-                for(int i = 0; i < zombieArr.length; i++) {
-                    if(zombieArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
-                        zombieFightOutcome(player,zombieArr[i], grid, "left");
-                        break;
-                    }
-                }
-            } 
-
-
-            else {
-                if(player.xpos - 2 > 0) {
-                    if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left", grid, player);
-                    else mvmAndMsg("* You take a step left", "left", grid, player);
-                }
-                else mvmAndMsg("* You take a step left", "left", grid, player);
-            }
-
-            
-        }
-    }
-
 
     // When a user encounters a zombie moving upwards                
     public static void zombieEncounterU(Person player, Zombie[] zombieArr, int[][] grid) {
@@ -158,8 +157,8 @@ class ZombieGame {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
                 playerMovements(player, grid, "up");
-            } 
-            
+            }
+
             else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
                 for(int i = 0; i < zombieArr.length; i++) {
                     if(zombieArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
@@ -168,7 +167,6 @@ class ZombieGame {
                     }
                 }
             }  
-            
             
             else {
                 if(player.ypos - 2 < grid[0].length) {
@@ -200,7 +198,6 @@ class ZombieGame {
                     }
                 }
             }  
-            
             
             else {
                 if(player.ypos + 2 < grid[0].length) {
@@ -273,11 +270,8 @@ class ZombieGame {
             } else {break;}
         }
         
-        if(player.getHp() <= 0) {
-            return 1;
-        } else {
-            return 3;
-        }  
+        if(player.getHp() <= 0) return 1;
+        else return 3;
     }
 
     public static void zombieFightOutcome(Person player,Zombie zombie, int[][] grid, String dir) {
@@ -306,6 +300,7 @@ class ZombieGame {
         grid[player.ypos][player.xpos] = PLAYER;
     }
 
+    // Player movements and message
     public static void mvmAndMsg(String msg, String mvm, int[][] grid, Person player) {
         System.out.println(msg);
         playerMovements(player, grid, mvm);
