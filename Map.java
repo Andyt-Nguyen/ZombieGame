@@ -19,6 +19,8 @@ public class Map {
                     System.out.print("Z ");
                 } else if(grid[i][j] == 1) {
                     System.out.print("P ");
+                } else if(grid[i][j] == 6) {
+                    System.out.print("D ");
                 } else {
                     // System.out.print(grid[i][j] + " ");
                     System.out.print(". ");

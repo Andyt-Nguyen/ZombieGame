@@ -1,8 +1,11 @@
 import java.util.Scanner;
 class ZombieGame {
-    public static final int PLAYER = 1;
-    public static final int ZOMBIE = 50;
-    public static final int BULLETS = 3;
+    public final static  int PLAYER = 1;
+    public final static int ZOMBIE  = 50;
+    public final static int BULLETS = 3;
+    public final static int KEY     = 4;
+    public final static int WALL    = 5;
+    public final static int DOOR    = 6;
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) {
         
@@ -31,6 +34,7 @@ class ZombieGame {
         // Set Zombie position
         map.setPos(zombieArr[0].xpos, zombieArr[0].ypos, zombieArr[0].getId());
         map.setPos(zombieArr[1].xpos, zombieArr[1].ypos, zombieArr[1].getId());
+        map.setPos(1, 1, DOOR);
 
 
         // Set Items
@@ -93,7 +97,19 @@ class ZombieGame {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
                 playerMovements(player, grid, "left");
-            } 
+            } else if(grid[player.ypos][player.xpos - 1] == KEY) {
+                System.out.println("* You've picked up a key");
+                player.addToKey();
+                playerMovements(player, grid, "left");
+            } else if(grid[player.ypos][player.xpos - 1] == DOOR) {
+                if(player.getKeyCount() < 1) {
+                    System.out.println("* Door is locked");
+                } else {
+                    System.out.println("* You have unlocked the door");
+                    player.removeKey();
+                    playerMovements(player, grid, "left");
+                }
+            }
             
             else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
                 for(int i = 0; i < zombieArr.length; i++) {
@@ -128,7 +144,19 @@ class ZombieGame {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
                 playerMovements(player, grid, "right");
-            } 
+            } else if(grid[player.ypos][player.xpos + 1] == KEY) {
+                System.out.println("* You've picked up a key");
+                player.addToKey();
+                playerMovements(player, grid, "right");
+            } else if(grid[player.ypos][player.xpos + 1] == DOOR) {
+                if(player.getKeyCount() < 1) {
+                    System.out.println("* Door is locked");
+                } else {
+                    System.out.println("* You have unlocked the door");
+                    player.removeKey();
+                    playerMovements(player, grid, "right");
+                }
+            }
             
             else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
                 for(int i = 0; i < zombieArr.length; i++) {
@@ -157,6 +185,18 @@ class ZombieGame {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
                 playerMovements(player, grid, "up");
+            } else if(grid[player.ypos - 1][player.xpos] == KEY) {
+                System.out.println("* You've picked up a key");
+                player.addToKey();
+                playerMovements(player, grid, "up");
+            } else if(grid[player.ypos - 1][player.xpos] == DOOR) {
+                if(player.getKeyCount() < 1) {
+                    System.out.println("* Door is locked");
+                } else {
+                    System.out.println("* You have unlocked the door");
+                    player.removeKey();
+                    playerMovements(player, grid, "up");
+                }
             }
 
             else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
@@ -188,7 +228,19 @@ class ZombieGame {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
                 playerMovements(player, grid, "down");
-            } 
+            } else if(grid[player.ypos + 1][player.xpos] == KEY) {
+                System.out.println("* You've picked up a bullet");
+                player.addToKey();
+                playerMovements(player, grid, "down");
+            } else if(grid[player.ypos + 1][player.xpos] == DOOR) {
+                if(player.getKeyCount() < 1) {
+                    System.out.println("* Door is locked");
+                } else {
+                    System.out.println("* You have unlocked the door");
+                    player.removeKey();
+                    playerMovements(player, grid, "down");
+                }
+            }
             
             else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
                 for(int i = 0; i < zombieArr.length; i++) {
@@ -216,27 +268,31 @@ class ZombieGame {
         while(true) {
             int weaponChoice = getInteger("* Select weapon of choice: ");
             if(weaponChoice == 1) {
-                System.out.println("* You swiftly pull out your gun and shoot in the dead of night!");
-                int zmbAtk = zombie.atk();
-                int userAtk = player.atkGun();
-                if(zmbAtk == 0) {
-                    System.out.println("The zombie missed you");
-                } else {
-                    System.out.println("* Zombie made a quick swipe at you!");
-                    zombie.decreaseHp(userAtk);
-                    System.out.println("* You suffered " + zmbAtk + " points from your hp");
-                }
-                player.decreaseHp(zmbAtk);
-                break;
+                if(player.getBulletCount() > 0) {
+                    System.out.println("* You swiftly pull out your gun and shoot in the dead of night!");
+                    int zmbAtk = zombie.atk();
+                    int userAtk = player.atkGun();
+                    if(zmbAtk == 0) {
+                        System.out.println("The zombie missed you");
+                    } else {
+                        System.out.println("* Zombie made a quick swipe at you!");
+                        zombie.decreaseHp(userAtk);
+                        System.out.println("* You suffered " + zmbAtk + " points from your hp");
+                    }
+                    player.decreaseHp(zmbAtk);
+                    break;
+                } else System.out.println("You have no bullets");
             } else if(weaponChoice == 2) {
-                System.out.println("* You stabbed the zombie");
-                int zmbAtk = zombie.atk();
-                int userAtk = player.atkKnife();
-                zombie.decreaseHp(userAtk);
-                player.decreaseHp(zmbAtk);
-                System.out.println("* Zombie made a quick swipe at you!");
-                System.out.println("* You suffered " + zmbAtk + " points from your hp");
-                break;
+                if(player.getKnifeCount() > 0) {
+                    System.out.println("* You stabbed the zombie");
+                    int zmbAtk = zombie.atk();
+                    int userAtk = player.atkKnife();
+                    zombie.decreaseHp(userAtk);
+                    player.decreaseHp(zmbAtk);
+                    System.out.println("* Zombie made a quick swipe at you!");
+                    System.out.println("* You suffered " + zmbAtk + " points from your hp");
+                    break;
+                } else System.out.println("You knife is too weak to cause any damage");
             } else if(weaponChoice == 3) {
                 System.out.println("* You attacked with your bare bloody hands");
                 int zmbAtk = zombie.atk();
@@ -274,6 +330,7 @@ class ZombieGame {
         else return 3;
     }
 
+    // When player encounters the enemy they have three outcomes. Death, run, win.
     public static void zombieFightOutcome(Person player,Zombie zombie, int[][] grid, String dir) {
         int isFight = zombieFight(player, zombie);
         if(isFight == 1) {

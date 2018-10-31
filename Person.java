@@ -125,47 +125,13 @@ public class Person {
         keyCount++;
     }
 
-    public void removeFromInventory(int item) {
-        for(int i = 0; i < this.inventory.length; i++) {
-            if(this.inventory[i] == item) {
-                this.inventory[i] = 0;
-            }
-        }
+    public void removeKey() {
+        keyCount--;
     }
 
-    public void swapFromInventory(int item) {
-        for(int i = 0; i < this.inventory.length; i++) {
-            if(this.inventory[i] == item) {
-                this.inventory[i] = item;
-            }
-        }
-    }
-
-    public void addToInventory(int item) {
-        if(!isInventoryFull()) {
-            for(int i = 0; i < this.inventory.length; i++) {
-                if(this.inventory[i] == 0) {
-                    this.inventory[i] = item;
-                    break;
-                }
-            }
-        } else {
-            System.out.println("Inventory is full");
-        }
-    }
-
-    public boolean isInventoryFull() {
-        int counter = 0;
-        for(int i = 0; i < this.inventory.length; i++) {
-            if(this.inventory[i] != 0) {
-                counter++;
-            }
-        }
-        return counter == inventory.length;
-    }
 
     public int atkHands() {
-        return IR5.getRandomNumber(0,2);
+        return IR5.getRandomNumber(0,15);
     }
 
     public int atkGun() {
