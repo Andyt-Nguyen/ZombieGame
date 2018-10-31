@@ -13,18 +13,11 @@ public class Map {
         for(int i = 0; i < this.grid.length; i++) {
             System.out.print("                                       ");
             for(int j = 0; j < this.grid[i].length; j++) {
-                if(grid[i][j] == 3) {
-                    System.out.print("B ");
-                } else if(grid[i][j] > 50) { // change this back to > 50 
+                if(grid[i][j] > 50) { // anything greater than 50 is the enemy
                     System.out.print("Z ");
                 } else if(grid[i][j] == 1) {
                     System.out.print("P ");
-                } else if(grid[i][j] == 6) {
-                    System.out.print("D ");
-                } else if(grid[i][j] == 5) {
-                    System.out.print("W ");
                 } else {
-                    // System.out.print(grid[i][j] + " ");
                     System.out.print(". ");
                 }
             }
