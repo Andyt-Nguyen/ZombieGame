@@ -1,11 +1,13 @@
 import java.util.Scanner;
 class ZombieGame {
     public final static  int PLAYER = 1;
-    public final static int ZOMBIE  = 50;
+    public final static int ZOMBIE  = 50; // Has to be greater than 50 or equal to
     public final static int BULLETS = 3;
     public final static int KEY     = 4;
     public final static int WALL    = 5;
     public final static int DOOR    = 6;
+    public final static int APPLE   = 20;
+    public final static int STEAK   = 21;
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) {
         
@@ -37,7 +39,7 @@ class ZombieGame {
         // Set Item Positions
         map.setPos(3, 0, BULLETS);
 
-        ZombieEncounters zombieEncounters = new ZombieEncounters();
+        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, APPLE, STEAK, KEY, WALL, DOOR, map.getGrid(), zombieArr, player);
 
         String userInput = "";
         while(player.getHp() > 0 && !userInput.equals("ex")) {
@@ -45,22 +47,22 @@ class ZombieGame {
             userInput = getString("Your move (type o to view full options): ").toLowerCase();
             switch(userInput) {
                 case "d": // Move right
-                    zombieEncounters.moveRight(player, zombieArr, map.getGrid());
+                    zombieEncounters.moveRight();
                     //Zombie Moves
                     break;
 
                 case "a": // Move left
-                    zombieEncounters.moveLeft(player, zombieArr, map.getGrid());
+                    zombieEncounters.moveLeft();
                     //Zombie Moves
                     break;
 
                 case "w": // Move up
-                    zombieEncounters.moveUp(player, zombieArr, map.getGrid());
+                    zombieEncounters.moveUp();
                     //Zombie Moves
                     break;
 
                 case "s": // Move down
-                    zombieEncounters.moveDown(player, zombieArr, map.getGrid());
+                    zombieEncounters.moveDown();
                     //Zombie Moves
                     break;
 
@@ -70,7 +72,7 @@ class ZombieGame {
                     break;
                 
                 case "i": // View inventory
-                    zombieEncounters.viewInventory(player);
+                    zombieEncounters.viewInventory();
                     break;
                 
                 case "ex": // exit program
@@ -106,7 +108,7 @@ class ZombieGame {
            } 
         }
         return answer;            
-     }
+    }
 
 }
 

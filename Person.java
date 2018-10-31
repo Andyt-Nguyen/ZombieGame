@@ -77,6 +77,10 @@ public class Person {
         this.steakCount = steakCount;
     } 
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public void setXpos(int xpos) {
         this.xpos = xpos;
     }
@@ -125,8 +129,24 @@ public class Person {
         keyCount++;
     }
 
+    public void addSteakCount() {
+        steakCount++;
+    }
+
+    public void addAppleCount() {
+        appleCount++;
+    }
+
     public void removeKey() {
         keyCount--;
+    }
+
+    public void eatApple() {
+        hp += 5;
+    }
+
+    public void eatSteak() {
+        hp += 20;
     }
 
 

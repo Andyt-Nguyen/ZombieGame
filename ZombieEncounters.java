@@ -1,32 +1,60 @@
 import java.util.Scanner;
 public class ZombieEncounters {
-    private final static  int PLAYER = 1;
-    private final static int ZOMBIE  = 50;
-    private final static int BULLETS = 3;
-    private final static int KEY     = 4;
-    private final static int WALL    = 5;
-    private final static int DOOR    = 6;
     private static Scanner scanner = new Scanner(System.in);
+    private int PLAYER;
+    private int ZOMBIE;
+    private int BULLETS;
+    private int KEY;
+    private int WALL;
+    private int DOOR;
+    private int STEAK;
+    private int APPLE;
+    private int[][] grid;
+    private Zombie[] zombieArr;
+    private Person player;
+
+    public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int[][] grid, Zombie[] zombieArr, Person player) {
+        this.PLAYER = PLAYER;
+        this.ZOMBIE = ZOMBIE;
+        this.BULLETS = BULLETS;
+        this.STEAK = STEAK;
+        this.APPLE = APPLE;
+        this.KEY = KEY;
+        this.WALL = WALL;
+        this.DOOR = DOOR;
+        this.grid = grid;
+        this.zombieArr = zombieArr;
+        this.player = player;
+    }
 
     // When a user encounters a zombie moving backwards        
-    public void moveLeft(Person player, Zombie[] zombieArr, int[][] grid) {
+    public void moveLeft() {
         if(player.xpos - 1 < 0) {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos][player.xpos - 1] != WALL) {
                 if(grid[player.ypos][player.xpos - 1] == BULLETS) {
-                    foundBullet(player, grid, "left");
+                    foundBullet("left");
                 } else if(grid[player.ypos][player.xpos - 1] == KEY) {
-                    foundKey(player, grid, "left");
+                    foundKey(grid, "left");
                 } else if(grid[player.ypos][player.xpos - 1] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
-                    else unlockDoor(player, grid, "left");
+                    else unlockDoor(grid, "left");
+                } else if(grid[player.ypos][player.xpos - 1] == STEAK) {
+                    player.addSteakCount();
+                    System.out.println("* You found a piece of steak!");
+                    System.out.println("* Steak added to inventory");
+                } else if(grid[player.ypos][player.xpos - 1] == APPLE) {
+                    player.addAppleCount();
+                    System.out.println("* You found an apple!");
+                    System.out.println("* Apple added to inventory");
                 }
+                
                 
                 else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
                         if(zombieArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
-                            zombieFightOutcome(player,zombieArr[i], grid, "left");
+                            zombieFightOutcome(zombieArr[i], "left");
                             break;
                         }
                     }
@@ -34,10 +62,10 @@ public class ZombieEncounters {
                 
                 else {
                     if(player.xpos - 2 > 0) {
-                        if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left", grid, player);
-                        else mvmAndMsg("* You take a step left", "left", grid, player);
+                        if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left");
+                        else mvmAndMsg("* You take a step left", "left");
                     }
-                    else mvmAndMsg("* You take a step left", "left", grid, player);
+                    else mvmAndMsg("* You take a step left", "left");
                 }
             } else {
                 System.out.println("* You hit a wall");
@@ -47,26 +75,33 @@ public class ZombieEncounters {
     
     
     // When a user encounters a zombie moving forward
-    public void moveRight(Person player, Zombie[] zombieArr, int[][] grid) {
+    public void moveRight() {
         // Player Moves
         if(player.xpos + 1 > grid[0].length - 1) {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos][player.xpos + 1] != WALL) {
                 if(grid[player.ypos][player.xpos + 1] == BULLETS) {
-                    foundBullet(player, grid, "right");
+                    foundBullet("right");
                 } else if(grid[player.ypos][player.xpos + 1] == KEY) {
-                    foundKey(player, grid, "right");
+                    foundKey(grid, "right");
                 } else if(grid[player.ypos][player.xpos + 1] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
-                    else unlockDoor(player, grid, "right");
-                    
+                    else unlockDoor(grid, "right");
+                } else if(grid[player.ypos][player.xpos + 1] == STEAK) {
+                    player.addSteakCount();
+                    System.out.println("* You found a piece of steak!");
+                    System.out.println("* Steak added to inventory");
+                } else if(grid[player.ypos][player.xpos + 1] == APPLE) {
+                    player.addAppleCount();
+                    System.out.println("* You found an apple!");
+                    System.out.println("* Apple added to inventory");
                 }
                 
                 else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
                         if(zombieArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
-                            zombieFightOutcome(player,zombieArr[i], grid, "right");
+                            zombieFightOutcome(zombieArr[i], "right");
                             break;
                         }
                     }
@@ -74,9 +109,9 @@ public class ZombieEncounters {
                     
                 else {
                     if(player.xpos + 2 < grid[0].length) {
-                        if(grid[player.ypos][player.xpos + 2] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "right", grid, player);
-                        else mvmAndMsg("* You take a step right", "right", grid, player);
-                    } else mvmAndMsg("* You take a step right", "right", grid, player);
+                        if(grid[player.ypos][player.xpos + 2] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "right");
+                        else mvmAndMsg("* You take a step right", "right");
+                    } else mvmAndMsg("* You take a step right", "right");
                 }
             } else {
                 System.out.println("* You hit a wall");
@@ -85,25 +120,33 @@ public class ZombieEncounters {
     }
 
     // When a user encounters a zombie moving upwards                
-    public void moveUp(Person player, Zombie[] zombieArr, int[][] grid) {
+    public void moveUp() {
         if(player.ypos - 1 < 0) {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos - 1][player.xpos] != WALL) {
                 if(grid[player.ypos - 1][player.xpos] == BULLETS) {
-                    foundBullet(player, grid, "up");
+                    foundBullet("up");
                 } else if(grid[player.ypos - 1][player.xpos] == KEY) {
-                    foundKey(player, grid, "up");
+                    foundKey(grid, "up");
                 } else if(grid[player.ypos - 1][player.xpos] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
-                    else unlockDoor(player, grid, "up");
+                    else unlockDoor(grid, "up");
                     
+                } else if(grid[player.ypos - 1][player.xpos] == STEAK) {
+                    player.addSteakCount();
+                    System.out.println("* You found a piece of steak!");
+                    System.out.println("* Steak added to inventory");
+                } else if(grid[player.ypos - 1][player.xpos] == APPLE) {
+                    player.addAppleCount();
+                    System.out.println("* You found an apple!");
+                    System.out.println("* Apple added to inventory");
                 }
     
                 else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
                         if(zombieArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
-                            zombieFightOutcome(player,zombieArr[i], grid, "up");
+                            zombieFightOutcome(zombieArr[i], "up");
                             break;
                         }
                     }
@@ -111,10 +154,10 @@ public class ZombieEncounters {
                 
                 else {
                     if(player.ypos - 2 > 0) {
-                        if(grid[player.ypos - 2][player.xpos] <= ZOMBIE) mvmAndMsg("* You hear deep breaths", "up", grid, player);
-                        else mvmAndMsg("* You take a step up", "up", grid, player);
+                        if(grid[player.ypos - 2][player.xpos] <= ZOMBIE) mvmAndMsg("* You hear deep breaths", "up");
+                        else mvmAndMsg("* You take a step up", "up");
                     }
-                    else mvmAndMsg("* You take a step up", "up", grid, player);
+                    else mvmAndMsg("* You take a step up", "up");
                 }
             } else {
                 System.out.println("* You hit a wall");
@@ -124,24 +167,32 @@ public class ZombieEncounters {
 
 
     // When a user encounters a zombie moving downwards                
-    public void moveDown(Person player, Zombie[] zombieArr, int[][] grid) {
+    public void moveDown() {
         if(player.ypos + 1 > grid[0].length - 1) {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos + 1][player.xpos] != WALL) {
                 if(grid[player.ypos + 1][player.xpos] == BULLETS) {
-                    foundBullet(player, grid, "down");
+                    foundBullet("down");
                 } else if(grid[player.ypos + 1][player.xpos] == KEY) {
-                    foundKey(player, grid, "down");
+                    foundKey(grid, "down");
                 } else if(grid[player.ypos + 1][player.xpos] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
-                    else unlockDoor(player, grid, "down");
+                    else unlockDoor(grid, "down");
+                } else if(grid[player.ypos + 1][player.xpos] == STEAK) {
+                    player.addSteakCount();
+                    System.out.println("* You found a piece of steak!");
+                    System.out.println("* Steak added to inventory");
+                } else if(grid[player.ypos + 1][player.xpos] == APPLE) {
+                    player.addAppleCount();
+                    System.out.println("* You found an apple!");
+                    System.out.println("* Apple added to inventory");
                 }
                 
                 else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
                         if(zombieArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
-                            zombieFightOutcome(player,zombieArr[i], grid, "down");
+                            zombieFightOutcome(zombieArr[i], "down");
                             break;
                         }
                     }
@@ -149,10 +200,10 @@ public class ZombieEncounters {
                 
                 else {
                     if(player.ypos + 2 < grid[0].length) {
-                        if(grid[player.ypos + 2][player.xpos] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "down", grid, player);
-                        else mvmAndMsg("* You take a step down", "down", grid, player);
+                        if(grid[player.ypos + 2][player.xpos] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "down");
+                        else mvmAndMsg("* You take a step down", "down");
                     }
-                    else mvmAndMsg("* You take a step down", "down", grid, player);
+                    else mvmAndMsg("* You take a step down", "down");
                 }
             } else {
                 System.out.println("* You hit a wall");
@@ -162,7 +213,7 @@ public class ZombieEncounters {
 
     
     // Displays the selection of guns the user can use to fight the zombie
-    private static void pZInteraction(Person player, Zombie zombie) {
+    private void pZInteraction(Zombie zombie) {
         displayWeaponOfChoice(player.getBulletCount(), player.getKnifeCount());
         while(true) {
             int weaponChoice = getInteger("* Select weapon of choice: ");
@@ -207,7 +258,7 @@ public class ZombieEncounters {
 
             
     // User option to fight zombie
-    private static int zombieFight(Person player, Zombie zombie) {
+    private int zombieFight(Zombie zombie) {
         System.out.println("** You've encountered a zombie do you fight or run? **");
         fighterMenu(player.getHp());
         int fightingOption = getInteger("* Choose option: ");
@@ -215,9 +266,11 @@ public class ZombieEncounters {
         while(player.getHp() > 0 && zombie.getHp() > 0) {
             System.out.println("Zombie hp: " + zombie.getHp());
             if(fightingOption == 1) {
-                pZInteraction(player, zombie);
+                pZInteraction(zombie);
             } else if(fightingOption == 2) {
                 return 2;
+            } else if(fightingOption == 3) {
+                viewInventory();
             }
             if(player.getHp() > 0 && zombie.getHp() > 0) {
                 fighterMenu(player.getHp());
@@ -230,24 +283,24 @@ public class ZombieEncounters {
     }
 
     // When player encounters the enemy they have three outcomes. Death, run, win.
-    private void zombieFightOutcome(Person player,Zombie zombie, int[][] grid, String dir) {
-        int isFight = zombieFight(player, zombie);
+    private void zombieFightOutcome(Zombie zombie, String dir) {
+        int isFight = zombieFight(zombie);
         if(isFight == 1) {
             gameOverMsg();
             return;
         } else if(isFight == 2) {
             System.out.println("* You ran from the zombie for now but he will be back for more");                    
         } else {
-            if(dir.equals("right")) playerMovements(player, grid, "right");
-            else if(dir.equals("left")) playerMovements(player, grid, "left");
-            else if(dir.equals("up")) playerMovements(player, grid, "up");
-            else if(dir.equals("down")) playerMovements(player, grid, "down");
+            if(dir.equals("right")) playerMovements("right");
+            else if(dir.equals("left")) playerMovements("left");
+            else if(dir.equals("up")) playerMovements("up");
+            else if(dir.equals("down")) playerMovements("down");
             eliminationMsg();
         }
     }
 
     // Moves player downward and erases last previous step        
-    private void playerMovements(Person player, int[][] grid, String dir) {
+    private void playerMovements(String dir) {
         grid[player.ypos][player.xpos] = 0;
         if(dir.equals("left")) player.moveLeft();
         else if(dir.equals("right")) player.moveRight();
@@ -257,27 +310,27 @@ public class ZombieEncounters {
     }
 
     // Player movements and message
-    private void mvmAndMsg(String msg, String mvm, int[][] grid, Person player) {
+    private void mvmAndMsg(String msg, String mvm) {
         System.out.println(msg);
-        playerMovements(player, grid, mvm);
+        playerMovements(mvm);
     }
 
-    private void foundBullet(Person player, int[][] grid, String mvm) {
+    private void foundBullet(String mvm) {
         System.out.println("* You've picked up a bullet");
         player.addToBullets();
-        playerMovements(player, grid, mvm);
+        playerMovements(mvm);
     }
 
-    private void foundKey(Person player, int[][] grid, String mvm) {
+    private void foundKey(int[][] grid, String mvm) {
         System.out.println("* You've picked up a key");
         player.addToKey();
-        playerMovements(player, grid, mvm);
+        playerMovements(mvm);
     }
 
-    private void unlockDoor(Person player, int[][] grid, String mvm) {
+    private void unlockDoor(int[][] grid, String mvm) {
         System.out.println("* You have unlocked the door");
         player.removeKey();
-        playerMovements(player, grid, mvm);
+        playerMovements(mvm);
     }
 
     
@@ -336,18 +389,33 @@ public class ZombieEncounters {
     }
 
     // MSG to view inventory
-    public void viewInventory(Person player) {
-        System.out.println("                                       ----------------------------");
-        System.out.println("                                       |        Inventory         |");
-        System.out.println("                                       ----------------------------");
-        System.out.println("                                       | Item         |   Amount  |");
-        System.out.println("                                       ----------------------------");
-        System.out.println("                                       | Apple        |     " + player.getAppleCount() + "     |");
-        System.out.println("                                       | Steak        |     " + player.getSteakCount() + "     |");
-        System.out.println("                                       | Gun          |     " + player.getBulletCount()    + "     |");
-        System.out.println("                                       | Rusty Knife  |     " + player.getKnifeCount()      + "     |");
-        System.out.println("                                       | Keys         |     " + player.getKeyCount()      + "     |");
-        System.out.println("                                       ----------------------------");
+    public void viewInventory() {
+        String userInput = "";
+        while(!userInput.equals("exit")) {                              
+            System.out.println("                                       ----------------------------");
+            System.out.println("                                       |        Inventory  HP:" + player.getHp() +"|");
+            System.out.println("                                       ----------------------------");
+            System.out.println("                                       | Item         |   Amount  |");
+            System.out.println("                                       ----------------------------");
+            System.out.println("                                       | ea. Apple    |     " + player.getAppleCount() + "     |");
+            System.out.println("                                       | es. Steak    |     " + player.getSteakCount() + "     |");
+            System.out.println("                                       | Gun          |     " + player.getBulletCount()    + "     |");
+            System.out.println("                                       | Rusty Knife  |     " + player.getKnifeCount()      + "     |");
+            System.out.println("                                       | Keys         |     " + player.getKeyCount()      + "     |");
+            System.out.println("                                       ----------------------------");
+            userInput = getString("Choose option (type exit to leave inventory)");
+            if(userInput.equals("ea")) {
+                player.eatApple();
+                if(player.getHp() > 100) player.setHp(100);    
+                System.out.println("You have eaten an apple");
+                System.out.println("Hp is healed by 5pts");
+            } else if(userInput.equals("es")) {
+                player.eatSteak();
+                if(player.getHp() > 100) player.setHp(100);
+                System.out.println("You have eaten a big ol steak");
+                System.out.println("Hp is healed by 20pts");
+            }
+        }
     }
 
 
@@ -365,5 +433,31 @@ public class ZombieEncounters {
             }
         }
         return userInput;
+    }
+
+
+    public static String getString(String msg) {
+        String answer = "";
+        System.out.print(msg);
+        try {
+           answer = scanner.nextLine(); 
+        }
+        catch (Exception e) {
+           System.err.println("Error reading input from user. Ending program.");
+           System.exit(-1);
+        } 
+        
+        while (answer.replace(" ", "").equals("")) {
+           System.err.println("Error: Missing input.");
+           try {
+              System.out.println(msg);
+              answer = scanner.nextLine(); 
+           }
+           catch (Exception e) {
+              System.err.println("Error reading input from user. Ending program.");
+              System.exit(-1);
+           } 
+        }
+        return answer;            
     }
 }
