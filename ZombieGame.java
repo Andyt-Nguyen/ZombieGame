@@ -95,21 +95,12 @@ class ZombieGame {
         } else {
             if(grid[player.ypos][player.xpos - 1] != WALL) {
                 if(grid[player.ypos][player.xpos - 1] == BULLETS) {
-                    System.out.println("* You've picked up a bullet");
-                    player.addToBullets();
-                    playerMovements(player, grid, "left");
+                    foundBullet(player, grid, "left");
                 } else if(grid[player.ypos][player.xpos - 1] == KEY) {
-                    System.out.println("* You've picked up a key");
-                    player.addToKey();
-                    playerMovements(player, grid, "left");
+                    foundKey(player, grid, "left");
                 } else if(grid[player.ypos][player.xpos - 1] == DOOR) {
-                    if(player.getKeyCount() < 1) {
-                        System.out.println("* Door is locked");
-                    } else {
-                        System.out.println("* You have unlocked the door");
-                        player.removeKey();
-                        playerMovements(player, grid, "left");
-                    }
+                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    else unlockDoor(player, grid, "left");
                 }
                 
                 else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
@@ -143,21 +134,13 @@ class ZombieGame {
         } else {
             if(grid[player.ypos][player.xpos + 1] != WALL) {
                 if(grid[player.ypos][player.xpos + 1] == BULLETS) {
-                    System.out.println("* You've picked up a bullet");
-                    player.addToBullets();
-                    playerMovements(player, grid, "right");
+                    foundBullet(player, grid, "right");
                 } else if(grid[player.ypos][player.xpos + 1] == KEY) {
-                    System.out.println("* You've picked up a key");
-                    player.addToKey();
-                    playerMovements(player, grid, "right");
+                    foundKey(player, grid, "right");
                 } else if(grid[player.ypos][player.xpos + 1] == DOOR) {
-                    if(player.getKeyCount() < 1) {
-                        System.out.println("* Door is locked");
-                    } else {
-                        System.out.println("* You have unlocked the door");
-                        player.removeKey();
-                        playerMovements(player, grid, "right");
-                    }
+                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    else unlockDoor(player, grid, "right");
+                    
                 }
                 
                 else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
@@ -188,21 +171,13 @@ class ZombieGame {
         } else {
             if(grid[player.ypos - 1][player.xpos] != WALL) {
                 if(grid[player.ypos - 1][player.xpos] == BULLETS) {
-                    System.out.println("* You've picked up a bullet");
-                    player.addToBullets();
-                    playerMovements(player, grid, "up");
+                    foundBullet(player, grid, "up");
                 } else if(grid[player.ypos - 1][player.xpos] == KEY) {
-                    System.out.println("* You've picked up a key");
-                    player.addToKey();
-                    playerMovements(player, grid, "up");
+                    foundKey(player, grid, "up");
                 } else if(grid[player.ypos - 1][player.xpos] == DOOR) {
-                    if(player.getKeyCount() < 1) {
-                        System.out.println("* Door is locked");
-                    } else {
-                        System.out.println("* You have unlocked the door");
-                        player.removeKey();
-                        playerMovements(player, grid, "up");
-                    }
+                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    else unlockDoor(player, grid, "up");
+                    
                 }
     
                 else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
@@ -235,21 +210,12 @@ class ZombieGame {
         } else {
             if(grid[player.ypos + 1][player.xpos] != WALL) {
                 if(grid[player.ypos + 1][player.xpos] == BULLETS) {
-                    System.out.println("* You've picked up a bullet");
-                    player.addToBullets();
-                    playerMovements(player, grid, "down");
+                    foundBullet(player, grid, "down");
                 } else if(grid[player.ypos + 1][player.xpos] == KEY) {
-                    System.out.println("* You've picked up a bullet");
-                    player.addToKey();
-                    playerMovements(player, grid, "down");
+                    foundKey(player, grid, "down");
                 } else if(grid[player.ypos + 1][player.xpos] == DOOR) {
-                    if(player.getKeyCount() < 1) {
-                        System.out.println("* Door is locked");
-                    } else {
-                        System.out.println("* You have unlocked the door");
-                        player.removeKey();
-                        playerMovements(player, grid, "down");
-                    }
+                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    else unlockDoor(player, grid, "down");
                 }
                 
                 else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
@@ -373,6 +339,24 @@ class ZombieGame {
     // Player movements and message
     public static void mvmAndMsg(String msg, String mvm, int[][] grid, Person player) {
         System.out.println(msg);
+        playerMovements(player, grid, mvm);
+    }
+
+    public static void foundBullet(Person player, int[][] grid, String mvm) {
+        System.out.println("* You've picked up a bullet");
+        player.addToBullets();
+        playerMovements(player, grid, mvm);
+    }
+
+    public static void foundKey(Person player, int[][] grid, String mvm) {
+        System.out.println("* You've picked up a key");
+        player.addToKey();
+        playerMovements(player, grid, mvm);
+    }
+
+    public static void unlockDoor(Person player, int[][] grid, String mvm) {
+        System.out.println("* You have unlocked the door");
+        player.removeKey();
         playerMovements(player, grid, mvm);
     }
 
