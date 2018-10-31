@@ -17,7 +17,9 @@ public class Map {
                     System.out.print("Z ");
                 } else if(grid[i][j] == 1) {
                     System.out.print("P ");
-                } else {
+                } else if(grid[i][j] == 20) {
+                    System.out.print("A");
+                }else {
                     System.out.print(". ");
                 }
             }
