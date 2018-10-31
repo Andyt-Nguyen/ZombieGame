@@ -61,6 +61,10 @@ public class Person {
         return keyCount;
     }
 
+    public double getHp() {
+        return this.hp;
+    }
+
     public void setBulletCount(int bulletCount) {
         this.bulletCount = bulletCount;
     }
@@ -99,10 +103,6 @@ public class Person {
 
     public void increaseHp(int num) {
         this.hp += num;
-    }
-
-    public double getHp() {
-        return this.hp;
     }
 
     public void moveRight() {
