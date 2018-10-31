@@ -1,55 +1,79 @@
 import java.util.Scanner;
 class ZombieGame {
     public static final int PLAYER = 1;
-    public static final int ZOMBIE = 2;
+    public static final int ZOMBIE = 50;
     public static final int BULLETS = 3;
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) {
+        
+        // Set Grid
         Map map = new Map();
-        Person player = new Person("Sacmctap", 0, 0);
-        Zombie zombie = new Zombie(30, 9, 0);
-        Zombie zombie2 = new Zombie(50, 2, 2);
-        map.setGrid(10);
-
+        map.setGrid(10,20);
         int[][] grid = map.getGrid();
+
+        
+        // Player
+        Person player = new Person("Sacmctap", 0, 0);
+       
+        // Zombie Array
+        Zombie [] zombieArr = new Zombie[4];
+        Zombie zombie =  new Zombie(55, 30, 9, 0);
+        Zombie zombie2 = new Zombie(57, 50, 2, 2);
+
+        // Add Zombies To Array
+        zombieArr[0] = zombie;
+        zombieArr[1] = zombie2;
+
+
+        // Set Player Position
         map.setPos(player.xpos,  player.ypos,  PLAYER);
-        map.setPos(zombie.xpos,  zombie.ypos,  ZOMBIE);
-        map.setPos(zombie2.xpos, zombie2.ypos, ZOMBIE);
+
+        // Set Zombie position
+        map.setPos(zombieArr[0].xpos, zombieArr[0].ypos, zombieArr[0].getId());
+        map.setPos(zombieArr[1].xpos, zombieArr[1].ypos, zombieArr[1].getId());
+
+
+        // Set Items
         map.setPos(3, 0, BULLETS);
 
-        int userInput = 0;
-        while(player.getHp() > 0 && userInput != 101) {
+
+        String userInput = "";
+        while(player.getHp() > 0 && !userInput.equals("101")) {
             map.displayMap();
 
-            userInput = getInteger("Your move(type 5 to view full options): ");
+            userInput = getString("Your move (type 5 to view full options): ").toLowerCase();
             switch(userInput) {
 
-                case 1: // Move forward
-                    zombieEncounterF(player, zombie, grid);
+                case "d": // Move forward
+                    zombieEncounterR(player, zombieArr, grid);
                     //Zombie Moves
                     break;
 
-                case 2: // Move left
-                    zombieEncounterB(player, zombie, grid);
+                case "a": // Move left
+                    zombieEncounterL(player, zombieArr, grid);
                     //Zombie Moves
                     break;
 
-                case 3: // Move up
-                    zombieEncounterU(player, zombie, grid);
+                case "w": // Move up
+                    zombieEncounterU(player, zombieArr, grid);
                     //Zombie Moves
                     break;
 
-                case 4: // Move downward
-                    zombieEncounterD(player, zombie, grid);
+                case "s": // Move downward
+                    zombieEncounterD(player, zombieArr, grid);
                     //Zombie Moves
                     break;
 
-                case 5: // displays user options
+                case "5": // displays user options
                     displayUserOptions();
                     //Zombie Moves
                     break;
                 
-                case 101: // exit program
+                case "6": // View inventory
+                    viewInventory(player);
+                    break;
+                
+                case "101": // exit program
                     break;
                 
                 default: 
@@ -60,170 +84,137 @@ class ZombieGame {
     }
 
     // When a user encounters a zombie moving forward
-    public static void zombieEncounterF(Person player, Zombie zombie, int[][] grid) {
+    public static void zombieEncounterR(Person player, Zombie[] zombieArr, int[][] grid) {
         // Player Moves
         if(player.xpos + 1 > grid[0].length - 1) {
             System.out.println("* You hit a wall");
         } else {
+
             if(grid[player.ypos][player.xpos + 1] == BULLETS) {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
-                playerMoveForward(player, grid);
-            } else if(grid[player.ypos][player.xpos + 1] == ZOMBIE) {
-                int isFight = zombieFight(player, zombie);
-                if(isFight == 1) {
-                    gameOverMsg();
-                    return;
-                } else if(isFight == 2) {
-                    System.out.println("* You ran from the zombie for now but he will be back for more");                    
-                } else {
-                    playerMoveForward(player, grid);
-                    eliminationMsg();
-                }
-
-            } else {
-                if(player.xpos + 2 < grid[0].length) {
-                    if(grid[player.ypos][player.xpos + 2] == ZOMBIE) {
-                        System.out.println("* You hear a deep breaths");
-                        playerMoveForward(player, grid);
-                    } else {
-                        System.out.println("* You take a step forward");                        
-                        playerMoveForward(player, grid);
+                playerMovements(player, grid, "right");
+            } 
+            
+            else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
+                for(int i = 0; i < zombieArr.length; i++) {
+                    if(zombieArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
+                        zombieFightOutcome(player,zombieArr[i], grid, "right");
+                        break;
                     }
-                } else {
-                    System.out.println("* You take a step forward");
-                    playerMoveForward(player, grid);
                 }
+            } 
+             
+            else {
+                if(player.xpos + 2 < grid[0].length) {
+                    if(grid[player.ypos][player.xpos + 2] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "right", grid, player);
+                    else mvmAndMsg("* You take a step right", "right", grid, player);
+                } else mvmAndMsg("* You take a step right", "right", grid, player);
             }
         }
     }
 
-
     // When a user encounters a zombie moving backwards        
-    public static void zombieEncounterB(Person player, Zombie zombie, int[][] grid) {
+    public static void zombieEncounterL(Person player, Zombie[] zombieArr, int[][] grid) {
         if(player.xpos - 1 < 0) {
             System.out.println("* You hit a wall");
         } else {
+
             if(grid[player.ypos][player.xpos - 1] == BULLETS) {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
-                playerMoveBackward(player, grid);
-            } else if(grid[player.ypos][player.xpos - 1] == ZOMBIE) {
-                int isFight = zombieFight(player, zombie);
-                if(isFight == 1) {
-                    gameOverMsg();
-                    return;
-                } else if(isFight == 2) {
-                    System.out.println("* You ran from the zombie for now but he will be back for more");                    
-                } else {
-                    playerMoveBackward(player, grid);
-                    eliminationMsg();
-                }
-
-            } else {
-                if(player.xpos - 2 > 0) {
-                    if(grid[player.ypos][player.xpos - 2] == ZOMBIE) {
-                        System.out.println("* You hear a deep breaths");
-                        playerMoveBackward(player, grid);
-
-                    } else {
-                        System.out.println("* You take a step back");
-                        playerMoveBackward(player, grid);
-
+                playerMovements(player, grid, "left");
+            } 
+            
+            else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
+                for(int i = 0; i < zombieArr.length; i++) {
+                    if(zombieArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
+                        zombieFightOutcome(player,zombieArr[i], grid, "left");
+                        break;
                     }
-                } else {
-                    System.out.println("* You take a step back");
-                    playerMoveBackward(player, grid);
                 }
+            } 
+
+
+            else {
+                if(player.xpos - 2 > 0) {
+                    if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left", grid, player);
+                    else mvmAndMsg("* You take a step left", "left", grid, player);
+                }
+                else mvmAndMsg("* You take a step left", "left", grid, player);
             }
+
+            
         }
     }
 
 
     // When a user encounters a zombie moving upwards                
-    public static void zombieEncounterU(Person player, Zombie zombie, int[][] grid) {
+    public static void zombieEncounterU(Person player, Zombie[] zombieArr, int[][] grid) {
         if(player.ypos - 1 < 0) {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos - 1][player.xpos] == BULLETS) {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
-                playerMoveUpward(player, grid);
-            } else if(grid[player.ypos - 1][player.xpos] == ZOMBIE) {
-                int isFight = zombieFight(player, zombie);
-                if(isFight == 1) {
-                    gameOverMsg();
-                    return;
-                } else if(isFight == 2) {
-                    System.out.println("* You ran from the zombie for now but he will be back for more");                    
-                } else {
-                    playerMoveUpward(player, grid);
-                    eliminationMsg();
-                }
-
-            } else {
-                if(player.ypos - 2 > 0) {
-                    if(grid[player.ypos - 2][player.xpos] == ZOMBIE) {
-                        System.out.println("* You hear a deep breaths");
-                        playerMoveUpward(player, grid);
-
-                    } else {
-                        System.out.println("* You take a step up");
-                        playerMoveUpward(player, grid);
-
+                playerMovements(player, grid, "up");
+            } 
+            
+            else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
+                for(int i = 0; i < zombieArr.length; i++) {
+                    if(zombieArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
+                        zombieFightOutcome(player,zombieArr[i], grid, "up");
+                        break;
                     }
-                } else {
-                    System.out.println("* You take a step up");
-                    playerMoveUpward(player, grid);
                 }
+            }  
+            
+            
+            else {
+                if(player.ypos - 2 < grid[0].length) {
+                    if(grid[player.ypos - 2][player.xpos] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "up", grid, player);
+                    else mvmAndMsg("* You take a step up", "up", grid, player);
+                }
+                else mvmAndMsg("* You take a step up", "up", grid, player);
             }
         }
     }
 
 
     // When a user encounters a zombie moving downwards                
-    public static void zombieEncounterD(Person player, Zombie zombie, int[][] grid) {
+    public static void zombieEncounterD(Person player, Zombie[] zombieArr, int[][] grid) {
         if(player.ypos + 1 > grid[0].length - 1) {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos + 1][player.xpos] == BULLETS) {
                 System.out.println("* You've picked up a bullet");
                 player.addToBullets();
-                playerMoveDownward(player, grid);
-            } else if(grid[player.ypos + 1][player.xpos] == ZOMBIE) {
-                int isFight = zombieFight(player, zombie);
-                if(isFight == 1) {
-                    gameOverMsg();
-                    return;
-                } else if(isFight == 2) {
-                    System.out.println("* You ran from the zombie for now but he will be back for more");                    
-                } else {
-                    playerMoveDownward(player, grid);
-                    eliminationMsg();
-                }
-
-            } else {
-                if(player.ypos + 2 < grid[0].length) {
-                    if(grid[player.ypos + 2][player.xpos] == ZOMBIE) {
-                        System.out.println("* You hear a deep breaths");
-                        playerMoveDownward(player, grid);
-
-                    } else {
-                        System.out.println("* You take a step down");
-                        playerMoveDownward(player, grid);
-
+                playerMovements(player, grid, "down");
+            } 
+            
+            else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
+                for(int i = 0; i < zombieArr.length; i++) {
+                    if(zombieArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
+                        zombieFightOutcome(player,zombieArr[i], grid, "down");
+                        break;
                     }
-                } else {
-                    System.out.println("* You take a step down");
-                    playerMoveDownward(player, grid);
                 }
+            }  
+            
+            
+            else {
+                if(player.ypos + 2 < grid[0].length) {
+                    if(grid[player.ypos + 2][player.xpos] >= ZOMBIE) mvmAndMsg("* You hear deep breaths", "down", grid, player);
+                    else mvmAndMsg("* You take a step down", "down", grid, player);
+                }
+                else mvmAndMsg("* You take a step down", "down", grid, player);
             }
         }
     }
 
   
     // Displays the selection of guns the user can use to fight the zombie
-    public static void weaponary(Person player, Zombie zombie) {
+    public static void pZInteraction(Person player, Zombie zombie) {
         displayWeaponOfChoice(player.getBulletCount(), player.getKnifeCount());
         while(true) {
             int weaponChoice = getInteger("* Select weapon of choice: ");
@@ -272,7 +263,7 @@ class ZombieGame {
         while(player.getHp() > 0 && zombie.getHp() > 0) {
             System.out.println("Zombie hp: " + zombie.getHp());
             if(fightingOption == 1) {
-                weaponary(player, zombie);
+                pZInteraction(player, zombie);
             } else if(fightingOption == 2) {
                 return 2;
             }
@@ -288,35 +279,38 @@ class ZombieGame {
             return 3;
         }  
     }
-        
-        
-    // Moves player forward and erases last previous step
-    public static void playerMoveForward(Person player, int[][] grid) {
-        grid[player.ypos][player.xpos] = 0;
-        player.moveForward();
-        grid[player.ypos][player.xpos] = PLAYER;
+
+    public static void zombieFightOutcome(Person player,Zombie zombie, int[][] grid, String dir) {
+        int isFight = zombieFight(player, zombie);
+        if(isFight == 1) {
+            gameOverMsg();
+            return;
+        } else if(isFight == 2) {
+            System.out.println("* You ran from the zombie for now but he will be back for more");                    
+        } else {
+            if(dir.equals("right")) playerMovements(player, grid, "right");
+            else if(dir.equals("left")) playerMovements(player, grid, "left");
+            else if(dir.equals("up")) playerMovements(player, grid, "up");
+            else if(dir.equals("down")) playerMovements(player, grid, "down");
+            eliminationMsg();
+        }
     }
-    
-    // Moves player backward and erases last previous step        
-    public static void playerMoveBackward(Person player, int[][] grid) {
-        grid[player.ypos][player.xpos] = 0;
-        player.moveLeft();
-        grid[player.ypos][player.xpos] = PLAYER;
-    }
-    
-    // Moves player upward and erases last previous step        
-    public static void playerMoveUpward(Person player, int[][] grid) {
-        grid[player.ypos][player.xpos] = 0;
-        player.moveUp();
-        grid[player.ypos][player.xpos] = PLAYER;
-    }
-    
+
     // Moves player downward and erases last previous step        
-    public static void playerMoveDownward(Person player, int[][] grid) {
+    public static void playerMovements(Person player, int[][] grid, String dir) {
         grid[player.ypos][player.xpos] = 0;
-        player.moveDown();
+        if(dir.equals("left")) player.moveLeft();
+        else if(dir.equals("right")) player.moveRight();
+        else if(dir.equals("up")) player.moveUp();
+        else if(dir.equals("down")) player.moveDown();
         grid[player.ypos][player.xpos] = PLAYER;
     }
+
+    public static void mvmAndMsg(String msg, String mvm, int[][] grid, Person player) {
+        System.out.println(msg);
+        playerMovements(player, grid, mvm);
+    }
+
     
 
     // Displays msg when zombie is eliminated
@@ -350,10 +344,10 @@ class ZombieGame {
         System.out.println("");
         System.out.println("                                       ----------------------------------");
         System.out.println("                                                     Options             ");
-        System.out.println("                                        1. Move forward                  ");
-        System.out.println("                                        2. Move backward                 ");
-        System.out.println("                                        3. Move upward                   ");
-        System.out.println("                                        4. Move downward                 ");
+        System.out.println("                                        1. Move right                    ");
+        System.out.println("                                        2. Move left                     ");
+        System.out.println("                                        3. Move up                       ");
+        System.out.println("                                        4. Move down                     ");
         System.out.println("                                        5. Display map                   ");
         System.out.println("                                        6. View inventory                ");
         System.out.println("                                        101. Exit                        ");
@@ -402,5 +396,30 @@ class ZombieGame {
         }
         return userInput;
     }
+
+    public static String getString(String msg) {
+        String answer = "";
+        System.out.print(msg);
+        try {
+           answer = scanner.nextLine(); 
+        }
+        catch (Exception e) {
+           System.err.println("Error reading input from user. Ending program.");
+           System.exit(-1);
+        } 
+        
+        while (answer.replace(" ", "").equals("")) {
+           System.err.println("Error: Missing input.");
+           try {
+              System.out.println(msg);
+              answer = scanner.nextLine(); 
+           }
+           catch (Exception e) {
+              System.err.println("Error reading input from user. Ending program.");
+              System.exit(-1);
+           } 
+        }
+        return answer;            
+     }
 
 }

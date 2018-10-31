@@ -2,18 +2,25 @@ public class Zombie {
     private int hp;
     public int xpos;
     public int ypos;
+    private int id;
 
 
     public Zombie() {
+        this.id = 0;
         this.hp = 15;
         this.xpos = 0;
         this.ypos = 0;
     }
 
-    public Zombie(int hp, int xpos, int ypos) {
+    public Zombie(int id,int hp, int xpos, int ypos) {
+        this.id = id;
         this.hp = hp;
         this.xpos = xpos;
         this.ypos = ypos;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getHp() {

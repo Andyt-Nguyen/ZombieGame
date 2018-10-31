@@ -12,7 +12,7 @@ public class Person {
 
     public Person() {
         this.username = "Unknown";
-        hp = 10;
+        hp = 100;
         bulletCount = 0;
         bulletCount = 0;
         knifeCount = 0;
@@ -26,7 +26,7 @@ public class Person {
         this.username = username;
         this.xpos = xpos;
         this.ypos = ypos;
-        hp = 10;
+        hp = 100;
         bulletCount = 0;
         bulletCount = 0;
         knifeCount = 0;
@@ -94,7 +94,7 @@ public class Person {
         return this.hp;
     }
 
-    public void moveForward() {
+    public void moveRight() {
         this.xpos++;
     }
     
