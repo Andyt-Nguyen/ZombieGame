@@ -40,7 +40,7 @@ class ZombieGame {
         // Set Item Positions
         map.setPos(3, 0, BULLETS);
 
-        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, KEY,APPLE, STEAK, WALL, DOOR, map.getGrid(), zombieArr, player);
+        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, KEY, APPLE, STEAK, WALL, DOOR, map.getGrid(), zombieArr, player);
 
         String userInput = "";
         while(player.getHp() > 0 && !userInput.equals("ex")) {
