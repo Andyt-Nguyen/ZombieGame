@@ -16,7 +16,6 @@ public class Person {
         this.username = "Unknown";
         hp = 100;
         bulletCount = 0;
-        bulletCount = 0;
         knifeCount = 0;
         appleCount = 0;
         steakCount = 0;
