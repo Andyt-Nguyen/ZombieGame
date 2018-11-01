@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 class ZombieGame {
     public final static  int PLAYER = 1;
     public final static int ZOMBIE  = 50; // Has to be greater than 50 or equal to
@@ -13,7 +14,7 @@ class ZombieGame {
         
         // Set Grid
         Map map = new Map();
-        map.setGrid(10,20);
+        map.setGrid(15,30);
         // Player
         Person player = new Person("Sacmctap", 0, 0);
        

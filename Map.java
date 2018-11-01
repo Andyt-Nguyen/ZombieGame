@@ -11,14 +11,14 @@ public class Map {
         System.out.println("                                                        Map");
         System.out.println("                                       ---------------------------------------");
         for(int i = 0; i < this.grid.length; i++) {
-            System.out.print("                                       ");
+            System.out.print("                              ");
             for(int j = 0; j < this.grid[i].length; j++) {
                 if(grid[i][j] > 50) { // anything greater than 50 is the enemy
                     System.out.print("Z ");
                 } else if(grid[i][j] == 1) {
                     System.out.print("P ");
                 } else if(grid[i][j] == 20) {
-                    System.out.print("A");
+                    System.out.print("A ");
                 }else {
                     System.out.print(". ");
                 }
