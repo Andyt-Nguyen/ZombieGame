@@ -1,5 +1,6 @@
 public class Person {
     private String username;
+    private String password;
     private int hp;
     private int endurance;
     private int[] inventory = new int[10];
@@ -24,6 +25,22 @@ public class Person {
         ypos = 0;
     }
     
+    //FileIO constructor.
+    public Person(String username, String password, int hp, int endurance, int bulletCount, int knifeCount
+                 ,int appleCount, int steakCount, int keyCount, int xpos, int ypos){
+      this.username = username;
+      this.password = password;
+      this.hp = hp;
+      this.endurance = endurance;
+      this.bulletCount = bulletCount;
+      this.knifeCount = knifeCount;
+      this.appleCount = appleCount;
+      this.steakCount = steakCount;
+      this.keyCount = keyCount;
+      this.xpos = xpos;
+      this.ypos = ypos;
+    }
+    
     public Person(String username, int xpos, int ypos) {
         this.username = username;
         this.xpos = xpos;
@@ -40,7 +57,19 @@ public class Person {
     public void displayHp() {
         System.out.println(this.hp);
     }
-
+    
+    public String getUsername(){
+      return username;
+    }
+    
+    public String getPassword(){
+      return password;
+    }
+    
+    public int getEndurance(){
+      return endurance;
+    }
+    
     public int getBulletCount() {
         return bulletCount;
     }
@@ -64,6 +93,22 @@ public class Person {
     public double getHp() {
         return this.hp;
     }
+    
+    public int getXpos(){
+      return xpos;
+    }
+    
+    public int getYpos(){
+      return ypos;
+    }
+    
+    public void setUsername(String username){
+      this.username = username;
+    }
+    
+    public void setPassword(String password){
+      this.password = password;
+    }
 
     public void setBulletCount(int bulletCount) {
         this.bulletCount = bulletCount;
@@ -83,6 +128,10 @@ public class Person {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+    
+    public void setEndurance(int endurance){
+      this.endurance = endurance;
     }
 
     public void setXpos(int xpos) {
