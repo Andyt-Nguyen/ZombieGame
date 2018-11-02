@@ -43,6 +43,17 @@ public class ZombieEncounters {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "left");
                 }
+
+                else if(grid[player.ypos][player.xpos - 1] >= 30 && grid[player.ypos][player.xpos - 1] <= 40) {
+                    for(int i = 0; i < npcArr.length; i++) {
+                        if(npcArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
+                            System.out.println("\n********************************************");
+                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
+                            System.out.println("********************************************");
+                            break;
+                        }
+                    }
+                }  
                 
                 else if(grid[player.ypos][player.xpos - 1] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
@@ -129,6 +140,17 @@ public class ZombieEncounters {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "up");   
                 } 
+
+                else if(grid[player.ypos - 1][player.xpos] >= 30 && grid[player.ypos - 1][player.xpos] <= 40) {
+                    for(int i = 0; i < npcArr.length; i++) {
+                        if(npcArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
+                            System.out.println("\n********************************************");
+                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
+                            System.out.println("********************************************");
+                            break;
+                        }
+                    }
+                } 
                 
                 else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
@@ -166,6 +188,17 @@ public class ZombieEncounters {
                 else if(grid[player.ypos + 1][player.xpos] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "down");
+                } 
+
+                else if(grid[player.ypos + 1][player.xpos] >= 30 && grid[player.ypos + 1][player.xpos] <= 40) {
+                    for(int i = 0; i < npcArr.length; i++) {
+                        if(npcArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
+                            System.out.println("\n********************************************");
+                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
+                            System.out.println("********************************************");
+                            break;
+                        }
+                    }
                 } 
                 
                 else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
