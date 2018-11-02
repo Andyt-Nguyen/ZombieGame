@@ -15,6 +15,8 @@ public class Map {
             for(int j = 0; j < this.grid[i].length; j++) {
                 if(grid[i][j] > 50) { // anything greater than 50 is the enemy
                     System.out.print("Z ");
+                } else if(grid[i][j] >= 30 && grid[i][j] <= 40) {
+                    System.out.print("N ");
                 } else if(grid[i][j] == 1) {
                     System.out.print("P ");
                 } else if(grid[i][j] == 20) {

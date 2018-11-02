@@ -3,9 +3,11 @@ public class NPC  {
     private int id;
     private int xpos;
     private int ypos;
+    private String name;
 
-    public NPC(int id, String text, int xpos, int ypos) {
+    public NPC(int id, String name, String text, int xpos, int ypos) {
         this.id = id;
+        this.name = name;
         this.text = text;
         this.xpos = xpos;
         this.ypos = ypos;
@@ -15,6 +17,9 @@ public class NPC  {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
     public int getXpos() {
         return xpos;
     }

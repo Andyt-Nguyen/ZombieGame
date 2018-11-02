@@ -11,9 +11,10 @@ public class ZombieEncounters {
     private int APPLE;
     private int[][] grid;
     private Zombie[] zombieArr;
+    private NPC[] npcArr;
     private Person player;
 
-    public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int[][] grid, Zombie[] zombieArr, Person player) {
+    public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int[][] grid, Zombie[] zombieArr, NPC[] npcArr,Person player) {
         this.PLAYER = PLAYER;
         this.ZOMBIE = ZOMBIE;
         this.BULLETS = BULLETS;
@@ -24,6 +25,7 @@ public class ZombieEncounters {
         this.DOOR = DOOR;
         this.grid = grid;
         this.zombieArr = zombieArr;
+        this.npcArr = npcArr;
         this.player = player;
     }
 
@@ -80,6 +82,17 @@ public class ZombieEncounters {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "right");
                 }
+
+                else if(grid[player.ypos][player.xpos + 1] >= 30 && grid[player.ypos][player.xpos + 1] <= 40) {
+                    for(int i = 0; i < npcArr.length; i++) {
+                        if(npcArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
+                            System.out.println("\n********************************************");
+                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
+                            System.out.println("********************************************");
+                            break;
+                        }
+                    }
+                }                
                 
                 else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
@@ -373,7 +386,7 @@ public class ZombieEncounters {
         String userInput = "";
         while(!userInput.equals("exit")) {                              
             System.out.println("                                       ----------------------------");
-            System.out.println("                                       |        Inventory  HP:" + player.getHp() +"|");
+            System.out.println("                                       |        Inventory  HP:    |");
             System.out.println("                                       ----------------------------");
             System.out.println("                                       | Item         |   Amount  |");
             System.out.println("                                       ----------------------------");
