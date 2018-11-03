@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class ZombieEncounters {
     private static Scanner scanner = new Scanner(System.in);
     private int PLAYER;
@@ -93,31 +94,9 @@ public class ZombieEncounters {
                 }
 
                 else if(grid[player.ypos][player.xpos + 1] >= 30 && grid[player.ypos][player.xpos + 1] <= 40) {
-                    int userAnswer = -100;
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
-                            while(userAnswer != -1) {
-                                System.out.println("\n********************************************");
-                                System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
-                                String[] q = npcArr[i].getQ();
-                                for(int j = 0; j < q.length; j++) {
-                                    System.out.println(j + 1 + ". " + q[j]);
-                                }
-                                System.out.println("********************************************");
-                                
-                                while(true) {
-                                    userAnswer = getInteger("Choose question (type -1 to leave): ");
-                                    if(userAnswer < q.length + 1 && userAnswer > 0) {
-                                       String answer = npcArr[i].getA()[userAnswer - 1];
-                                       System.out.println(answer);
-                                       break;
-
-                                    } else if(userAnswer == -1) break;
-                                    else {
-                                        System.out.println("Those were not one of the options. Try again.");
-                                    }
-                                }
-                            }
+                            pNInteraction(npcArr[i]);
                             break;
                         }
                     }
@@ -162,9 +141,7 @@ public class ZombieEncounters {
                 else if(grid[player.ypos - 1][player.xpos] >= 30 && grid[player.ypos - 1][player.xpos] <= 40) {
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
-                            System.out.println("\n********************************************");
-                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
-                            System.out.println("********************************************");
+                            pNInteraction(npcArr[i]);
                             break;
                         }
                     }
@@ -211,9 +188,7 @@ public class ZombieEncounters {
                 else if(grid[player.ypos + 1][player.xpos] >= 30 && grid[player.ypos + 1][player.xpos] <= 40) {
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
-                            System.out.println("\n********************************************");
-                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
-                            System.out.println("********************************************");
+                            pNInteraction(npcArr[i]);
                             break;
                         }
                     }
@@ -287,13 +262,30 @@ public class ZombieEncounters {
     }
 
     private void pNInteraction(NPC npc) {
-        System.out.println("********************************************");
-        boolean isTalk = getYorN("Would you like to talk to this person (y/n)? ");
-        System.out.println("********************************************");
-        if(isTalk) {
+        int userAnswer = -100;        
+        while(userAnswer != -1) {
             System.out.println("\n********************************************");
-            System.out.println("** " + npc.getName() + ": " + npc.getText() + " **");
+            System.out.println("* " + npc.getName());
+            String[] q = npc.getQ();
+            // Looping through the npcs questions that are being asked
+            for(int j = 0; j < q.length; j++) {
+                System.out.println("* " + (j + 1) + ". " + q[j]);
+            }
             System.out.println("********************************************");
+            
+            // Loops through the given answers of the npc
+            while(true) {
+                userAnswer = getInteger("Choose question (type -1 to leave): ");
+                if(userAnswer < q.length + 1 && userAnswer > 0) {
+                   String answer = npc.getA()[userAnswer - 1];
+                   System.out.println(answer);
+                   break;
+
+                } else if(userAnswer == -1) break;
+                else {
+                    System.out.println("Those were not one of the options. Try again.");
+                }
+            }
         }
     }
 
