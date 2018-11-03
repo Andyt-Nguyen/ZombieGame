@@ -199,7 +199,7 @@ public class Person {
 
 
     public int atkHands() {
-        return IR5.getRandomNumber(0,15);
+        return IR5.getRandomNumber(0,5);
     }
 
     public int atkGun() {
@@ -207,7 +207,7 @@ public class Person {
     }
 
     public int atkKnife() {
-        return IR5.getRandomNumber(5,7);
+        return IR5.getRandomNumber(7,15);
     }
 
 

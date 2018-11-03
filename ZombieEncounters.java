@@ -265,20 +265,22 @@ public class ZombieEncounters {
         System.out.println("\n--------------------------------------------");
         System.out.println("* " + npc.getName() + " speaking: ");
         System.out.println("- Hello my good person my name is " + npc.getName());
-        // Looping through the npcs questions that are being asked
         System.out.println("----------------------------------------------");
+
+        // Looping through the npcs questions that are being asked
         int userAnswer = -100;        
         while(userAnswer != -1) {
             System.out.println("\n--------------------------------------------");
             System.out.println("*  Question " + npc.getName());
             String[] q = npc.getQ();
+
             // Looping through the npcs questions that are being asked
             System.out.println("----------------------------------------------");
             for(int j = 0; j < q.length; j++) {
                 System.out.println("* " + (j + 1) + ". " + q[j]);
             }
             
-            // Loops through the given answers of the npc
+            // Finds what the user typed to find the given answer
             while(true) {
                 userAnswer = getInteger("Choose question (type -1 to leave): ");
                 if(userAnswer < q.length + 1 && userAnswer > 0) {
@@ -310,11 +312,10 @@ public class ZombieEncounters {
     // User option to fight zombie
     private int zombieFight(Zombie zombie) {
         System.out.println("** You've encountered a zombie do you fight or run? **");
-        fighterMenu(player.getHp());
+        fighterMenu(player.getHp(), zombie.getHp());
         int fightingOption = getInteger("* Choose option: ");
         
         while(player.getHp() > 0 && zombie.getHp() > 0) {
-            System.out.println("Zombie hp: " + zombie.getHp());
             if(fightingOption == 1) {
                 pZInteraction(zombie);
             } else if(fightingOption == 2) {
@@ -323,7 +324,7 @@ public class ZombieEncounters {
                 viewInventory();
             }
             if(player.getHp() > 0 && zombie.getHp() > 0) {
-                fighterMenu(player.getHp());
+                fighterMenu(player.getHp(), zombie.getHp());
                 fightingOption = getInteger("* Select option: ");
             } else {break;}
         }
@@ -416,9 +417,10 @@ public class ZombieEncounters {
     }
 
     // Msg to display options can choose from and their current health
-    private static void fighterMenu(double hp) {
+    private static void fighterMenu(double hp, double zombieHp) {
         System.out.println("                                       -------------------");
         System.out.println("                                       Current Hp: " + hp);
+        System.out.println("                                       Zombie  Hp: " + zombieHp);
         System.out.println("                                       1. Fight");
         System.out.println("                                       2. Run");
         System.out.println("                                       3. Inventory");
@@ -447,8 +449,8 @@ public class ZombieEncounters {
         System.out.println("                                   |  Weapon        |   DMG    | Durability |");
         System.out.println("                                   ----------------------------------------- ");
         System.out.println("                                   | 1. Gun         |  25-50  |     " + bulletCount + "       |");
-        System.out.println("                                   | 2. Rusty Knife |   5-7   |     " + knifeCount  + "       |");
-        System.out.println("                                   | 3. Hands       |   2-5   | unlimited   |");
+        System.out.println("                                   | 2. Rusty Knife |   7-15   |     " + knifeCount  + "       |");
+        System.out.println("                                   | 3. Hands       |   0-5   | unlimited   |");
         System.out.println("                                   ----------------------------------------- ");
     }
 
