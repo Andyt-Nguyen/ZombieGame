@@ -3,7 +3,8 @@ public class Zombie {
     public int xpos;
     public int ypos;
     private int id;
-
+    private final int MIN_ATK = 0;
+    private final int MAX_ATK = 15;
 
     public Zombie() {
         this.id = 0;
@@ -48,7 +49,7 @@ public class Zombie {
     }
 
     public int atk() {
-        return IR5.getRandomNumber(0, 15);
+        return IR5.getRandomNumber(MIN_ATK, MAX_ATK);
     }
 
 

@@ -11,6 +11,12 @@ public class Person {
     private int keyCount;
     public  int xpos;
     public  int ypos;
+    private final int MIN_HAND_ATK = 0;
+    private final int MAX_HAND_ATK = 7;
+    private final int MIN_GUN_ATK = 25;
+    private final int MAX_GUN_ATK = 50;
+    private final int MIN_KNIFE_ATK = 7;
+    private final int MAX_KNIFE_ATK = 15;
 
     public Person() {
         this.username = "Unknown";
@@ -190,24 +196,26 @@ public class Person {
     }
 
     public void eatApple() {
+        appleCount--;
         hp += 5;
     }
 
     public void eatSteak() {
+        steakCount--;
         hp += 20;
     }
 
 
     public int atkHands() {
-        return IR5.getRandomNumber(0,5);
+        return IR5.getRandomNumber(MIN_HAND_ATK, MAX_HAND_ATK);
     }
 
     public int atkGun() {
-        return IR5.getRandomNumber(25,50);
+        return IR5.getRandomNumber(MIN_GUN_ATK, MAX_GUN_ATK);
     }
 
     public int atkKnife() {
-        return IR5.getRandomNumber(7,15);
+        return IR5.getRandomNumber(MIN_KNIFE_ATK, MAX_KNIFE_ATK);
     }
 
 

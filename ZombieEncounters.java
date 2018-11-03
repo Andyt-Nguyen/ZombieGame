@@ -16,15 +16,15 @@ public class ZombieEncounters {
     private Person player;
 
     public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int[][] grid, Zombie[] zombieArr, NPC[] npcArr,Person player) {
-        this.PLAYER = PLAYER;
-        this.ZOMBIE = ZOMBIE;
+        this.PLAYER  = PLAYER;
+        this.ZOMBIE  = ZOMBIE;
         this.BULLETS = BULLETS;
-        this.STEAK = STEAK;
-        this.APPLE = APPLE;
-        this.KEY = KEY;
-        this.WALL = WALL;
-        this.DOOR = DOOR;
-        this.grid = grid;
+        this.STEAK   = STEAK;
+        this.APPLE   = APPLE;
+        this.KEY     = KEY;
+        this.WALL    = WALL;
+        this.DOOR    = DOOR;
+        this.grid    = grid;
         this.zombieArr = zombieArr;
         this.npcArr = npcArr;
         this.player = player;
@@ -84,7 +84,7 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos][player.xpos + 1] != WALL) {
-                if(grid[player.ypos][player.xpos + 1] == BULLETS) foundBullet("right");
+                if(grid[player.ypos][player.xpos + 1]      == BULLETS) foundBullet("right");
                 else if(grid[player.ypos][player.xpos + 1] == KEY) foundKey(grid, "right");
                 else if(grid[player.ypos][player.xpos + 1] == STEAK) foundSteak("right");
                 else if(grid[player.ypos][player.xpos + 1] == APPLE) foundApple("right");
@@ -93,7 +93,7 @@ public class ZombieEncounters {
                     else unlockDoor(grid, "right");
                 }
 
-                else if(grid[player.ypos][player.xpos + 1] >= 30 && grid[player.ypos][player.xpos + 1] <= 40) {
+                else if(grid[player.ypos][player.xpos + 1] >= 30 && grid[player.ypos][player.xpos + 1] <= 40) { // interaction with npc
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
                             pNInteraction(npcArr[i]);
@@ -104,7 +104,7 @@ public class ZombieEncounters {
                 
                 else if(grid[player.ypos][player.xpos + 1] >= ZOMBIE) {
                     for(int i = 0; i < zombieArr.length; i++) {
-                        if(zombieArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
+                        if(zombieArr[i].getId() == grid[player.ypos][player.xpos + 1]) { // interaction with zombie
                             zombieFightOutcome(zombieArr[i], "right");
                             break;
                         }
@@ -129,7 +129,7 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos - 1][player.xpos] != WALL) {
-                if(grid[player.ypos - 1][player.xpos] == BULLETS) foundBullet("up");
+                if(grid[player.ypos - 1][player.xpos]      == BULLETS) foundBullet("up");
                 else if(grid[player.ypos - 1][player.xpos] == KEY) foundKey(grid, "up");
                 else if(grid[player.ypos - 1][player.xpos] == STEAK) foundSteak("up");
                 else if(grid[player.ypos - 1][player.xpos] == APPLE) foundApple("up");
@@ -138,7 +138,7 @@ public class ZombieEncounters {
                     else unlockDoor(grid, "up");   
                 } 
 
-                else if(grid[player.ypos - 1][player.xpos] >= 30 && grid[player.ypos - 1][player.xpos] <= 40) {
+                else if(grid[player.ypos - 1][player.xpos] >= 30 && grid[player.ypos - 1][player.xpos] <= 40) { //interaction with npc
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
                             pNInteraction(npcArr[i]);
@@ -147,7 +147,7 @@ public class ZombieEncounters {
                     }
                 } 
                 
-                else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) {
+                else if(grid[player.ypos - 1][player.xpos] >= ZOMBIE) { // interaction with zombie
                     for(int i = 0; i < zombieArr.length; i++) {
                         if(zombieArr[i].getId() == grid[player.ypos - 1][player.xpos]) {
                             zombieFightOutcome(zombieArr[i], "up");
@@ -176,7 +176,7 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             if(grid[player.ypos + 1][player.xpos] != WALL) {
-                if(grid[player.ypos + 1][player.xpos] == BULLETS) foundBullet("down");
+                if(grid[player.ypos + 1][player.xpos]     == BULLETS) foundBullet("down");
                 else if(grid[player.ypos + 1][player.xpos] == STEAK) foundSteak("down");
                 else if(grid[player.ypos + 1][player.xpos] == APPLE) foundApple("down");
                 else if(grid[player.ypos + 1][player.xpos] == KEY) foundKey(grid, "down");
@@ -185,7 +185,7 @@ public class ZombieEncounters {
                     else unlockDoor(grid, "down");
                 } 
 
-                else if(grid[player.ypos + 1][player.xpos] >= 30 && grid[player.ypos + 1][player.xpos] <= 40) {
+                else if(grid[player.ypos + 1][player.xpos] >= 30 && grid[player.ypos + 1][player.xpos] <= 40) { // interaction with npc
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
                             pNInteraction(npcArr[i]);
@@ -194,7 +194,7 @@ public class ZombieEncounters {
                     }
                 } 
                 
-                else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) {
+                else if(grid[player.ypos + 1][player.xpos] >= ZOMBIE) { // interaction with zombie
                     for(int i = 0; i < zombieArr.length; i++) {
                         if(zombieArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
                             zombieFightOutcome(zombieArr[i], "down");
@@ -412,8 +412,8 @@ public class ZombieEncounters {
     // Msg game over
     private void gameOverMsg() {
         System.out.println("* You have gone unconcious and feeling your flesh");
-        System.out.println(" being pulled away from you piece By piece");
-        System.out.println("Game Over");
+        System.out.println("  being pulled away from you piece By piece");
+        System.out.println("  Game Over");
     }
 
     // Msg to display options can choose from and their current health
@@ -448,7 +448,7 @@ public class ZombieEncounters {
         System.out.println("                                   ----------------------------------------- ");
         System.out.println("                                   |  Weapon        |   DMG    | Durability |");
         System.out.println("                                   ----------------------------------------- ");
-        System.out.println("                                   | 1. Gun         |  25-50  |     " + bulletCount + "       |");
+        System.out.println("                                   | 1. Gun         |  25-50  |     "  + bulletCount + "       |");
         System.out.println("                                   | 2. Rusty Knife |   7-15   |     " + knifeCount  + "       |");
         System.out.println("                                   | 3. Hands       |   0-5   | unlimited   |");
         System.out.println("                                   ----------------------------------------- ");
@@ -465,7 +465,7 @@ public class ZombieEncounters {
             System.out.println("                                       ----------------------------");
             System.out.println("                                       | ea. Apple    |     " + player.getAppleCount() + "     |");
             System.out.println("                                       | es. Steak    |     " + player.getSteakCount() + "     |");
-            System.out.println("                                       | Gun          |     " + player.getBulletCount()    + "     |");
+            System.out.println("                                       | Bullets      |     " + player.getBulletCount()    + "     |");
             System.out.println("                                       | Rusty Knife  |     " + player.getKnifeCount()      + "     |");
             System.out.println("                                       | Keys         |     " + player.getKeyCount()      + "     |");
             System.out.println("                                       ----------------------------");
@@ -473,15 +473,24 @@ public class ZombieEncounters {
             System.out.println("                                       ----------------------------");
             userInput = getString("Choose option (type exit to leave inventory): ");
             if(userInput.equals("ea")) {
-                player.eatApple();
-                if(player.getHp() > 100) player.setHp(100);    
-                System.out.println("You have eaten an apple");
-                System.out.println("Hp is healed by 5pts");
+                if(player.getAppleCount() > 0) {
+                    player.eatApple();
+                    if(player.getHp() > 100) player.setHp(100);    
+                    System.out.println("You have eaten an apple");
+                    System.out.println("Hp is healed by 5pts");
+                } else {
+                    System.out.println("You no apples to eat.");
+                }
+
             } else if(userInput.equals("es")) {
-                player.eatSteak();
-                if(player.getHp() > 100) player.setHp(100);
-                System.out.println("You have eaten a big ol steak");
-                System.out.println("Hp is healed by 20pts");
+                if(player.getSteakCount() > 0) {
+                    player.eatSteak();
+                    if(player.getHp() > 100) player.setHp(100);
+                    System.out.println("You have eaten a big ol steak");
+                    System.out.println("Hp is healed by 20pts");
+                } else {
+                    System.out.println("You have no steaks to eat.");
+                }
             }
         }
     }
@@ -533,26 +542,26 @@ public class ZombieEncounters {
     public static boolean getYorN(String msg) {
         String answer = getString(msg);
         
-        while (answer.compareToIgnoreCase("y")   != 0 
-            && answer.compareToIgnoreCase("yes") != 0 
-            && answer.compareToIgnoreCase("n")   != 0 
-            && answer.compareToIgnoreCase("no")  != 0) {
+        while (answer.compareToIgnoreCase("y")   != 0 &&
+               answer.compareToIgnoreCase("yes") != 0 &&
+               answer.compareToIgnoreCase("n")   != 0 &&
+               answer.compareToIgnoreCase("no")  != 0) {
            
            if (answer.replace(" ", "").equals("")) {
               System.err.println("Error: Missing y/n input.");
            } else {
-              if (answer.compareToIgnoreCase("y")   != 0 
-               && answer.compareToIgnoreCase("yes") != 0 
-               && answer.compareToIgnoreCase("n")   != 0 
-               && answer.compareToIgnoreCase("no")  != 0) {
+              if (answer.compareToIgnoreCase("y")   != 0 &&
+                  answer.compareToIgnoreCase("yes") != 0 &&
+                  answer.compareToIgnoreCase("n")   != 0 &&
+                  answer.compareToIgnoreCase("no")  != 0) {
                  System.err.println("Error: Unexpected input.");
               }
            }
            answer = getString(msg);
         } 
         
-        if  (answer.compareToIgnoreCase("y")   == 0  
-          || answer.compareToIgnoreCase("yes") == 0) {
+        if  (answer.compareToIgnoreCase("y")   == 0  || 
+             answer.compareToIgnoreCase("yes") == 0) {
            return true;
         } 
         else {
