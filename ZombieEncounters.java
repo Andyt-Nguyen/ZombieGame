@@ -457,7 +457,7 @@ public class ZombieEncounters {
         String userInput = "";
         while(!userInput.equals("exit")) {                              
             System.out.println("                                       ----------------------------");
-            System.out.println("                                       |        Inventory  HP:    |");
+            System.out.println("                                       |        Inventory         |");
             System.out.println("                                       ----------------------------");
             System.out.println("                                       | Item         |   Amount  |");
             System.out.println("                                       ----------------------------");
@@ -466,6 +466,8 @@ public class ZombieEncounters {
             System.out.println("                                       | Gun          |     " + player.getBulletCount()    + "     |");
             System.out.println("                                       | Rusty Knife  |     " + player.getKnifeCount()      + "     |");
             System.out.println("                                       | Keys         |     " + player.getKeyCount()      + "     |");
+            System.out.println("                                       ----------------------------");
+            System.out.println("                                               HP: " + player.getHp());
             System.out.println("                                       ----------------------------");
             userInput = getString("Choose option (type exit to leave inventory): ");
             if(userInput.equals("ea")) {
