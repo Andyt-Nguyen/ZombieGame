@@ -20,7 +20,7 @@ class ZombieGame {
        
         // NPC Array
         NPC [] npcArr = new NPC[3];
-        NPC npc1 = new NPC(30, "Geffory","You need to go eat your peas", 5, 0);
+        NPC npc1 = new NPC(30, "Geffory", 5, 0);
         // Creating Npcs
         npcArr[0] = npc1;
 

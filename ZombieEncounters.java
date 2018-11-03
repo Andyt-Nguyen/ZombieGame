@@ -262,6 +262,11 @@ public class ZombieEncounters {
     }
 
     private void pNInteraction(NPC npc) {
+        System.out.println("\n--------------------------------------------");
+        System.out.println("* " + npc.getName() + " speaking: ");
+        System.out.println("- Hello my good person my name is " + npc.getName());
+        // Looping through the npcs questions that are being asked
+        System.out.println("----------------------------------------------");
         int userAnswer = -100;        
         while(userAnswer != -1) {
             System.out.println("\n--------------------------------------------");
@@ -277,14 +282,15 @@ public class ZombieEncounters {
             while(true) {
                 userAnswer = getInteger("Choose question (type -1 to leave): ");
                 if(userAnswer < q.length + 1 && userAnswer > 0) {
-                   System.out.println("----------------------------------------------");
+                   System.out.println("\n----------------------------------------------");
                    System.out.println("*  " + npc.getName() + " speaking:");
+                   System.out.println("----------------------------------------------");
                    String answer = npc.getA()[userAnswer - 1];
                    String[] parseAnswer = answer.split("");
-                   System.out.print("*  ");
+                   System.out.print("-  ");
                    for(int i = 0; i < parseAnswer.length; i++) {
                        if(parseAnswer[i].equals(".")) {
-                           parseAnswer[i] = ".\n* ";
+                           parseAnswer[i] = ".\n- ";
                         }
                     }
                     answer = String.join("", parseAnswer);

@@ -1,6 +1,5 @@
 
 public class NPC  {
-    private String text;
     private int id;
     private int xpos;
     private int ypos;
@@ -8,10 +7,9 @@ public class NPC  {
     private String [] questions;
     private String [] answers;
 
-    public NPC(int id, String name, String text, int xpos, int ypos) {
+    public NPC(int id, String name, int xpos, int ypos) {
         this.id = id;
         this.name = name;
-        this.text = text;
         this.xpos = xpos;
         this.ypos = ypos;
     }
@@ -25,10 +23,6 @@ public class NPC  {
     }
     public int getXpos() {
         return xpos;
-    }
-
-    public String getText() {
-        return text;
     }
 
     
@@ -54,10 +48,6 @@ public class NPC  {
 
     public void setYpos(int ypos) {
         this.ypos = ypos;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public void setQAOptions(int amount) {
