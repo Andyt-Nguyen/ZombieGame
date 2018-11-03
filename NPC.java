@@ -1,9 +1,12 @@
+
 public class NPC  {
     private String text;
     private int id;
     private int xpos;
     private int ypos;
     private String name;
+    private String [] questions;
+    private String [] answers;
 
     public NPC(int id, String name, String text, int xpos, int ypos) {
         this.id = id;
@@ -28,8 +31,17 @@ public class NPC  {
         return text;
     }
 
+    
     public int getYpos() {
         return ypos;
+    }
+
+    public String[] getQ() {
+        return questions;
+    }
+
+    public String[] getA() {
+        return answers;
     }
 
     public void setId(int id) {
@@ -46,6 +58,19 @@ public class NPC  {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setQAOptions(int amount) {
+        this.questions = new String[amount];
+        this.answers = new String[amount];
+    }
+
+    public void setOptionsQ(int index, String question) {
+        this.questions[index] = question;
+    }
+
+    public void setOptionsA(int index, String answer) {
+        this.answers[index] = answer;
     }
 
 }

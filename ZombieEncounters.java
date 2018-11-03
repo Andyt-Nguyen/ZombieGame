@@ -47,9 +47,7 @@ public class ZombieEncounters {
                 else if(grid[player.ypos][player.xpos - 1] >= 30 && grid[player.ypos][player.xpos - 1] <= 40) {
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos][player.xpos - 1]) {
-                            System.out.println("\n********************************************");
-                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
-                            System.out.println("********************************************");
+                            pNInteraction(npcArr[i]);
                             break;
                         }
                     }
@@ -95,11 +93,31 @@ public class ZombieEncounters {
                 }
 
                 else if(grid[player.ypos][player.xpos + 1] >= 30 && grid[player.ypos][player.xpos + 1] <= 40) {
+                    int userAnswer = -100;
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
-                            System.out.println("\n********************************************");
-                            System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
-                            System.out.println("********************************************");
+                            while(userAnswer != -1) {
+                                System.out.println("\n********************************************");
+                                System.out.println("** " + npcArr[i].getName() + ": " + npcArr[i].getText() + " **");
+                                String[] q = npcArr[i].getQ();
+                                for(int j = 0; j < q.length; j++) {
+                                    System.out.println(j + 1 + ". " + q[j]);
+                                }
+                                System.out.println("********************************************");
+                                
+                                while(true) {
+                                    userAnswer = getInteger("Choose question (type -1 to leave): ");
+                                    if(userAnswer < q.length + 1 && userAnswer > 0) {
+                                       String answer = npcArr[i].getA()[userAnswer - 1];
+                                       System.out.println(answer);
+                                       break;
+
+                                    } else if(userAnswer == -1) break;
+                                    else {
+                                        System.out.println("Those were not one of the options. Try again.");
+                                    }
+                                }
+                            }
                             break;
                         }
                     }
@@ -268,6 +286,17 @@ public class ZombieEncounters {
         }
     }
 
+    private void pNInteraction(NPC npc) {
+        System.out.println("********************************************");
+        boolean isTalk = getYorN("Would you like to talk to this person (y/n)? ");
+        System.out.println("********************************************");
+        if(isTalk) {
+            System.out.println("\n********************************************");
+            System.out.println("** " + npc.getName() + ": " + npc.getText() + " **");
+            System.out.println("********************************************");
+        }
+    }
+
             
     // User option to fight zombie
     private int zombieFight(Zombie zombie) {
@@ -392,12 +421,12 @@ public class ZombieEncounters {
         System.out.println("");
         System.out.println("                                       ----------------------------------");
         System.out.println("                                                     Options             ");
-        System.out.println("                                        w- Move up                       ");
-        System.out.println("                                        a- Move left                     ");
-        System.out.println("                                        s- Move down                     ");
-        System.out.println("                                        d- Move right                    ");
-        System.out.println("                                        i- View inventory                ");
-        System.out.println("                                        ex- Exit                        ");
+        System.out.println("                                        w - Move up                       ");
+        System.out.println("                                        a - Move left                     ");
+        System.out.println("                                        s - Move down                     ");
+        System.out.println("                                        d - Move right                    ");
+        System.out.println("                                        i - View inventory                ");
+        System.out.println("                                        ex - Exit                        ");
         System.out.println("                                       ----------------------------------");
     }
 
@@ -486,4 +515,36 @@ public class ZombieEncounters {
         }
         return answer;            
     }
+
+
+    public static boolean getYorN(String msg) {
+        String answer = getString(msg);
+        
+        while (answer.compareToIgnoreCase("y")   != 0 
+            && answer.compareToIgnoreCase("yes") != 0 
+            && answer.compareToIgnoreCase("n")   != 0 
+            && answer.compareToIgnoreCase("no")  != 0) {
+           
+           if (answer.replace(" ", "").equals("")) {
+              System.err.println("Error: Missing y/n input.");
+           } else {
+              if (answer.compareToIgnoreCase("y")   != 0 
+               && answer.compareToIgnoreCase("yes") != 0 
+               && answer.compareToIgnoreCase("n")   != 0 
+               && answer.compareToIgnoreCase("no")  != 0) {
+                 System.err.println("Error: Unexpected input.");
+              }
+           }
+           answer = getString(msg);
+        } 
+        
+        if  (answer.compareToIgnoreCase("y")   == 0  
+          || answer.compareToIgnoreCase("yes") == 0) {
+           return true;
+        } 
+        else {
+           return false;
+        }
+     }
+     
 }

@@ -25,6 +25,17 @@ class ZombieGame {
         npcArr[0] = npc1;
 
 
+        // Set Npc Options
+        npc1.setQAOptions(3);
+        npc1.setOptionsQ(0, "What is this place?");
+        npc1.setOptionsQ(1, "Who are you?");
+        npc1.setOptionsQ(2, "Is there anything I can do to get out of here?");
+
+        npc1.setOptionsA(0, "This place has been abandon years ago. I found you and kept you safe cause there aren't many people around except a few. This may sound crazy but becareful around these parts there are some dead people walking around...");
+        npc1.setOptionsA(1, "I am sargent bitch tits and I don't really know who I am");
+        npc1.setOptionsA(2, "Yes! Actually I have a key to enter into the hospital but don't have the key to unlock the door behind me. You'll have to enter the building to search for the key. I hope you the best");
+
+
         // Zombie Array
         Zombie [] zombieArr = new Zombie[4];
         // Creating Zombies
@@ -46,6 +57,7 @@ class ZombieGame {
 
         // Set NPC Position
         map.setPos(npc1.getXpos(), npc1.getYpos(), npc1.getId());
+
 
         // Set Item Positions
         map.setPos(3, 0, BULLETS);
