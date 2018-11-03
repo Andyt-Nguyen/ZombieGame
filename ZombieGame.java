@@ -33,7 +33,7 @@ class ZombieGame {
 
         npc1.setOptionsA(0, "This place has been abandon years ago. I found you and kept you safe cause there aren't many people around except a few. This may sound crazy but becareful around these parts there are some dead people walking around");
         npc1.setOptionsA(1, "I am sargent bitch tits and I don't really know who I am");
-        npc1.setOptionsA(2, "Yes! Actually I have a key to enter into the hospital but don't have the key to unlock the door behind me. You'll have to enter the building to search for the key. I hope you the best");
+        npc1.setOptionsA(2, "Yes! Actually I have a key to enter into the hospital. It will be at the end of the hallway heading east right after the end of the door. I don't have the key to unlock the door west of me unfortunatly to get us both out. You'll have to enter the building to search for the key. I hope you the best");
 
 
         // Zombie Array
