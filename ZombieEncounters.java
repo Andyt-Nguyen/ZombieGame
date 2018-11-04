@@ -232,6 +232,7 @@ public class ZombieEncounters {
                     } else {
                         System.out.println("* Zombie made a quick swipe at you!");
                         zombie.decreaseHp(userAtk);
+                        System.out.println("* You damaged the zombie by " + userAtk + " points" );
                         System.out.println("* You suffered " + zmbAtk + " points from your hp");
                     }
                     player.decreaseHp(zmbAtk);
@@ -245,6 +246,7 @@ public class ZombieEncounters {
                     zombie.decreaseHp(userAtk);
                     player.decreaseHp(zmbAtk);
                     System.out.println("* Zombie made a quick swipe at you!");
+                    System.out.println("* You damaged the zombie by " + userAtk + " points" );
                     System.out.println("* You suffered " + zmbAtk + " points from your hp");
                     break;
                 } else System.out.println("You knife is too weak to cause any damage");
@@ -254,6 +256,7 @@ public class ZombieEncounters {
                 int userAtk = player.atkHands();
                 zombie.decreaseHp(userAtk);
                 player.decreaseHp(zmbAtk);
+                System.out.println("* You damaged the zombie by " + userAtk + " points" );
                 System.out.println("* Zombie made a quick swipe at you!");
                 System.out.println("* You suffered " + zmbAtk + " points from your hp");
                 break;
