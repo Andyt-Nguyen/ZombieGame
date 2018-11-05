@@ -11,6 +11,7 @@ public class Person {
     private int keyCount;
     public  int xpos;
     public  int ypos;
+    public int specialKey;
     private final int MIN_HAND_ATK = 0;
     private final int MAX_HAND_ATK = 7;
     private final int MIN_GUN_ATK = 25;
@@ -28,6 +29,7 @@ public class Person {
         keyCount = 0;
         xpos = 0;
         ypos = 0;
+        specialKey = 0;
     }
     
     //FileIO constructor.
@@ -95,6 +97,10 @@ public class Person {
         return keyCount;
     }
 
+    public int getSpecialKey() {
+        return specialKey;
+    }
+
     public double getHp() {
         return this.hp;
     }
@@ -125,6 +131,10 @@ public class Person {
 
     public void setAppleCount(int appleCount) {
         this.appleCount = appleCount;
+    }
+
+    public void setSpecialKey(int specialKey) {
+        this.specialKey = specialKey;
     }
 
     public void setSteakCount(int steakCount) {
@@ -183,6 +193,10 @@ public class Person {
         keyCount++;
     }
 
+    public void addSpecialKey() {
+        specialKey++;
+    }
+
     public void addSteakCount() {
         steakCount++;
     }
@@ -211,10 +225,12 @@ public class Person {
     }
 
     public int atkGun() {
+        bulletCount--;
         return IR5.getRandomNumber(MIN_GUN_ATK, MAX_GUN_ATK);
     }
 
     public int atkKnife() {
+        knifeCount--;
         return IR5.getRandomNumber(MIN_KNIFE_ATK, MAX_KNIFE_ATK);
     }
 

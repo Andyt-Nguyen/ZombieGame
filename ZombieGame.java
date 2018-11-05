@@ -9,6 +9,8 @@ class ZombieGame {
     public final static int DOOR    = 6;
     public final static int APPLE   = 20;
     public final static int STEAK   = 21;
+    public final static int SPECIAL_KEY = 25;
+    public final static int FINAL_DOOR = 26;
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) {
         
@@ -57,12 +59,16 @@ class ZombieGame {
 
         // Set NPC Position
         map.setPos(npc1.getXpos(), npc1.getYpos(), npc1.getId());
-
-
+        
         // Set Item Positions
         map.setPos(3, 0, BULLETS);
+        map.setPos(5, 5, DOOR);
+        map.setPos(7, 8, KEY);
+        map.setPos(12, 13, WALL);
+        map.setPos(10, 10, SPECIAL_KEY);
+        map.setPos(10, 13, FINAL_DOOR);
 
-        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, KEY, APPLE, STEAK, WALL, DOOR, map.getGrid(), zombieArr, npcArr, player);
+        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, SPECIAL_KEY, KEY, APPLE, STEAK, WALL, DOOR, FINAL_DOOR, map.getGrid(), zombieArr, npcArr, player);
 
         String userInput = "";
         while(player.getHp() > 0 && !userInput.equals("ex")) {

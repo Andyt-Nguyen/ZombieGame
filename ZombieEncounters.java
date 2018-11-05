@@ -10,17 +10,20 @@ public class ZombieEncounters {
     private int DOOR;
     private int STEAK;
     private int APPLE;
+    private int SPECIAL_KEY;
     private int[][] grid;
     private Zombie[] zombieArr;
     private NPC[] npcArr;
     private Person player;
+    private int FINAL_DOOR;
 
-    public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int[][] grid, Zombie[] zombieArr, NPC[] npcArr,Person player) {
+    public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int SPECIAL_KEY, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int FINAL_DOOR, int[][] grid, Zombie[] zombieArr, NPC[] npcArr,Person player) {
         this.PLAYER  = PLAYER;
         this.ZOMBIE  = ZOMBIE;
         this.BULLETS = BULLETS;
         this.STEAK   = STEAK;
         this.APPLE   = APPLE;
+        this.SPECIAL_KEY = SPECIAL_KEY;
         this.KEY     = KEY;
         this.WALL    = WALL;
         this.DOOR    = DOOR;
@@ -28,6 +31,7 @@ public class ZombieEncounters {
         this.zombieArr = zombieArr;
         this.npcArr = npcArr;
         this.player = player;
+        this.FINAL_DOOR = FINAL_DOOR;
     }
 
     // When a user encounters a zombie moving backwards        
@@ -43,6 +47,18 @@ public class ZombieEncounters {
                 else if(grid[player.ypos][player.xpos - 1] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "left");
+                }
+
+                else if(grid[player.ypos][player.xpos - 1] == SPECIAL_KEY) {
+                    System.out.println("You found the Skeleton key");
+                    player.addSpecialKey();
+                    mvmAndMsg("You found the specail key!", "left");
+                }
+
+                else if(grid[player.ypos][player.xpos -1] == FINAL_DOOR) {
+                    if(player.getSpecialKey() > 0) {
+                        mvmAndMsg("- You did it you escaped from the hospital!", "left");
+                    }
                 }
 
                 else if(grid[player.ypos][player.xpos - 1] >= 30 && grid[player.ypos][player.xpos - 1] <= 40) {
@@ -93,6 +109,12 @@ public class ZombieEncounters {
                     else unlockDoor(grid, "right");
                 }
 
+                else if(grid[player.ypos][player.xpos + 1] == SPECIAL_KEY) {
+                    System.out.println("You found the Skeleton key");
+                    player.addSpecialKey();
+                    mvmAndMsg("You found the specail key!", "left");
+                }
+
                 else if(grid[player.ypos][player.xpos + 1] >= 30 && grid[player.ypos][player.xpos + 1] <= 40) { // interaction with npc
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos][player.xpos + 1]) {
@@ -137,6 +159,12 @@ public class ZombieEncounters {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "up");   
                 } 
+
+                else if(grid[player.ypos - 1][player.xpos] == SPECIAL_KEY) {
+                    System.out.println("You found the Skeleton key");
+                    player.addSpecialKey();
+                    mvmAndMsg("You found the specail key!", "left");
+                }
 
                 else if(grid[player.ypos - 1][player.xpos] >= 30 && grid[player.ypos - 1][player.xpos] <= 40) { //interaction with npc
                     for(int i = 0; i < npcArr.length; i++) {
@@ -185,6 +213,12 @@ public class ZombieEncounters {
                     else unlockDoor(grid, "down");
                 } 
 
+                else if(grid[player.ypos - 1][player.xpos] == SPECIAL_KEY) {
+                    System.out.println("You found the Skeleton key");
+                    player.addSpecialKey();
+                    mvmAndMsg("You found the specail key!", "left");
+                }
+
                 else if(grid[player.ypos + 1][player.xpos] >= 30 && grid[player.ypos + 1][player.xpos] <= 40) { // interaction with npc
                     for(int i = 0; i < npcArr.length; i++) {
                         if(npcArr[i].getId() == grid[player.ypos + 1][player.xpos]) {
@@ -224,7 +258,7 @@ public class ZombieEncounters {
             int weaponChoice = getInteger("* Select weapon of choice: ");
             if(weaponChoice == 1) {
                 if(player.getBulletCount() > 0) {
-                    System.out.println("* You swiftly pull out your gun and shoot in the dead of night!");
+                    System.out.println("\n* You swiftly pull out your gun and shoot in the dead of night!");
                     int zmbAtk = zombie.atk();
                     int userAtk = player.atkGun();
                     if(zmbAtk == 0) {
@@ -237,10 +271,10 @@ public class ZombieEncounters {
                     }
                     player.decreaseHp(zmbAtk);
                     break;
-                } else System.out.println("You have no bullets");
+                } else System.out.println("- You have no bullets");
             } else if(weaponChoice == 2) {
                 if(player.getKnifeCount() > 0) {
-                    System.out.println("* You stabbed the zombie");
+                    System.out.println("\n* You stabbed the zombie");
                     int zmbAtk = zombie.atk();
                     int userAtk = player.atkKnife();
                     zombie.decreaseHp(userAtk);
@@ -249,9 +283,9 @@ public class ZombieEncounters {
                     System.out.println("* You damaged the zombie by " + userAtk + " points" );
                     System.out.println("* You suffered " + zmbAtk + " points from your hp");
                     break;
-                } else System.out.println("You knife is too weak to cause any damage");
+                } else System.out.println("- You knife is too weak to cause any damage");
             } else if(weaponChoice == 3) {
-                System.out.println("* You attacked with your bare bloody hands");
+                System.out.println("\n* You attacked with your bare bloody hands");
                 int zmbAtk = zombie.atk();
                 int userAtk = player.atkHands();
                 zombie.decreaseHp(userAtk);
@@ -265,50 +299,61 @@ public class ZombieEncounters {
     }
 
     private void pNInteraction(NPC npc) {
-        System.out.println("\n--------------------------------------------");
-        System.out.println("* " + npc.getName() + " speaking: ");
-        System.out.println("- Hello my good person my name is " + npc.getName());
-        System.out.println("----------------------------------------------");
-
-        // Looping through the npcs questions that are being asked
-        int userAnswer = -100;        
-        while(userAnswer != -1) {
+        if(player.getSpecialKey() > 0) {
             System.out.println("\n--------------------------------------------");
-            System.out.println("*  Question " + npc.getName());
-            String[] q = npc.getQ();
-
-            // Looping through the npcs questions that are being asked
+            System.out.println("* " + npc.getName() + " speaking: ");
+            System.out.println("- " + npc.getName());
+            System.out.println("- You found the special key! Let's get the heck out of here!");
             System.out.println("----------------------------------------------");
-            for(int j = 0; j < q.length; j++) {
-                System.out.println("* " + (j + 1) + ". " + q[j]);
-            }
-            
-            // Finds what the user typed to find the given answer
-            while(true) {
-                userAnswer = getInteger("Choose question (type -1 to leave): ");
-                if(userAnswer < q.length + 1 && userAnswer > 0) {
-                   System.out.println("\n----------------------------------------------");
-                   System.out.println("*  " + npc.getName() + " speaking:");
-                   System.out.println("----------------------------------------------");
-                   String answer = npc.getA()[userAnswer - 1];
-                   String[] parseAnswer = answer.split("");
-                   System.out.print("-  ");
-                   for(int i = 0; i < parseAnswer.length; i++) {
-                       if(parseAnswer[i].equals(".")) {
-                           parseAnswer[i] = ".\n- ";
-                        }
-                    }
-                    answer = String.join("", parseAnswer);
-                    System.out.println(answer);
-                    System.out.println("----------------------------------------------");
-                   break;
+        }
 
-                } else if(userAnswer == -1) break;
-                else {
-                    System.out.println("Those were not one of the options. Try again.");
+        else {
+            System.out.println("\n--------------------------------------------");
+            System.out.println("* " + npc.getName() + " speaking: ");
+            System.out.println("- Hello my good person my name is " + npc.getName());
+            System.out.println("----------------------------------------------");
+    
+            // Looping through the npcs questions that are being asked
+            int userAnswer = -100;
+            while(userAnswer != -1) {
+                System.out.println("\n--------------------------------------------");
+                System.out.println("*  Question " + npc.getName());
+                String[] q = npc.getQ();
+
+                // Looping through the npcs questions that are being asked
+                System.out.println("----------------------------------------------");
+                for(int j = 0; j < q.length; j++) {
+                    System.out.println("* " + (j + 1) + ". " + q[j]);
+                }
+                
+                // Finds what the user typed to find the given answer
+                while(true) {
+                    userAnswer = getInteger("Choose question (type -1 to leave): ");
+                    if(userAnswer < q.length + 1 && userAnswer > 0) {
+                    System.out.println("\n----------------------------------------------");
+                    System.out.println("*  " + npc.getName() + " speaking:");
+                    System.out.println("----------------------------------------------");
+                    String answer = npc.getA()[userAnswer - 1];
+                    String[] parseAnswer = answer.split("");
+                    System.out.print("-  ");
+                    for(int i = 0; i < parseAnswer.length; i++) {
+                        if(parseAnswer[i].equals(".")) {
+                            parseAnswer[i] = ".\n- ";
+                            }
+                        }
+                        answer = String.join("", parseAnswer);
+                        System.out.println(answer);
+                        System.out.println("----------------------------------------------");
+                    break;
+
+                    } else if(userAnswer == -1) break;
+                    else {
+                        System.out.println("Those were not one of the options. Try again.");
+                    }
                 }
             }
         }
+        
     }
 
             
@@ -452,7 +497,7 @@ public class ZombieEncounters {
         System.out.println("                                   |  Weapon        |   DMG    | Durability |");
         System.out.println("                                   ----------------------------------------- ");
         System.out.println("                                   | 1. Gun         |  25-50  |     "  + bulletCount + "       |");
-        System.out.println("                                   | 2. Rusty Knife |   7-15   |     " + knifeCount  + "       |");
+        System.out.println("                                   | 2. Rusty Knife |   7-15  |     " + knifeCount  + "       |");
         System.out.println("                                   | 3. Hands       |   0-5   | unlimited   |");
         System.out.println("                                   ----------------------------------------- ");
     }
