@@ -44,21 +44,15 @@ public class ZombieEncounters {
                 else if(grid[player.ypos][player.xpos - 1] == KEY) foundKey(grid, "left");
                 else if(grid[player.ypos][player.xpos - 1] == STEAK) foundSteak("left");
                 else if(grid[player.ypos][player.xpos - 1] == APPLE)  foundApple("left");
+                else if(grid[player.ypos][player.xpos - 1] == SPECIAL_KEY) foundSpecialKey("left");
                 else if(grid[player.ypos][player.xpos - 1] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "left");
                 }
 
-                else if(grid[player.ypos][player.xpos - 1] == SPECIAL_KEY) {
-                    System.out.println("You found the Skeleton key");
-                    player.addSpecialKey();
-                    mvmAndMsg("You found the specail key!", "left");
-                }
 
                 else if(grid[player.ypos][player.xpos -1] == FINAL_DOOR) {
-                    if(player.getSpecialKey() > 0) {
-                        mvmAndMsg("- You did it you escaped from the hospital!", "left");
-                    }
+                    unlockFinalDoor();
                 }
 
                 else if(grid[player.ypos][player.xpos - 1] >= 30 && grid[player.ypos][player.xpos - 1] <= 40) {
@@ -104,15 +98,14 @@ public class ZombieEncounters {
                 else if(grid[player.ypos][player.xpos + 1] == KEY) foundKey(grid, "right");
                 else if(grid[player.ypos][player.xpos + 1] == STEAK) foundSteak("right");
                 else if(grid[player.ypos][player.xpos + 1] == APPLE) foundApple("right");
+                else if(grid[player.ypos][player.xpos + 1] == SPECIAL_KEY) foundSpecialKey("right");
                 else if(grid[player.ypos][player.xpos + 1] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "right");
                 }
 
-                else if(grid[player.ypos][player.xpos + 1] == SPECIAL_KEY) {
-                    System.out.println("You found the Skeleton key");
-                    player.addSpecialKey();
-                    mvmAndMsg("You found the specail key!", "left");
+                else if(grid[player.ypos][player.xpos + 1] == FINAL_DOOR) {
+                    unlockFinalDoor();
                 }
 
                 else if(grid[player.ypos][player.xpos + 1] >= 30 && grid[player.ypos][player.xpos + 1] <= 40) { // interaction with npc
@@ -155,10 +148,15 @@ public class ZombieEncounters {
                 else if(grid[player.ypos - 1][player.xpos] == KEY) foundKey(grid, "up");
                 else if(grid[player.ypos - 1][player.xpos] == STEAK) foundSteak("up");
                 else if(grid[player.ypos - 1][player.xpos] == APPLE) foundApple("up");
+                else if(grid[player.ypos - 1][player.xpos] == SPECIAL_KEY) foundSpecialKey("up");
                 else if(grid[player.ypos - 1][player.xpos] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "up");   
                 } 
+
+                else if(grid[player.ypos - 1][player.xpos] == FINAL_DOOR) {
+                    unlockFinalDoor();
+                }
 
                 else if(grid[player.ypos - 1][player.xpos] == SPECIAL_KEY) {
                     System.out.println("You found the Skeleton key");
@@ -208,12 +206,17 @@ public class ZombieEncounters {
                 else if(grid[player.ypos + 1][player.xpos] == STEAK) foundSteak("down");
                 else if(grid[player.ypos + 1][player.xpos] == APPLE) foundApple("down");
                 else if(grid[player.ypos + 1][player.xpos] == KEY) foundKey(grid, "down");
+                else if(grid[player.ypos + 1][player.xpos] == SPECIAL_KEY) foundSpecialKey("down");
                 else if(grid[player.ypos + 1][player.xpos] == DOOR) {
                     if(player.getKeyCount() < 1) System.out.println("* Door is locked");
                     else unlockDoor(grid, "down");
                 } 
 
-                else if(grid[player.ypos - 1][player.xpos] == SPECIAL_KEY) {
+                else if(grid[player.ypos + 1][player.xpos] == FINAL_DOOR) {
+                    unlockFinalDoor();
+                }
+
+                else if(grid[player.ypos + 1][player.xpos] == SPECIAL_KEY) {
                     System.out.println("You found the Skeleton key");
                     player.addSpecialKey();
                     mvmAndMsg("You found the specail key!", "left");
@@ -261,38 +264,33 @@ public class ZombieEncounters {
                     System.out.println("\n* You swiftly pull out your gun and shoot in the dead of night!");
                     int zmbAtk = zombie.atk();
                     int userAtk = player.atkGun();
-                    if(zmbAtk == 0) {
-                        System.out.println("The zombie missed you");
-                    } else {
-                        System.out.println("* Zombie made a quick swipe at you!");
-                        zombie.decreaseHp(userAtk);
-                        System.out.println("* You damaged the zombie by " + userAtk + " points" );
-                        System.out.println("* You suffered " + zmbAtk + " points from your hp");
-                    }
+                    if(zmbAtk == 0) System.out.println("The zombie missed you");
+                    displayHitMsg(userAtk, zmbAtk);
+                    zombie.decreaseHp(userAtk);
                     player.decreaseHp(zmbAtk);
                     break;
                 } else System.out.println("- You have no bullets");
+
             } else if(weaponChoice == 2) {
                 if(player.getKnifeCount() > 0) {
                     System.out.println("\n* You stabbed the zombie");
                     int zmbAtk = zombie.atk();
                     int userAtk = player.atkKnife();
+                    if(zmbAtk == 0) System.out.println("The zombie missed!");
                     zombie.decreaseHp(userAtk);
                     player.decreaseHp(zmbAtk);
-                    System.out.println("* Zombie made a quick swipe at you!");
-                    System.out.println("* You damaged the zombie by " + userAtk + " points" );
-                    System.out.println("* You suffered " + zmbAtk + " points from your hp");
+                    displayHitMsg(userAtk, zmbAtk);
                     break;
                 } else System.out.println("- You knife is too weak to cause any damage");
+                
             } else if(weaponChoice == 3) {
                 System.out.println("\n* You attacked with your bare bloody hands");
                 int zmbAtk = zombie.atk();
                 int userAtk = player.atkHands();
+                if(zmbAtk == 0) System.out.println("The zombie missed!");
                 zombie.decreaseHp(userAtk);
                 player.decreaseHp(zmbAtk);
-                System.out.println("* You damaged the zombie by " + userAtk + " points" );
-                System.out.println("* Zombie made a quick swipe at you!");
-                System.out.println("* You suffered " + zmbAtk + " points from your hp");
+                displayHitMsg(userAtk, zmbAtk);
                 break;
             } 
         }
@@ -425,10 +423,11 @@ public class ZombieEncounters {
         player.addToKey();
         playerMovements(mvm);
     }
-
-    private void unlockDoor(int[][] grid, String mvm) {
-        System.out.println("* You have unlocked the door");
-        player.removeKey();
+    
+    private void foundSteak(String mvm) {
+        player.addSteakCount();
+        System.out.println("* You found a piece of steak!");
+        System.out.println("* Steak added to inventory");
         playerMovements(mvm);
     }
 
@@ -438,13 +437,28 @@ public class ZombieEncounters {
         System.out.println("* Apple added to inventory");
         playerMovements(mvm);
     }
-    
-    private void foundSteak(String mvm) {
-        player.addSteakCount();
-        System.out.println("* You found a piece of steak!");
-        System.out.println("* Steak added to inventory");
+
+    private void foundSpecialKey(String mvm) {
+        player.addSpecialKey();
+        System.out.println("* You found the specail key!");
         playerMovements(mvm);
     }
+
+    private void unlockDoor(int[][] grid, String mvm) {
+        System.out.println("* You have unlocked the door");
+        player.removeKey();
+        playerMovements(mvm);
+    }
+
+    private void unlockFinalDoor() {
+        if(player.getSpecialKey() > 0) {
+            mvmAndMsg("- You did it you escaped from the hospital!", "left");
+        } else {
+            System.out.println("You dont have the right key to unlock this door");
+        }
+    }
+
+    
 
     
 
@@ -541,6 +555,12 @@ public class ZombieEncounters {
                 }
             }
         }
+    }
+
+    public void displayHitMsg(int userAtk, int zmbAtk) {
+        System.out.println("* Zombie made a quick swipe at you!");
+        System.out.println("* You damaged the zombie by " + userAtk + " points" );
+        System.out.println("* You suffered " + zmbAtk + " points from your hp");
     }
 
 
