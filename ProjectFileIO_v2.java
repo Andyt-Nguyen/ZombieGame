@@ -23,9 +23,7 @@ public class ProjectFileIO_v2 {
     private static PrintWriter pw;
     
     //Data related to the Player objects
-    private static ArrayList<Person> playerArrayList = new ArrayList<Person>();
-    //Data related to the Map Objects
-    private static ArrayList<Map> mapArrayList = new ArrayList<Map>();
+    private static ArrayList<Player> playerArrayList = new ArrayList<Player>();
 
     //================================================================================================================
 
@@ -86,7 +84,7 @@ public class ProjectFileIO_v2 {
         }
         catch (FileNotFoundException e) {
             System.out.println(FILE_NAME + " not found. Creating new file with sample player data.");
-            writeNewPlayer("Test", "pw123", 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            writeNewPlayer("Test", "pw123", 0, 0);
                 
             writeFile();
             //readFile();
@@ -109,40 +107,24 @@ public class ProjectFileIO_v2 {
     //ADJUST AS NECESSARY!
     //In this example, the player has 3 pieces of data. You will change this to suite your game. 
     private static void readPlayerData(String entireLine){
-
         //Get 1st line. 
         String name = getLine();
+        
         //Get 2nd line. 
         String password = getLine();
-        //Get 3rd line.
-        String hp = getLine();
-        //Get 4th line.
-        String endurance = getLine();
-        //Get 5th line.
-        String bulletCount = getLine();
-        //Get 6th line.
-        String knifeCount = getLine();
-        //Get 7th line.
-        String appleCount = getLine();
-        //Get 8th line.
-        String steakCount = getLine();
-        //Get 9th line.
-        String keyCount = getLine();
-        //Get 10th line.
-        String xpos = getLine();
-        //Get 11th line.
-        String ypos = getLine();
         
-        writeNewPlayer(name, password, Integer.parseInt(hp), Integer.parseInt(endurance),  Integer.parseInt(bulletCount)
-                      ,  Integer.parseInt(knifeCount),  Integer.parseInt(appleCount),  Integer.parseInt(steakCount)
-                      ,  Integer.parseInt(keyCount), Integer.parseInt(xpos), Integer.parseInt(ypos));
+        //Get 3rd line
+        String highScoreString = getLine();
+        
+        //Get 4th line
+        String numberOfTimesPlayedString = getLine();
+        
+        writeNewPlayer(name, password, Integer.parseInt(highScoreString), Integer.parseInt(numberOfTimesPlayedString));
     }
     
     //ADJUST AS NECESSARY!
-    private static void writeNewPlayer(String name, String password, int hp, int endurance, int bulletCount 
-                                      , int knifeCount, int appleCount, int steakCount, int keyCount, int xpos, int ypos){
-        Person playerNew = new Person(name, password, hp, endurance, bulletCount, knifeCount, appleCount, steakCount
-                                     , keyCount, xpos, ypos);
+    private static void writeNewPlayer(String name, String password, int highScore, int numberOfTimesPlayed){
+        Player playerNew = new Player(name, password, highScore, numberOfTimesPlayed);
         playerArrayList.add(playerNew);
     }
     
@@ -187,8 +169,8 @@ public class ProjectFileIO_v2 {
     private static void writeHeaderLines(){
         pw.println("***********************************");
         pw.println("* My Game " + getVersionNumber());
-        pw.println("* Authors: Sean and Andrew");
-        pw.println("* Enjoy!...");
+        pw.println("* Authors: ...");
+        pw.println("* Add as many lines of comments as you want...");
         pw.println("***********************************");
         pw.flush();
     }
@@ -213,16 +195,10 @@ public class ProjectFileIO_v2 {
         for (int i = 0; i < playerArrayList.size(); i++){
             String playerMarker = PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER;
             pw.println(playerMarker + " Player#" + i + " " + playerMarker);
-            pw.println(playerArrayList.get(i).getUsername());
+            pw.println(playerArrayList.get(i).getName());
             pw.println(playerArrayList.get(i).getPassword());
-            pw.println(playerArrayList.get(i).getHp());
-            pw.println(playerArrayList.get(i).getEndurance());
-            pw.println(playerArrayList.get(i).getBulletCount());
-            pw.println(playerArrayList.get(i).getKnifeCount());
-            pw.println(playerArrayList.get(i).getAppleCount());
-            pw.println(playerArrayList.get(i).getSteakCount());
-            pw.println(playerArrayList.get(i).getXpos());
-            pw.println(playerArrayList.get(i).getYpos());
+            pw.println(playerArrayList.get(i).getHighScore());
+            pw.println(playerArrayList.get(i).getNumberOfTimesPlayed());
             pw.flush();
         }
     }    
@@ -241,14 +217,14 @@ public class ProjectFileIO_v2 {
         return playerArrayList;
     }
     
-    public static void setPlayerArrayList(ArrayList<Person> newPlayerArrayList){
+    public static void setPlayerArrayList(ArrayList<Player> newPlayerArrayList){
         playerArrayList = newPlayerArrayList;
     }
     
     //Returns a Player object
-    public static Person getPlayer(String name, String password){
+    public static Player getPlayer(String name, String password){
        for (int i = 0; i < playerArrayList.size(); i++){
-           if (playerArrayList.get(i).getUsername().equals(name)
+           if (playerArrayList.get(i).getName().equals(name)
             && playerArrayList.get(i).getPassword().equals(password))
            {
                return playerArrayList.get(i);
@@ -258,9 +234,9 @@ public class ProjectFileIO_v2 {
     }
     
     //Finds the specific Player object, deletes it, and adds the new Player object
-    public static void updatePlayer(Person newPlayer){
+    public static void updatePlayer(Player newPlayer){
         for (int i = 0; i < playerArrayList.size(); i++){
-           if (playerArrayList.get(i).getUsername().equals(newPlayer.getUsername())
+           if (playerArrayList.get(i).getName().equals(newPlayer.getName())
             && playerArrayList.get(i).getPassword().equals(newPlayer.getPassword()))
            {
                playerArrayList.remove(i);
@@ -273,9 +249,9 @@ public class ProjectFileIO_v2 {
     }    
     
     //Adds the new Player object if there is no duplicate name and password 
-    public static boolean addNewPlayer(Person newPlayer){
+    public static boolean addNewPlayer(Player newPlayer){
         for (int i = 0; i < playerArrayList.size(); i++){
-           if (playerArrayList.get(i).getUsername().equals(newPlayer.getUsername())
+           if (playerArrayList.get(i).getName().equals(newPlayer.getName())
             && playerArrayList.get(i).getPassword().equals(newPlayer.getPassword()))
            {
                return false;  //indicates the player could not be added due to a duplcate player name and password. 
