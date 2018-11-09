@@ -14,27 +14,27 @@ public class Map {
             System.out.print("                              ");
             for(int j = 0; j < this.grid[i].length; j++) {
                 if(grid[i][j] > 50) { // anything greater than 50 is the enemy
-                    System.out.print("Z ");
+                    System.out.print("Z  ");
                 } else if(grid[i][j] == 5) {
-                    System.out.print("W ");
+                    System.out.print("W  ");
                 } else if(grid[i][j] == 6) {
-                    System.out.print("D ");
+                    System.out.print("D  ");
                 } else if(grid[i][j] == 4) {
-                    System.out.print("K ");
+                    System.out.print("K  ");
                 } else if(grid[i][j] >= 30 && grid[i][j] <= 40) {
-                    System.out.print("N ");
+                    System.out.print("N  ");
                 } else if(grid[i][j] == 1) {
-                    System.out.print("P ");
+                    System.out.print("P  ");
                 } else if(grid[i][j] == 20) {
-                    System.out.print("A ");
+                    System.out.print("A  ");
                 } else if(grid[i][j] == 21) {
-                    System.out.print("S ");
+                    System.out.print("S  ");
                 } else if(grid[i][j] == 25) {
                     System.out.print("SK ");
                 } else if(grid[i][j] == 26) {
                     System.out.print("FD ");
                 } else {
-                    System.out.print(". ");
+                    System.out.print(".  ");
                 }
             }
             System.out.println("");

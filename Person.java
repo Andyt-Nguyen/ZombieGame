@@ -101,7 +101,7 @@ public class Person {
         return specialKey;
     }
 
-    public double getHp() {
+    public int getHp() {
         return this.hp;
     }
     

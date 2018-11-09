@@ -23,7 +23,7 @@ public class ProjectFileIO_v2 {
     private static PrintWriter pw;
     
     //Data related to the Player objects
-    private static ArrayList<Player> playerArrayList = new ArrayList<Player>();
+    private static ArrayList<Person> playerArrayList = new ArrayList<Person>();
 
     //================================================================================================================
 
@@ -84,7 +84,7 @@ public class ProjectFileIO_v2 {
         }
         catch (FileNotFoundException e) {
             System.out.println(FILE_NAME + " not found. Creating new file with sample player data.");
-            writeNewPlayer("Test", "pw123", 0, 0);
+            writeNewPlayer("Test", "pw123", 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 
             writeFile();
             //readFile();
@@ -114,17 +114,43 @@ public class ProjectFileIO_v2 {
         String password = getLine();
         
         //Get 3rd line
-        String highScoreString = getLine();
+        String hpString = getLine();
         
         //Get 4th line
-        String numberOfTimesPlayedString = getLine();
+        String bulletCountString = getLine();
+
+        //Get 5th line
+        String knifeCountString = getLine();
+
+        //Get 6th line
+        String appleCountString = getLine();
+
+        //Get 7th line
+        String steakCountString = getLine();
+
+        //Get 8th line
+        String keyCountString = getLine();
+
+        //Get 9th line
+        String xposString = getLine();
+
+        //Get 10th line
+        String yposString = getLine();
+
+        //Get 11th line
+        String specialKeyString = getLine();
         
-        writeNewPlayer(name, password, Integer.parseInt(highScoreString), Integer.parseInt(numberOfTimesPlayedString));
+        writeNewPlayer(name, password, Integer.parseInt(hpString), Integer.parseInt(bulletCountString),
+        Integer.parseInt(knifeCountString), Integer.parseInt(appleCountString), Integer.parseInt(steakCountString),
+        Integer.parseInt(keyCountString), Integer.parseInt(xposString), Integer.parseInt(yposString),
+        Integer.parseInt(specialKeyString));
     }
     
     //ADJUST AS NECESSARY!
-    private static void writeNewPlayer(String name, String password, int highScore, int numberOfTimesPlayed){
-        Player playerNew = new Player(name, password, highScore, numberOfTimesPlayed);
+    private static void writeNewPlayer(String name, String password, int hp, int bulletCount, int knifeCount, int appleCount,
+    int steakCount, int keyCount, int xpos, int ypos, int specialKey){
+        Player playerNew = new Player(name, password, hp, bulletCount, knifeCount, appleCount, steakCount,
+        keyCount, xpos, ypos, specialKey);
         playerArrayList.add(playerNew);
     }
     
@@ -169,8 +195,8 @@ public class ProjectFileIO_v2 {
     private static void writeHeaderLines(){
         pw.println("***********************************");
         pw.println("* My Game " + getVersionNumber());
-        pw.println("* Authors: ...");
-        pw.println("* Add as many lines of comments as you want...");
+        pw.println("* Authors: Sean & Andrew");
+        pw.println("* Welcome to our game, enjoy...");
         pw.println("***********************************");
         pw.flush();
     }
@@ -197,8 +223,14 @@ public class ProjectFileIO_v2 {
             pw.println(playerMarker + " Player#" + i + " " + playerMarker);
             pw.println(playerArrayList.get(i).getName());
             pw.println(playerArrayList.get(i).getPassword());
-            pw.println(playerArrayList.get(i).getHighScore());
-            pw.println(playerArrayList.get(i).getNumberOfTimesPlayed());
+            pw.println(playerArrayList.get(i).getHp());
+            pw.println(playerArrayList.get(i).getBulletCount());
+            pw.println(playerArrayList.get(i).getKnifeCount());
+            pw.println(playerArrayList.get(i).getAppleCount());
+            pw.println(playerArrayList.get(i).getSteakCount());
+            pw.println(playerArrayList.get(i).getXpos());
+            pw.println(playerArrayList.get(i).getYpos());
+            pw.println(playerArrayList.get(i).getSpecialKey());
             pw.flush();
         }
     }    

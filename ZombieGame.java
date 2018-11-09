@@ -16,7 +16,7 @@ class ZombieGame {
         
         // Set Grid
         Map map = new Map();
-        map.setGrid(15,30);
+        map.setGrid(20,30);
         // Player
         Person player = new Person("Sacmctap", 0, 0);
        
@@ -48,6 +48,70 @@ class ZombieGame {
         zombieArr[0] = zombie;
         zombieArr[1] = zombie2;
 
+        //Set Wall Position
+        map.setPos(1, 5, WALL);
+        map.setPos(2, 5, WALL);
+        map.setPos(3, 5, WALL);
+        map.setPos(4, 5, WALL);
+        map.setPos(5, 5, WALL);
+        map.setPos(6, 5, WALL);
+        map.setPos(6, 0, WALL);
+        map.setPos(6, 1, WALL);
+        map.setPos(6, 3, WALL);
+        map.setPos(6, 4, WALL);
+        map.setPos(2, 6, WALL);
+        map.setPos(2, 7, WALL);
+        map.setPos(2, 8, WALL);
+        map.setPos(2, 9, WALL);
+        map.setPos(2, 10, WALL);
+        map.setPos(2, 11, WALL);
+        map.setPos(2, 12, WALL);
+        map.setPos(2, 13, WALL);
+        map.setPos(2, 14, WALL);
+        map.setPos(2, 15, WALL);
+        map.setPos(2, 16, WALL);
+        map.setPos(2, 17, WALL);
+        map.setPos(2, 19, WALL);
+        map.setPos(7, 5, WALL);
+        map.setPos(8, 5, WALL);
+        map.setPos(9, 5, WALL);
+        map.setPos(10, 5, WALL);
+        map.setPos(11, 5, WALL);
+        map.setPos(12, 5, WALL);
+        map.setPos(13, 5, WALL);
+        map.setPos(14, 5, WALL);
+        map.setPos(15, 5, WALL);
+        map.setPos(16, 5, WALL);
+        map.setPos(17, 5, WALL);
+        map.setPos(18, 5, WALL);
+        map.setPos(19, 5, WALL);
+        map.setPos(20, 5, WALL);
+        map.setPos(21, 5, WALL);
+        map.setPos(22, 5, WALL);
+        map.setPos(23, 5, WALL);
+        map.setPos(24, 5, WALL);
+        map.setPos(25, 5, WALL);
+        map.setPos(26, 5, WALL);
+        map.setPos(27, 5, WALL);
+        map.setPos(13, 0, WALL);
+        map.setPos(13, 1, WALL);
+        map.setPos(13, 3, WALL);
+        map.setPos(13, 4, WALL);
+        map.setPos(13, 5, WALL);
+        map.setPos(21, 0, WALL);
+        map.setPos(21, 1, WALL);
+        map.setPos(21, 3, WALL);
+        map.setPos(21, 4, WALL);
+        map.setPos(21, 5, WALL);
+        map.setPos(29, 5, WALL);
+//Set Door Position
+        map.setPos(0, 5, DOOR);
+        map.setPos(6, 2, DOOR);
+        map.setPos(2, 18, DOOR);
+        map.setPos(28, 5, DOOR);
+        map.setPos(13, 2, DOOR);
+        map.setPos(21, 2, DOOR);
+        map.setPos(0,3, FINAL_DOOR);
 
         // Set Player Position
         map.setPos(player.xpos,  player.ypos,  PLAYER);
