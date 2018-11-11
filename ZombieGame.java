@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 class ZombieGame {
     public final static  int PLAYER = 1;
@@ -11,9 +12,16 @@ class ZombieGame {
     public final static int STEAK   = 21;
     public final static int SPECIAL_KEY = 25;
     public final static int FINAL_DOOR = 26;
+    public final static String FILE_NAME = "ZombieGameSave.txt";
     public static Scanner scanner = new Scanner(System.in);
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         
+        File file = new File(FILE_NAME);
+        
+        if(FILE_NAME == ""){
+            System.out.println("No saved file. Creating new Game..");
+            ProjectFileIO_v2.writeFile();
+        }
         // Set Grid
         Map map = new Map();
         map.setGrid(20,30);

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ProjectFileIO_v2 {
     //Global Constants
-    private static String FILE_NAME = "FileTest-1.txt";
+    private static String FILE_NAME = "ZombieGameSave.txt";
     
     private static String EOF_MARKER             = "-";
     private static String PLAYER_MARKER          = "=";
@@ -149,7 +149,7 @@ public class ProjectFileIO_v2 {
     //ADJUST AS NECESSARY!
     private static void writeNewPlayer(String name, String password, int hp, int bulletCount, int knifeCount, int appleCount,
     int steakCount, int keyCount, int xpos, int ypos, int specialKey){
-        Player playerNew = new Player(name, password, hp, bulletCount, knifeCount, appleCount, steakCount,
+        Person playerNew = new Person(name, password, hp, bulletCount, knifeCount, appleCount, steakCount,
         keyCount, xpos, ypos, specialKey);
         playerArrayList.add(playerNew);
     }
@@ -221,7 +221,7 @@ public class ProjectFileIO_v2 {
         for (int i = 0; i < playerArrayList.size(); i++){
             String playerMarker = PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER;
             pw.println(playerMarker + " Player#" + i + " " + playerMarker);
-            pw.println(playerArrayList.get(i).getName());
+            pw.println(playerArrayList.get(i).getUsername());
             pw.println(playerArrayList.get(i).getPassword());
             pw.println(playerArrayList.get(i).getHp());
             pw.println(playerArrayList.get(i).getBulletCount());
@@ -249,14 +249,14 @@ public class ProjectFileIO_v2 {
         return playerArrayList;
     }
     
-    public static void setPlayerArrayList(ArrayList<Player> newPlayerArrayList){
+    public static void setPlayerArrayList(ArrayList<Person> newPlayerArrayList){
         playerArrayList = newPlayerArrayList;
     }
     
     //Returns a Player object
-    public static Player getPlayer(String name, String password){
+    public static Person getPlayer(String name, String password){
        for (int i = 0; i < playerArrayList.size(); i++){
-           if (playerArrayList.get(i).getName().equals(name)
+           if (playerArrayList.get(i).getUsername().equals(name)
             && playerArrayList.get(i).getPassword().equals(password))
            {
                return playerArrayList.get(i);
@@ -266,9 +266,9 @@ public class ProjectFileIO_v2 {
     }
     
     //Finds the specific Player object, deletes it, and adds the new Player object
-    public static void updatePlayer(Player newPlayer){
+    public static void updatePlayer(Person newPlayer){
         for (int i = 0; i < playerArrayList.size(); i++){
-           if (playerArrayList.get(i).getName().equals(newPlayer.getName())
+           if (playerArrayList.get(i).getUsername().equals(newPlayer.getUsername())
             && playerArrayList.get(i).getPassword().equals(newPlayer.getPassword()))
            {
                playerArrayList.remove(i);
@@ -281,9 +281,9 @@ public class ProjectFileIO_v2 {
     }    
     
     //Adds the new Player object if there is no duplicate name and password 
-    public static boolean addNewPlayer(Player newPlayer){
+    public static boolean addNewPlayer(Person newPlayer){
         for (int i = 0; i < playerArrayList.size(); i++){
-           if (playerArrayList.get(i).getName().equals(newPlayer.getName())
+           if (playerArrayList.get(i).getUsername().equals(newPlayer.getUsername())
             && playerArrayList.get(i).getPassword().equals(newPlayer.getPassword()))
            {
                return false;  //indicates the player could not be added due to a duplcate player name and password. 
