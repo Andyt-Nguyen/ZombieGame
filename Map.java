@@ -11,7 +11,7 @@ public class Map {
         System.out.println("                                                        Map");
         System.out.println("                                       ---------------------------------------");
         for(int i = 0; i < this.grid.length; i++) {
-            System.out.print("                              ");
+            System.out.print("                  ");
             for(int j = 0; j < this.grid[i].length; j++) {
                 if(grid[i][j] > 50) { // anything greater than 50 is the enemy
                     System.out.print("Z  ");

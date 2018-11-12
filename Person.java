@@ -20,7 +20,8 @@ public class Person {
     private final int MAX_KNIFE_ATK = 15;
 
     public Person() {
-        this.username = "Unknown";
+        this.username = "";
+        this.password = "";
         hp = 100;
         bulletCount = 0;
         knifeCount = 0;
@@ -48,8 +49,9 @@ public class Person {
       this.ypos = ypos;
     }
     
-    public Person(String username, int xpos, int ypos) {
+    public Person(String username, String password, int xpos, int ypos) {
         this.username = username;
+        this.password = password;
         this.xpos = xpos;
         this.ypos = ypos;
         hp = 100;
