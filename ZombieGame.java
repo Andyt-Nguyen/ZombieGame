@@ -21,8 +21,13 @@ class ZombieGame {
         Person player = new Person();
         Zombie [] zombieArr = new Zombie[10];
         NPC [] npcArr = new NPC[5];
+        String username;
+        String password;
+        ProjectFileIO_v2.readFile();
+        ArrayList<Person> playerList = new ArrayList<Person>();
 
         int menuOption;
+        boolean newUser = false;
 
         menuOption = getValidMenuOption("-------------------------------------------" +
                                         "\nPlease enter a menu option." + 
@@ -31,18 +36,22 @@ class ZombieGame {
                                         "\n3. Quit Game" +
                                         "\n-------------------------------------------");
         if(menuOption == 1){
-                String username;
-                String password;
-                username = IR5.getString("Please choose a username.");
-                password = IR5.getString("Please choose a password.");
-
+            do{
+                username = IR5.getString("Please choose a username.(Case Sensitive)");
+                password = IR5.getString("Please choose a password.(Case Sensitive)");
+                for(int i = 0; i < playerList.size(); i++){
+                    if(playerList.get(i).getUsername().equals(username)
+                    && playerList.get(i).getPassword().equals(password)){
+                        newUser = false;
+                    }
+                    newUser = true;
+                    player.setUsername(username);
+                    player.setPassword(password);
+                }
+            }while(!newUser);
                 // Set Grid
                 //Map map = new Map();
                 map.setGrid(20,30);
-                // Player
-                player.setUsername(username);
-                player.setPassword(password);
-            
                 // NPC Array
                 //NPC [] npcArr = new NPC[3];
                 NPC npc1 = new NPC(30, "Geffory", 5, 0);
@@ -156,10 +165,34 @@ class ZombieGame {
                 map.setPos(10, 10, SPECIAL_KEY);
                 map.setPos(10, 13, FINAL_DOOR);
 
+                ProjectFileIO_v2.writeNewPlayer(
+                    username, 
+                    password, 
+                    player.getHp(), 
+                    player.getBulletCount(), 
+                    player.getKnifeCount(), 
+                    player.getAppleCount(), 
+                    player.getSteakCount(), 
+                    player.getKeyCount() , 
+                    player.getXpos(), 
+                    player.getYpos(), 
+                    player.getSpecialKey()
+                );
+                ProjectFileIO_v2.writeFile();
+
+      
+
                 //ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, SPECIAL_KEY, KEY, APPLE, STEAK, WALL, DOOR, FINAL_DOOR, map.getGrid(), zombieArr, npcArr, player);
-        }else if(menuOption == 2){
-            System.out.println("Dog");
-        }else if(menuOption == 3){
+        } else if(menuOption == 2) {
+            do {
+            // boolean existingFile;
+            username = IR5.getString("Please enter your username.(Case Sensitive)");
+            password = IR5.getString("Please enter your password.(Case Sensitive)");
+
+            player = ProjectFileIO_v2.getPlayer(username, password);
+
+            } while(player == null);
+        } else if(menuOption == 3) {
             System.exit(-1);
         }
         
@@ -206,6 +239,8 @@ class ZombieGame {
             }            
             
         }  
+
+        ProjectFileIO_v2.writeFile();
     }
 
     public static int getValidMenuOption(String msg){

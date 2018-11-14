@@ -147,7 +147,7 @@ public class ProjectFileIO_v2 {
     }
     
     //ADJUST AS NECESSARY!
-    private static void writeNewPlayer(String name, String password, int hp, int bulletCount, int knifeCount, int appleCount,
+    public static void writeNewPlayer(String name, String password, int hp, int bulletCount, int knifeCount, int appleCount,
     int steakCount, int keyCount, int xpos, int ypos, int specialKey){
         Person playerNew = new Person(name, password, hp, bulletCount, knifeCount, appleCount, steakCount,
         keyCount, xpos, ypos, specialKey);
@@ -157,7 +157,7 @@ public class ProjectFileIO_v2 {
     //----------------------------------------------------------------------------------------------------------------
     
     private static String getLine(){
-        String entireLine ="";
+        String entireLine = "";
         try {
             entireLine = br.readLine();
             System.out.println(entireLine);  
@@ -221,8 +221,8 @@ public class ProjectFileIO_v2 {
         for (int i = 0; i < playerArrayList.size(); i++){
             String playerMarker = PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER + PLAYER_MARKER;
             pw.println(playerMarker + " Player#" + i + " " + playerMarker);
-            pw.println(playerArrayList.get(i).getUsername());
-            pw.println(playerArrayList.get(i).getPassword());
+            pw.println(playerArrayList.get(i).getUsername()+ "");
+            pw.println(playerArrayList.get(i).getPassword()+ "");
             pw.println(playerArrayList.get(i).getHp());
             pw.println(playerArrayList.get(i).getBulletCount());
             pw.println(playerArrayList.get(i).getKnifeCount());
