@@ -36,7 +36,7 @@ class ZombieGame {
                                         "\n3. Quit Game" +
                                         "\n-------------------------------------------");
         if(menuOption == 1){
-            do{
+            // do{
                 username = IR5.getString("Please choose a username.(Case Sensitive)");
                 password = IR5.getString("Please choose a password.(Case Sensitive)");
                 for(int i = 0; i < playerList.size(); i++){
@@ -48,7 +48,7 @@ class ZombieGame {
                     player.setUsername(username);
                     player.setPassword(password);
                 }
-            }while(!newUser);
+            // }while(!newUser);
                 // Set Grid
                 //Map map = new Map();
                 map.setGrid(20,30);
@@ -165,21 +165,23 @@ class ZombieGame {
                 map.setPos(10, 10, SPECIAL_KEY);
                 map.setPos(10, 13, FINAL_DOOR);
 
-                ProjectFileIO_v2.writeNewPlayer(
-                    username, 
-                    password, 
-                    player.getHp(), 
-                    player.getBulletCount(), 
-                    player.getKnifeCount(), 
-                    player.getAppleCount(), 
-                    player.getSteakCount(), 
-                    player.getKeyCount() , 
-                    player.getXpos(), 
-                    player.getYpos(), 
-                    player.getSpecialKey()
-                );
+                // ProjectFileIO_v2.writeNewPlayer(
+                //     username, 
+                //     password, 
+                //     player.getHp(), 
+                //     player.getBulletCount(), 
+                //     player.getKnifeCount(), 
+                //     player.getAppleCount(), 
+                //     player.getSteakCount(), 
+                //     player.getKeyCount() , 
+                //     player.getXpos(), 
+                //     player.getYpos(), 
+                //     player.getSpecialKey()
+                // );
+                player.setUsername("Gamer");
+                player.setPassword("Girl");
+                ProjectFileIO_v2.addNewPlayer(player);
                 ProjectFileIO_v2.writeFile();
-
       
 
                 //ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, SPECIAL_KEY, KEY, APPLE, STEAK, WALL, DOOR, FINAL_DOOR, map.getGrid(), zombieArr, npcArr, player);

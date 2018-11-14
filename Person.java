@@ -34,12 +34,14 @@ public class Person {
     }
     
     //FileIO constructor.
-    public Person(String username, String password, int hp, int endurance, int bulletCount, int knifeCount
-                 ,int appleCount, int steakCount, int keyCount, int xpos, int ypos){
+
+    // (name, password, hp, bulletCount, knifeCount, appleCount, steakCount, keyCount, xpos, ypos, specialKey)
+
+    public Person(String username, String password, int hp, int bulletCount, int knifeCount
+                 ,int appleCount, int steakCount, int keyCount, int xpos, int ypos, int specialKey){
       this.username = username;
       this.password = password;
       this.hp = hp;
-      this.endurance = endurance;
       this.bulletCount = bulletCount;
       this.knifeCount = knifeCount;
       this.appleCount = appleCount;
@@ -47,6 +49,7 @@ public class Person {
       this.keyCount = keyCount;
       this.xpos = xpos;
       this.ypos = ypos;
+      this.specialKey = specialKey;
     }
     
     public Person(String username, String password, int xpos, int ypos) {
