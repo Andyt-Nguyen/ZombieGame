@@ -1,7 +1,1 @@
-IR5.class
-Map.class
-NPC.class
-ProjectFileIO_v2.class
-Zombie.class
-ZombieGame.class
-ZombieEncounters.class
+*.class
