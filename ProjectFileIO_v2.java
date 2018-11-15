@@ -315,4 +315,15 @@
       public static ArrayList<Person> getPlayerList() {
           return playerArrayList;
       }
+
+      //Returns a Player object
+      public static Person checkPlayer(String name){
+        for (int i = 0; i < playerArrayList.size(); i++){
+            if (playerArrayList.get(i).getUsername().equals(name))
+            {
+                return playerArrayList.get(i);
+            }
+        }
+        return null; //player was not found
+     }
   }
