@@ -8,6 +8,7 @@ public class ZombieEncounters {
     private int KEY;
     private int WALL;
     private int DOOR;
+    private int BARRICADE;
     private int STEAK;
     private int APPLE;
     private int SPECIAL_KEY;
@@ -17,7 +18,7 @@ public class ZombieEncounters {
     private Person player;
     private int FINAL_DOOR;
 
-    public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int SPECIAL_KEY, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int FINAL_DOOR, int[][] grid, Zombie[] zombieArr, NPC[] npcArr,Person player) {
+    public ZombieEncounters(int PLAYER, int ZOMBIE, int BULLETS, int SPECIAL_KEY, int KEY, int APPLE, int STEAK, int WALL, int DOOR, int BARRICADE, int FINAL_DOOR, int[][] grid, Zombie[] zombieArr, NPC[] npcArr,Person player) {
         this.PLAYER  = PLAYER;
         this.ZOMBIE  = ZOMBIE;
         this.BULLETS = BULLETS;
@@ -26,6 +27,7 @@ public class ZombieEncounters {
         this.SPECIAL_KEY = SPECIAL_KEY;
         this.KEY     = KEY;
         this.WALL    = WALL;
+        this.BARRICADE = BARRICADE;
         this.DOOR    = DOOR;
         this.grid    = grid;
         this.zombieArr = zombieArr;
@@ -159,9 +161,9 @@ public class ZombieEncounters {
                 }
 
                 else if(grid[player.ypos - 1][player.xpos] == SPECIAL_KEY) {
-                    System.out.println("You found the Skeleton key");
+                    System.out.println("You found the Special key");
                     player.addSpecialKey();
-                    mvmAndMsg("You found the specail key!", "left");
+                    mvmAndMsg("You found the special key!", "left");
                 }
 
                 else if(grid[player.ypos - 1][player.xpos] >= 30 && grid[player.ypos - 1][player.xpos] <= 40) { //interaction with npc
@@ -217,9 +219,9 @@ public class ZombieEncounters {
                 }
 
                 else if(grid[player.ypos + 1][player.xpos] == SPECIAL_KEY) {
-                    System.out.println("You found the Skeleton key");
+                    System.out.println("You found the Special key");
                     player.addSpecialKey();
-                    mvmAndMsg("You found the specail key!", "left");
+                    mvmAndMsg("You found the special key!", "left");
                 }
 
                 else if(grid[player.ypos + 1][player.xpos] >= 30 && grid[player.ypos + 1][player.xpos] <= 40) { // interaction with npc

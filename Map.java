@@ -19,6 +19,8 @@ public class Map {
                     System.out.print("W  ");
                 } else if(grid[i][j] == 6) {
                     System.out.print("D  ");
+                } else if(grid[i][j] == 7) {
+                    System.out.print("B  ");
                 } else if(grid[i][j] == 4) {
                     System.out.print("K  ");
                 } else if(grid[i][j] >= 30 && grid[i][j] <= 40) {

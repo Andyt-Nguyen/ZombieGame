@@ -8,6 +8,7 @@ class ZombieGame {
     public final static int KEY     = 4;
     public final static int WALL    = 5;
     public final static int DOOR    = 6;
+    public final static int BARRICADE = 7;
     public final static int APPLE   = 20;
     public final static int STEAK   = 21;
     public final static int SPECIAL_KEY = 25;
@@ -48,10 +49,12 @@ class ZombieGame {
                 map.setGrid(20,30);
                 // NPC Array
                 //NPC [] npcArr = new NPC[3];
-                NPC npc1 = new NPC(30, "Geffory", 5, 0);
+                NPC npc1 = new NPC(30, "Geoff", 5, 0);
+                NPC npc2 = new NPC(31, "Rick", 7, 0);
 
                 // Creating Npcs
                 npcArr[0] = npc1;
+                npcArr[1] = npc2;
 
 
                 // Set Npc Options Question to NPC
@@ -60,20 +63,23 @@ class ZombieGame {
                 npc1.setOptionsQ(1, "Who are you?");
                 npc1.setOptionsQ(2, "Is there anything I can do to get out of here?");
                 // Set Npc Answer to Answer the user
-                npc1.setOptionsA(0, "This place has been abandon years ago. I found you and kept you safe cause there aren't many people around except a few. This may sound crazy but becareful around these parts there are some dead people walking around");
-                npc1.setOptionsA(1, "My name is goomba goomba Geffory");
-                npc1.setOptionsA(2, "Yes! Actually I have a key to enter into the hospital. It will be at the end of the hallway heading east right after the end of the door. I don't have the key to unlock the door west of me unfortunatly to get us both out. You'll have to enter the building to search for the key. I hope you the best");
+                npc1.setOptionsA(0, "This place was got run down when the apocolype hit.. I found you and kept you safe cause there aren't many people around except a few. This may sound crazy but becareful around these parts there are some dead people walking around, and they aren't friendly.");
+                npc1.setOptionsA(1, "My name is Geoff");
+                npc1.setOptionsA(2, "Yes! Actually I have a key to enter this next room. I don't have the key to unlock the door west of me unfortunatly to get us both out. You'll have to enter the building to search for the key. I wish for you the best");
 
 
                 // Zombie Array
                 //Zombie [] zombieArr = new Zombie[4];
                 // Creating Zombies
-                Zombie zombie =  new Zombie(55, 30, 9, 0);
-                Zombie zombie2 = new Zombie(57, 50, 2, 2);
+                Zombie zombie =  new Zombie(55, 30, 11, 0);
+                Zombie zombie1 = new Zombie(56, 30, 15, 2);
+                Zombie zombie2 = new Zombie(57, 30, 18, 4);
+                
 
                 // Add Zombies To Array
                 zombieArr[0] = zombie;
-                zombieArr[1] = zombie2;
+                zombieArr[1] = zombie1;
+                zombieArr[2] = zombie2;                
 
                 //Set Wall Position
                 map.setPos(1, 5, WALL);
@@ -81,6 +87,7 @@ class ZombieGame {
                 map.setPos(3, 5, WALL);
                 map.setPos(4, 5, WALL);
                 map.setPos(5, 5, WALL);
+                map.setPos(12, 13, WALL);
                 map.setPos(6, 5, WALL);
                 map.setPos(6, 0, WALL);
                 map.setPos(6, 1, WALL);
@@ -131,14 +138,36 @@ class ZombieGame {
                 map.setPos(21, 4, WALL);
                 map.setPos(21, 5, WALL);
                 map.setPos(29, 5, WALL);
-        //Set Door Position
+                map.setPos(6, 6, WALL);
+                map.setPos(6, 7, WALL);
+                map.setPos(6, 8, WALL);
+                map.setPos(6, 9, WALL);
+                map.setPos(6, 11, WALL);
+                map.setPos(6, 12, WALL);
+                map.setPos(6, 13, WALL);
+                map.setPos(6, 14, WALL);
+                map.setPos(6, 15, WALL);
+                map.setPos(6, 16, WALL);
+                map.setPos(6, 17, WALL);
+                map.setPos(6, 18, WALL);
+                map.setPos(6, 19, WALL);
+                map.setPos(3, 14, WALL);
+                map.setPos(5, 14, WALL);
+                map.setPos(6, 14, WALL);
+                //Set Door Position
+                map.setPos(5, 5, DOOR);
                 map.setPos(0, 5, DOOR);
                 map.setPos(6, 2, DOOR);
                 map.setPos(2, 18, DOOR);
                 map.setPos(28, 5, DOOR);
                 map.setPos(13, 2, DOOR);
                 map.setPos(21, 2, DOOR);
+                map.setPos(4, 14, DOOR);
+                map.setPos(6, 10, DOOR);
                 map.setPos(0,3, FINAL_DOOR);
+                //Set Barricades
+                map.setPos(7, 1, BARRICADE);
+                map.setPos(8, 0, BARRICADE);
 
                 // Set Player Position
                 map.setPos(player.xpos,  player.ypos,  PLAYER);
@@ -146,16 +175,22 @@ class ZombieGame {
                 // Set Zombie position
                 map.setPos(zombieArr[0].xpos, zombieArr[0].ypos, zombieArr[0].getId());
                 map.setPos(zombieArr[1].xpos, zombieArr[1].ypos, zombieArr[1].getId());
-                map.setPos(3, 3, APPLE);
+                map.setPos(zombieArr[2].xpos, zombieArr[2].ypos, zombieArr[2].getId());
 
                 // Set NPC Position
                 map.setPos(npc1.getXpos(), npc1.getYpos(), npc1.getId());
+                map.setPos(npc2.getXpos(), npc2.getYpos(), npc2.getId());
                 
                 // Set Item Positions
+                map.setPos(3, 3, APPLE);
+                map.setPos(0, 1, KEY);
+                map.setPos(14, 4, APPLE);
+                map.setPos(19, 3, STEAK);
                 map.setPos(3, 0, BULLETS);
-                map.setPos(5, 5, DOOR);
+                map.setPos(12, 0, BULLETS);
+                map.setPos(7, 4, BULLETS);
+                map.setPos(14, 0, BULLETS);
                 map.setPos(7, 8, KEY);
-                map.setPos(12, 13, WALL);
                 map.setPos(10, 10, SPECIAL_KEY);
                 map.setPos(10, 13, FINAL_DOOR);
 
@@ -178,7 +213,7 @@ class ZombieGame {
             System.exit(-1);
         }
         
-        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, SPECIAL_KEY, KEY, APPLE, STEAK, WALL, DOOR, FINAL_DOOR, map.getGrid(), zombieArr, npcArr, player);
+        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, SPECIAL_KEY, KEY, APPLE, STEAK, WALL, DOOR, BARRICADE, FINAL_DOOR, map.getGrid(), zombieArr, npcArr, player);
         String userInput = "";
         while(player.getHp() > 0 && !userInput.equals("ex") && (menuOption == 1 || menuOption == 2)) {
             map.displayMap();

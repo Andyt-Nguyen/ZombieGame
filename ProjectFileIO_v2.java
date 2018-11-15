@@ -199,8 +199,8 @@
       private static void writeHeaderLines(){
           pw.println("***********************************");
           pw.println("* My Game " + getVersionNumber());
-          pw.println("* Authors: ...");
-          pw.println("* Add as many lines of comments as you want...");
+          pw.println("* Authors: Andrew & Sean");
+          pw.println("* Enjoy!...");
           pw.println("***********************************");
           pw.flush();
       }
