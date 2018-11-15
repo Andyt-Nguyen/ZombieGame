@@ -3,6 +3,7 @@ public class Zombie {
     public int xpos;
     public int ypos;
     private int id;
+    private int item;
     private final int MIN_ATK = 0;
     private final int MAX_ATK = 15;
 
@@ -28,6 +29,10 @@ public class Zombie {
         return hp;
     }
 
+    public int getItem() {
+        return item;
+    }
+
     public int getAttackPower() {
         return IR5.getRandomNumber(0, 15);
     }
@@ -42,6 +47,10 @@ public class Zombie {
 
     public void setYpos(int ypos) {
         this.ypos = ypos;
+    }
+
+    public void setItem(int item) {
+        this.item = item;
     }
 
     public void setHp(int hp) {

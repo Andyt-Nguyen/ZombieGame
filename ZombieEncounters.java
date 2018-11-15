@@ -394,6 +394,23 @@ public class ZombieEncounters {
             else if(dir.equals("left")) playerMovements("left");
             else if(dir.equals("up")) playerMovements("up");
             else if(dir.equals("down")) playerMovements("down");
+
+            if(zombie.getItem() != 0) {
+                if(zombie.getItem() == KEY) {
+                    System.out.println("- You find something shiny inside the zombie");
+                    System.out.println("- You found a key!");
+                    player.addToKey();
+                } else if(zombie.getItem() == BULLETS) {
+                    System.out.println("- You find something shiny inside the zombie");
+                    System.out.println("- You found a bullet!");
+                    player.addToBullets();
+                } else if(zombie.getItem() == SPECIAL_KEY) {
+                    System.out.println("- You find something really shiny coming out of the beast");
+                    System.out.println("- Oh crap! Its an apple!!");
+                    System.out.println("- Jk");
+                    System.out.println("- Its a special key");
+                }
+            }
             eliminationMsg();
         }
     }
