@@ -1,0 +1,166 @@
+***********************************
+* My Game 1.0
+* Authors: Andrew & Sean
+* Enjoy!...
+***********************************
+>>> Global Settings >>>
+The 1st setting would go here...
+The 2nd setting would go here...
+>>> End of Global Settings >>>
+===== Player#0 =====
+Test
+pw123
+0
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#1 =====
+jimmy
+neutron
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#2 =====
+frank
+sinatra
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#3 =====
+jimmy hey
+hey
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#4 =====
+crack
+pipe
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#5 =====
+cracknoots
+cracker
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#6 =====
+grease
+monkey
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#7 =====
+garma
+garn
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#8 =====
+cracker
+jack
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#9 =====
+github
+hit
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#10 =====
+carck
+carck
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#11 =====
+k
+k
+100
+0
+0
+0
+0
+0
+0
+0
+0
+===== Player#12 =====
+kj
+kj
+100
+0
+0
+0
+0
+0
+0
+0
+0
+--- End of File ---

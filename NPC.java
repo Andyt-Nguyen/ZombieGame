@@ -4,6 +4,8 @@ public class NPC  {
     private int xpos;
     private int ypos;
     private String name;
+    private int itemCount = 0;
+    private int item;
     private String [] questions;
     private String [] answers;
 
@@ -38,6 +40,14 @@ public class NPC  {
         return answers;
     }
 
+    public int getItem() {
+        if(itemCount < 0){ return -100; }
+        else {
+            itemCount--;
+            return item;
+        }
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -61,6 +71,10 @@ public class NPC  {
 
     public void setOptionsA(int index, String answer) {
         this.answers[index] = answer;
+    }
+
+    public void setItem(int item) {
+        this.item = item;
     }
 
 }

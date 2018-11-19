@@ -48,7 +48,7 @@ public class ZombieEncounters {
                 else if(grid[player.ypos][player.xpos - 1] == APPLE)  foundApple("left");
                 else if(grid[player.ypos][player.xpos - 1] == SPECIAL_KEY) foundSpecialKey("left");
                 else if(grid[player.ypos][player.xpos - 1] == DOOR) {
-                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    if(player.getKeyCount() < 1) System.out.println("* You have stumbled upon a closed door \n  You try to open it but it is locked.");
                     else unlockDoor(grid, "left");
                 }
 
@@ -78,7 +78,7 @@ public class ZombieEncounters {
                 else {
                     if(player.xpos - 2 > 0) {
                         if(grid[player.ypos][player.xpos - 2] > 50) mvmAndMsg("* You hear deep breaths", "left");
-                        else mvmAndMsg("* You take a step left", "left");
+                        else mvmAndMsg("* You take a step west", "left");
                     }
                     else mvmAndMsg("* You take a step left", "left");
                 }
@@ -102,7 +102,7 @@ public class ZombieEncounters {
                 else if(grid[player.ypos][player.xpos + 1] == APPLE) foundApple("right");
                 else if(grid[player.ypos][player.xpos + 1] == SPECIAL_KEY) foundSpecialKey("right");
                 else if(grid[player.ypos][player.xpos + 1] == DOOR) {
-                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    if(player.getKeyCount() < 1) System.out.println("* You have stumbled upon a door \n  You try to open it but it is locked.");
                     else unlockDoor(grid, "right");
                 }
 
@@ -152,7 +152,7 @@ public class ZombieEncounters {
                 else if(grid[player.ypos - 1][player.xpos] == APPLE) foundApple("up");
                 else if(grid[player.ypos - 1][player.xpos] == SPECIAL_KEY) foundSpecialKey("up");
                 else if(grid[player.ypos - 1][player.xpos] == DOOR) {
-                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    if(player.getKeyCount() < 1) System.out.println("* You have stumbled upon a door \n  You try to open it but it is locked.");
                     else unlockDoor(grid, "up");   
                 } 
 
@@ -210,7 +210,7 @@ public class ZombieEncounters {
                 else if(grid[player.ypos + 1][player.xpos] == KEY) foundKey(grid, "down");
                 else if(grid[player.ypos + 1][player.xpos] == SPECIAL_KEY) foundSpecialKey("down");
                 else if(grid[player.ypos + 1][player.xpos] == DOOR) {
-                    if(player.getKeyCount() < 1) System.out.println("* Door is locked");
+                    if(player.getKeyCount() < 1) System.out.println("\n* You have stumbled upon a door \n  You try to open it but it is locked.\n");
                     else unlockDoor(grid, "down");
                 } 
 
@@ -427,14 +427,21 @@ public class ZombieEncounters {
 
     // Player movements and message
     private void mvmAndMsg(String msg, String mvm) {
+        System.out.println("\nRECEPTION ROOM");
         System.out.println(msg);
         playerMovements(mvm);
+        System.out.println("");
     }
 
     private void foundBullet(String mvm) {
-        System.out.println("* You've picked up a bullet");
-        player.addToBullets();
-        playerMovements(mvm);
+        String userInput = IR5.getString("* You have stumbled upon what appears to be shell with gun powder covered all over it");
+        if(userInput.equals("Pick up bullet")) {
+            System.out.println("* You've picked up a bullet");
+            player.addToBullets();
+            playerMovements(mvm);
+        } else {
+            System.out.println("You have left the bullet");
+        }
     }
 
     private void foundKey(int[][] grid, String mvm) {
@@ -464,9 +471,14 @@ public class ZombieEncounters {
     }
 
     private void unlockDoor(int[][] grid, String mvm) {
-        System.out.println("* You have unlocked the door");
-        player.removeKey();
-        playerMovements(mvm);
+        String userInput = IR5.getString("");
+        if(userInput.equals("unlock door")) {
+            System.out.println("* You have unlocked the door");
+            player.removeKey();
+            playerMovements(mvm);
+        } else {
+            System.out.println("You step away from the door");
+        }
     }
 
     private void unlockFinalDoor() {
@@ -513,12 +525,12 @@ public class ZombieEncounters {
         System.out.println("");
         System.out.println("                                       ----------------------------------");
         System.out.println("                                                     Options             ");
-        System.out.println("                                        w - Move up                       ");
-        System.out.println("                                        a - Move left                     ");
-        System.out.println("                                        s - Move down                     ");
-        System.out.println("                                        d - Move right                    ");
-        System.out.println("                                        i - View inventory                ");
-        System.out.println("                                        ex - Exit                        ");
+        System.out.println("                                        move nort  - Move up                       ");
+        System.out.println("                                        move west  - Move left                     ");
+        System.out.println("                                        move south - Move down                     ");
+        System.out.println("                                        move east  - Move right                    ");
+        System.out.println("                                        inventory  - View inventory                ");
+        System.out.println("                                        exit       - Exit                        ");
         System.out.println("                                       ----------------------------------");
     }
 

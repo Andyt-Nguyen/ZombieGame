@@ -283,25 +283,26 @@ class ZombieGame {
         ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, SPECIAL_KEY, KEY, APPLE, STEAK, WALL, DOOR, BARRICADE, FINAL_DOOR, map.getGrid(), zombieArr, npcArr, player);
         String userInput = "";
         while(player.getHp() > 0 && !userInput.equals("ex") && (menuOption == 1 || menuOption == 2)) {
-            map.displayMap();
+            // map.displayMap();
+            System.out.println("RECEPTION ROOM");
             userInput = getString("Your move (type o to view full options): ").toLowerCase();
             switch(userInput) {
-                case "d": // Move right
+                case "move east": // Move right
                     zombieEncounters.moveRight();
                     //Zombie Moves
                     break;
 
-                case "a": // Move left
+                case "move west": // Move left
                     zombieEncounters.moveLeft();
                     //Zombie Moves
                     break;
 
-                case "w": // Move up
+                case "move north": // Move up
                     zombieEncounters.moveUp();
                     //Zombie Moves
                     break;
 
-                case "s": // Move down
+                case "move south": // Move down
                     zombieEncounters.moveDown();
                     //Zombie Moves
                     break;
@@ -311,11 +312,11 @@ class ZombieGame {
                     //Zombie Moves
                     break;
                 
-                case "i": // View inventory
+                case "inventory": // View inventory
                     zombieEncounters.viewInventory();
                     break;
                 
-                case "ex": // exit program
+                case "exit": // exit program
                     break;
                 
                 default: 
