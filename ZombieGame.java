@@ -13,6 +13,7 @@ class ZombieGame {
     public final static int STEAK   = 21;
     public final static int SPECIAL_KEY = 25;
     public final static int FINAL_DOOR = 26;
+    public final static int KITCHEN = 10;
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) throws IOException {
         
@@ -102,6 +103,7 @@ class ZombieGame {
                 zombieArr[5] = zombie5;                
 
                 //Set Wall Position
+                map.setPos(1, 1, KITCHEN);
                 map.setPos(1, 5, WALL);
                 map.setPos(2, 5, WALL);
                 map.setPos(3, 5, WALL);
@@ -283,7 +285,7 @@ class ZombieGame {
         ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, ZOMBIE, BULLETS, SPECIAL_KEY, KEY, APPLE, STEAK, WALL, DOOR, BARRICADE, FINAL_DOOR, map.getGrid(), zombieArr, npcArr, player);
         String userInput = "";
         while(player.getHp() > 0 && !userInput.equals("ex") && (menuOption == 1 || menuOption == 2)) {
-            // map.displayMap();
+            map.displayMap();
             System.out.println("RECEPTION ROOM");
             userInput = getString("Your move (type o to view full options): ").toLowerCase();
             switch(userInput) {

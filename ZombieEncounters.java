@@ -525,12 +525,12 @@ public class ZombieEncounters {
         System.out.println("");
         System.out.println("                                       ----------------------------------");
         System.out.println("                                                     Options             ");
-        System.out.println("                                        move nort  - Move up                       ");
-        System.out.println("                                        move west  - Move left                     ");
-        System.out.println("                                        move south - Move down                     ");
-        System.out.println("                                        move east  - Move right                    ");
-        System.out.println("                                        inventory  - View inventory                ");
-        System.out.println("                                        exit       - Exit                        ");
+        System.out.println("                                        move north  - Move up                       ");
+        System.out.println("                                        move west   - Move left                     ");
+        System.out.println("                                        move south  - Move down                     ");
+        System.out.println("                                        move east   - Move right                    ");
+        System.out.println("                                        inventory   - View inventory                ");
+        System.out.println("                                        exit        - Exit                        ");
         System.out.println("                                       ----------------------------------");
     }
 

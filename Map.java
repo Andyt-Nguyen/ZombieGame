@@ -35,6 +35,8 @@ public class Map {
                     System.out.print("SK ");
                 } else if(grid[i][j] == 26) {
                     System.out.print("FD ");
+                } else if(grid[i][j] == 10) {
+                    System.out.print("KI");
                 } else {
                     System.out.print(".  ");
                 }
