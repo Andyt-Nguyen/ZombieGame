@@ -1,12 +1,19 @@
 public class Room {
+    private int id;
     private String name;
     private boolean isDoor;
     private boolean isEnter;
     
-    public Room(String name, boolean isDoor) {
+    public Room(int id, String name, boolean isDoor) {
         this.name = name;
         this.isDoor = isDoor;
         this.isEnter = false;
+        this.id = id;
+    }
+
+ 
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -15,6 +22,10 @@ public class Room {
 
     public boolean haveDoor() {
         return isDoor;
+    }
+
+    public void setObjectInPlay(String objectInPlay) {
+        System.out.println("That isn't a place you can walk to");
     }
 
     public void getItem(String item, Player player) {
@@ -62,6 +73,7 @@ public class Room {
         if(noun.equals(name.toLowerCase())) {
             isEnter = false;
             System.out.println("You have left the " + name.toLowerCase());
+            System.out.println("and back in the hallway");
         } else {
             System.out.println("What?");
         }

@@ -1,58 +1,71 @@
 public class Kitchen extends Room {
-    private int knife;
-    private boolean isFridge;
-    private boolean isCloset;
-    private int food;
     private boolean isDoor;
-    
+    private Fridge fridge;
+    private Closet closet;
+    private String objectInPlay;
+
     public Kitchen() {
-        super("Kitchen", true);
-        this.knife = 0;
-        this.isFridge = false;
-        isCloset = false;
-        this.food = 0;
+        super(0,"Kitchen", true);
         this.isDoor = false;
+        fridge = new Fridge();
+        closet = new Closet();
+        this.objectInPlay = "";
     }
 
-    public Kitchen(int knife, boolean isFridge, boolean isCloset, int food) {
-        super("Kitchen", true);
-        this.knife = knife;
-        this.isFridge = isFridge;
-        this.isCloset = isCloset;
-        this.food = food;
+    public Kitchen(int id, Fridge fridge, Closet closet) {
+        super(id, "Kitchen", true);
         this.isDoor = false;
+        this.fridge = fridge;
+        this.closet = closet;
+        this.objectInPlay = "";
     }
 
     public void lookAround() {
         if(super.getEnter() && isDoor) {
-            System.out.println("There is a fridge with dirty red marks all of over it");
-            System.out.println("and a closet");
+            System.out.println("You look around and you see...");
+            if(fridge.getDoesExist()) {
+                System.out.println("A fridge with dirty red marks all of over it");
+            }
+
+            if(closet.getDoesExist()) {
+                System.out.println("A closet bigger than your average bear");
+            }
+
+            
         } else {
-            super.lookAround();
+            System.out.println("This door is a pleasure to look at");
         }
     }
 
+    @Override
+    public void setObjectInPlay(String objectInPlay) {
+        if(super.getEnter()) {
+            if(objectInPlay.equals("fridge") && fridge.getDoesExist()) {
+                this.objectInPlay = objectInPlay;
+                System.out.println("You walked to the " + objectInPlay);
+            } else if(objectInPlay.equals("closet") && closet.getDoesExist()) {
+                this.objectInPlay = objectInPlay;
+                System.out.println("You walked to the " + objectInPlay);
+            } else {
+                super.setObjectInPlay("");       
+            }
+        } else {
+            System.out.println("I can't go to that. I'm still at the door");
+        }
+    }
+    
     public void open(String item) {
         if(isDoor) {
             if(super.getEnter()) {
-                if(item.equals("fridge")) {
-                    if(isFridge) {
-                       System.out.println("Fridge already opened"); 
-                    } else {
-                        isFridge = true;
-                        System.out.println("You have opened the fridge");
-                    }
-                } else if(item.equals("closet")) {
-                    if(isCloset) {
-                        System.out.println("Counter already open");
-                    } else {
-                        isCloset = true;
-                        System.out.println("You have successfully open the drawer congratulations");
-        
-                    }
+                if(item.equals("fridge") && objectInPlay.equals("fridge")) {
+                    fridge.open();
+                } else if(item.equals("closet") && objectInPlay.equals("closet")) {
+                    closet.open();
                 } else {
                     super.open(item);
                 }
+            } else {
+                System.out.println("I'm looking at door right now");
             }
         } else {
             isDoor = true;
@@ -63,23 +76,10 @@ public class Kitchen extends Room {
     @Override
     public void getItem(String item, Player player) {
         if(super.getEnter() && isDoor) {
-            if(item.equals("knife")) {
-                if(this.knife != 0 && isCloset) {
-                    System.out.println("Oooo so nice an shiny.");
-                    player.addToItem("knife", knife);
-                    knife = 0;
-                } else {
-                    super.getItem(item, player);
-                }
-            } else if(item.equals("food")) {
-                if(food != 0 && isFridge) {
-                    System.out.println("Nice you put that piece of food in your pocket.");
-                    System.out.println("Are you proud of that? Might eat it for later.");
-                    player.addToItem("food", food);
-                    food = 0;
-                } else {
-                    super.getItem(item, player);
-                }
+            if(objectInPlay.equals("fridge")) {
+                fridge.getItem(item, player);
+            } else if(objectInPlay.equals("closet")) {
+                closet.getItem(item, player);
             } else {
                 super.getItem(item, player);
             }
@@ -88,38 +88,29 @@ public class Kitchen extends Room {
 
     @Override
     public void search(String object) {
-        if(isFridge) {
-            if(object.equals("fridge")) {
-                if(food != 0) {
-                    System.out.println("You found some scraps of food in the frideg");
-                    System.out.println("The food looks filthy! But I kind of want it");
-                } else {
-                    super.search(object);
-                }
-            } else if(object.equals("closet")) {
-                if(knife != 0) {
-                    System.out.println("Ther's cobweb all over this thing.");
-                    System.out.println("Look at that there is one knife in here");
-                    System.out.println("Everything else looks in it looks empty");
-                } else {
-                    super.search((object));
-                }
-            }
-        } else {
-            super.search(object);
-        }
+        if(object.equals("fridge")) {
+            fridge.search();
+        } else if(object.equals("closet")) {
+            System.out.println("Ther's cobweb all over this thing.");                
+            closet.search();
+        } else super.search(object);
     }
 
     @Override
     public void examine(String item) {
         if(item.equals("fridge")) {
-            System.out.println("The fridge looks interesting");
-            System.out.println("I want to build one");
+            fridge.examine();
         } else if(item.equals("closet")) {
-            System.out.println("Ooo I wonder if that closet has cereal. I'm starving!");
+            closet.examine();
         } else {
             super.examine(item);
         }
+    }
+
+    @Override
+    public void leave(String noun) {
+        objectInPlay = "";
+        super.leave(noun);
     }
 
 }

@@ -5,32 +5,72 @@ public class Player {
     private  int xpos;
     private  int ypos;
     private int knifeCount;
+    private int foodCount;
+    private String notes;
 
     public Player() {
         this.username = "";
         this.password = "";
         this.hp = 100;
+        this.knifeCount = 0;
+        this.foodCount = 0;
+        this.notes = "";
         xpos = 0;
         ypos = 0;
-        this.knifeCount = 0;
     }
     
-    //FileIO constructor.
 
-    // (name, password, hp, bulletCount, knifeCount, appleCount, steakCount, keyCount, xpos, ypos, specialKey)
-
-    public Player(String username, String password, int hp, int xpos, int ypos){
+    public Player(String username, String password, String notes, int hp, int knifeCount, int foodCount, int xpos, int ypos){
       this.username = username;
       this.password = password;
       this.hp = hp;
       this.xpos = xpos;
       this.ypos = ypos;
-      this.knifeCount = 0;
+      this.knifeCount = knifeCount;
+      this.foodCount = foodCount;
+      this.notes = notes;
     }
     
     public void addToItem(String item, int count) {
         System.out.println(item + " added to inventory");
         if(item.equals("knife")) this.knifeCount += count;
+        else if(item.equals("food")) this.foodCount += count;
+    }
+
+    public void writeNote(String note) {
+        System.out.println("I'm jotting this down in my notes");
+        this.notes += note + " ";
+    }
+
+    public void clearNotes() {
+        System.out.println("You erased all of your notes");
+        this.notes = "";
+    }
+
+    public void eat() {
+        if(foodCount > 0) {
+            System.out.println("Chew... chomp.. chow... crackle... burp");
+            System.out.println("That was delicious!");
+            foodCount--;
+        } else {
+            System.out.println("I don't have anything to eat");
+        }
+    }
+
+    public void getInventory() {
+        System.out.println("-----------------------");
+        System.out.println("       Inventory");
+        System.out.println("-----------------------");
+        System.out.println(" Items     |   Count   ");
+        System.out.println("_______________________");
+        System.out.println(" Knives    |    " + knifeCount);
+        System.out.println(" Food      |    " + foodCount);
+        System.out.println(" Notes     |    " + notes.split(" ").length);
+        System.out.println("-----------------------");
+    }
+
+    public String getNotes() {
+        return notes;
     }
 
     public void displayHp() {

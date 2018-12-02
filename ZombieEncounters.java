@@ -5,15 +5,15 @@ public class ZombieEncounters {
     private Player player;
     private int PLAYER;
     private int[][] grid;
-    private Kitchen ki;
-    private Bedroom b;
+    private Kitchen[] kiArr;
+    private Bedroom[] bArr;
 
-    public ZombieEncounters(int PLAYER, int[][] grid, Player player, Kitchen ki, Bedroom b) {
+    public ZombieEncounters(int PLAYER, int[][] grid, Player player, Kitchen[] kiArr, Bedroom[] bArr) {
         this.PLAYER = PLAYER;
         this.grid = grid;
         this.player = player;
-        this.ki = ki;
-        this.b = b;
+        this.kiArr = kiArr;
+        this.bArr = bArr;
     }
 
     // When a user encounters a zombie moving backwards
@@ -22,9 +22,9 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() - 1];
-            if (playerPos == 10) objectEncounter(grid, player, ki);
-            else if(playerPos == 11) objectEncounter(grid, player, b);
-            else mvmAndMsg("* You take a step left", "left");
+            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
+            else if(playerPos >= 20 && playerPos < 30) objectEncounter(grid, player, findId(bArr, playerPos));
+            else mvmAndMsg("* You move west", "left");
         }
     }
 
@@ -35,9 +35,9 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() + 1];
-            if (playerPos == 10) objectEncounter(grid, player, ki);
-            else if (playerPos == 11) objectEncounter(grid, player, b);
-            else mvmAndMsg("* You take a step right", "right");
+            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
+            else if (playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(bArr, playerPos));
+            else mvmAndMsg("* You move east", "right");
         }
     }
 
@@ -47,9 +47,9 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos() - 1][player.getXpos()];
-            if (playerPos == 10) objectEncounter(grid, player, ki);
-            else if(playerPos == 11) objectEncounter(grid, player, b);
-            else mvmAndMsg("* You take a step up", "up");
+            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
+            else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(bArr, playerPos));
+            else mvmAndMsg("* You move north", "up");
         }
     }
 
@@ -59,9 +59,9 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos() + 1][player.getXpos()];
-            if (playerPos == 10) objectEncounter(grid, player, ki);
-            else if(playerPos == 11) objectEncounter(grid, player, b);
-            else mvmAndMsg("* You take a step down", "down");
+            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
+            else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(bArr, playerPos));
+            else mvmAndMsg("* You move south", "down");
         }
     }
 
@@ -71,14 +71,18 @@ public class ZombieEncounters {
             System.out.println("and you take second to look at it");
         }
         String userInput = "";
-        while (true) {
+        while (player.getHp() > 0) {
             userInput = ZombieGame.getString("\n(type help to see commands)>> ");
             String[] splitUserInput = userInput.split(" ");
+            String object = "";
             if (splitUserInput.length == 2) {
                 String verb = splitUserInput[0];
                 String noun = splitUserInput[1];
                 if (verb.equals("pickup")) {
-                    room.getItem(noun, player);
+                    if(object.equals("")) room.getItem(noun, player);
+                    else room.getItem(noun, player);
+                } else if(verb.equals("goto")) {
+                    room.setObjectInPlay(noun);
                 } else if (verb.equals("open")) {
                     room.open(noun);
                 } else if (verb.equals("uncover")) {
@@ -96,6 +100,10 @@ public class ZombieEncounters {
                 } else if(verb.equals("leave")) {
                     room.leave(noun);
                     break;
+                } else if(verb.equals("readmy") && noun.equals("notes")) {
+                    System.out.println(player.getNotes());
+                } else if(verb.equals("writedown")) {
+                    player.writeNote(noun);
                 } else if(verb.equals("examine")) {
                     room.examine(noun);
                 } else if(verb.equals("walk")) {
@@ -103,7 +111,7 @@ public class ZombieEncounters {
                        noun.equals("west") ||
                        noun.equals("north") ||
                        noun.equals("south")) {
-                           System.out.println("You back away from the door");
+                           System.out.println("You back away from the door and now in the hallway");
                         break;
                         }
                 }
@@ -111,6 +119,12 @@ public class ZombieEncounters {
                 String verb = splitUserInput[0];
                 if (verb.equals("lookaround")) {
                     room.lookAround();
+                } else if(verb.equals("inventory")) {
+                    player.getInventory();
+                } else if(verb.equals("clearnotes")) {
+                    player.clearNotes();
+                } else if(verb.equals("eat")) {
+                    player.eat();
                 } else if(verb.equals("help")) {
                     ZombieGame.showHelpMenu();
                 } else {
@@ -125,32 +139,32 @@ public class ZombieEncounters {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() - 1];
-            if (playerPos == 10)  System.out.println("There is a door west of you");
-            else if(playerPos == 11) System.out.println("There is a door west of you");
+            if (playerPos >= 10 && playerPos <= 20)  System.out.println("There is a door west of you");
+            else if(playerPos >= 20 && playerPos < 30)System.out.println("There is a door west of you");
         }
 
         if (player.getXpos() + 1 > grid[0].length - 1) {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() + 1];
-            if (playerPos == 10) System.out.println("There is a door east of you");
-            else if (playerPos == 11) System.out.println("There is a door east of you");
+            if (playerPos >= 10 && playerPos <= 20) System.out.println("There is a door east of you");
+            else if (playerPos >= 20 && playerPos < 30)System.out.println("There is a door east of you");
         }
 
         if (player.getYpos() - 1 < 0) {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos() - 1][player.getXpos()];
-            if (playerPos == 10) System.out.println("There is a door north of you");
-            else if(playerPos == 11) System.out.println("There is a door north of you");
+            if (playerPos >= 10 && playerPos <= 20) System.out.println("There is a door north of you");
+            else if(playerPos >= 20 && playerPos < 30)System.out.println("There is a door north of you");
         }
 
         if (player.getYpos() + 1 > grid.length - 1) {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos() + 1][player.getXpos()];
-            if (playerPos == 10) System.out.println("There is a door south of your");
-            else if(playerPos == 11) System.out.println("There is a door south of you");
+            if (playerPos >= 10 && playerPos <= 20) System.out.println("There is a door south of your");
+            else if(playerPos >= 20 && playerPos < 30)System.out.println("There is a door south of you");
         }
     }
 
@@ -175,7 +189,14 @@ public class ZombieEncounters {
         System.out.println("");
     }
 
-
+    private Room findId(Room[] room, int id) {
+        for(int i = 0; i < room.length; i++) {
+            if(room[i].getId() == id) {
+                return room[i];
+            }
+        }
+        return null;
+    }
 }
 
 
