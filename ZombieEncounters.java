@@ -7,13 +7,15 @@ public class ZombieEncounters {
     private int[][] grid;
     private Kitchen[] kiArr;
     private Bedroom[] bArr;
+    private SuperRoom[] superRooms;
 
-    public ZombieEncounters(int PLAYER, int[][] grid, Player player, Kitchen[] kiArr, Bedroom[] bArr) {
+    public ZombieEncounters(int PLAYER, int[][] grid, Player player, Kitchen[] kiArr, Bedroom[] bArr, SuperRoom[] superRooms) {
         this.PLAYER = PLAYER;
         this.grid = grid;
         this.player = player;
         this.kiArr = kiArr;
         this.bArr = bArr;
+        this.superRooms = superRooms;
     }
 
     // When a user encounters a zombie moving backwards
@@ -22,8 +24,8 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() - 1];
-            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
-            else if(playerPos >= 20 && playerPos < 30) objectEncounter(grid, player, findId(bArr, playerPos));
+            if (playerPos >= 10 && playerPos <= 30) objectEncounter(grid, player, findId(superRooms, playerPos));
+            // else if(playerPos >= 20 && playerPos < 30) objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move west", "left");
         }
     }
@@ -35,8 +37,8 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() + 1];
-            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
-            else if (playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(bArr, playerPos));
+            if (playerPos >= 10 && playerPos <= 30) objectEncounter(grid, player, findId(superRooms, playerPos));
+            // else if (playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move east", "right");
         }
     }
@@ -47,8 +49,8 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos() - 1][player.getXpos()];
-            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
-            else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(bArr, playerPos));
+            if (playerPos >= 10 && playerPos <= 30) objectEncounter(grid, player, findId(superRooms, playerPos));
+            // else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move north", "up");
         }
     }
@@ -59,23 +61,128 @@ public class ZombieEncounters {
             System.out.println("* You hit a wall");
         } else {
             int playerPos = grid[player.getYpos() + 1][player.getXpos()];
-            if (playerPos >= 10 && playerPos <= 20) objectEncounter(grid, player, findId(kiArr, playerPos));
-            else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(bArr, playerPos));
+            if (playerPos >= 10 && playerPos <= 30) objectEncounter(grid, player, findId(superRooms, playerPos));
+            // else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move south", "down");
         }
     }
 
-    public void objectEncounter(int[][] grid, Player player, Room room) {
-        if(room.haveDoor()) {
+    // public void objectEncounter(int[][] grid, Player player, Room room) {
+    //     if(!room.getIsDoorOpen()) {
+    //         System.out.println("You slammed your head against a door");
+    //         System.out.println("and you take second to look at it");
+    //     } else {
+    //         System.out.println("You are about to step into the " + room.getName());
+    //     }
+    //     String userInput = "";
+    //     while (player.getHp() > 0) {
+    //         userInput = ZombieGame.getString("\n(type help to see commands)>> ");
+    //         String[] splitUserInput = userInput.split(" ");
+    //         String object = "";
+    //         if (splitUserInput.length == 2) {
+    //             String verb = splitUserInput[0];
+    //             String noun = splitUserInput[1];
+    //             if (verb.equals("pickup")) {
+    //                 if(object.equals("")) room.getItem(noun, player);
+    //                 else room.getItem(noun, player);
+    //             } else if(verb.equals("goto")) {
+    //                 room.setObjectInPlay(noun);
+    //             } else if (verb.equals("open")) {
+    //                 room.open(noun);
+    //             } else if(verb.equals("breakinto")) {
+    //                 if(player.getKnifeCount() > 0) {
+    //                     int damage = room.breakInto(noun);
+    //                     player.decreaseHp(damage);
+    //                     player.decreaseKnifeCount();
+    //                 } else {
+    //                     System.out.println("You look frivilously check your back and front pockets");
+    //                     System.out.println("and alas you have no knife");
+    //                 }
+    //             } else if (verb.equals("uncover")) {
+    //                 room.unCover(noun);
+    //             } else if (verb.equals("search")) {
+    //                 room.search(noun);
+    //             } else if (verb.equals("read")) {
+    //                 room.read(noun);
+    //             } else if(verb.equals("scream")) {
+    //                 player.scream();
+    //             } else if(verb.equals("kick")) {
+    //                 room.kick();
+    //             } else if(verb.equals("enter")) {
+    //                 room.enter(noun);
+    //             } else if(verb.equals("leave")) {
+    //                 room.leave(noun);
+    //                 break;
+    //             } else if(verb.equals("unlock")) {
+    //                 if(noun.equals("vault")) {
+    //                     System.out.println("I can't unlock this thing it doesn't have any key holes");
+    //                 } else {
+    //                     if(player.getKeyCount() > 0) {
+    //                         room.unlock(noun);
+    //                         player.useKey();
+    //                     } else {
+    //                         System.out.println("You look in your back and front pockets");
+    //                         System.out.println("and alas you have no key");
+    //                     }
+    //                 }
+    //             } else if(verb.equals("code")) {
+    //                 room.unlock(noun);
+    //             } else if(verb.equals("readmy") && noun.equals("notes")) {
+    //                 System.out.println(player.getNotes());
+    //             } else if(verb.equals("examine")) {
+    //                 room.examine(noun);
+    //             } else if(verb.equals("walk")) {
+    //                 if(noun.equals("east") ||
+    //                    noun.equals("west") ||
+    //                    noun.equals("north") ||
+    //                    noun.equals("south")) {
+    //                        System.out.println("You back away from the door and now in the hallway");
+    //                     break;
+    //                     }
+    //             }
+    //         } else if(splitUserInput.length == 1) {
+    //             String verb = splitUserInput[0];
+    //             if (verb.equals("lookaround")) {
+    //                 room.lookAround();
+    //             } else if(verb.equals("checkhealth")) {
+    //                 player.checkHealth();
+    //             } else if(verb.equals("inventory")) {
+    //                 player.getInventory();
+    //             } else if(verb.equals("clearnotes")) {
+    //                 player.clearNotes();
+    //             } else if(verb.equals("eat")) {
+    //                 player.eat();
+    //             } else if(verb.equals("help")) {
+    //                 ZombieGame.showHelpMenu();
+    //             } else {
+    //                 System.out.println("I've never heard of this before");
+    //             }
+    //         } else if(splitUserInput.length > 2){
+    //             String verb = splitUserInput[0];
+    //             String userNotes = "";
+    //             if(verb.equals("writedown")) {
+    //                 for(int i = 1; i < splitUserInput.length; i++) {
+    //                     userNotes += splitUserInput[i] + " ";
+    //                 }
+    //                 player.writeNote(userNotes + "\n");
+    //             }
+    //         }
+    //     }
+    // }
+
+    public void objectEncounter(int[][] grid, Player player, SuperRoom room) {
+        if(!room.getIsDoorOpen()) {
             System.out.println("You slammed your head against a door");
             System.out.println("and you take second to look at it");
+        } else {
+            System.out.println("You are about to step into the " + room.getName());
         }
         String userInput = "";
         while (player.getHp() > 0) {
             userInput = ZombieGame.getString("\n(type help to see commands)>> ");
             String[] splitUserInput = userInput.split(" ");
             String object = "";
-            if (splitUserInput.length == 2) {
+            if (splitUserInput.length >= 2) {
                 String verb = splitUserInput[0];
                 String noun = splitUserInput[1];
                 if (verb.equals("pickup")) {
@@ -85,6 +192,15 @@ public class ZombieEncounters {
                     room.setObjectInPlay(noun);
                 } else if (verb.equals("open")) {
                     room.open(noun);
+                } else if(verb.equals("breakinto")) {
+                    if(player.getKnifeCount() > 0) {
+                        int damage = room.breakInto(noun);
+                        player.decreaseHp(damage);
+                        player.decreaseKnifeCount();
+                    } else {
+                        System.out.println("You look frivilously check your back and front pockets");
+                        System.out.println("and alas you have no knife");
+                    }
                 } else if (verb.equals("uncover")) {
                     room.unCover(noun);
                 } else if (verb.equals("search")) {
@@ -100,10 +216,28 @@ public class ZombieEncounters {
                 } else if(verb.equals("leave")) {
                     room.leave(noun);
                     break;
+                } else if(verb.equals("unlock")) {
+                    if(noun.equals("vault")) {
+                        System.out.println("I can't unlock this thing it doesn't have any key holes");
+                    } else {
+                        if(player.getKeyCount() > 0) {
+                            room.unlock(noun);
+                            player.useKey();
+                        } else {
+                            System.out.println("You look in your back and front pockets");
+                            System.out.println("and alas you have no key");
+                        }
+                    }
+                } else if(verb.equals("writedown")) {
+                    String userNotes = "";
+                    for(int i = 1; i < splitUserInput.length; i++) {
+                        userNotes += splitUserInput[i];
+                    }
+                    player.writeNote(userNotes + "\n");
+                } else if(verb.equals("code")) {
+                    room.unlock(noun);
                 } else if(verb.equals("readmy") && noun.equals("notes")) {
                     System.out.println(player.getNotes());
-                } else if(verb.equals("writedown")) {
-                    player.writeNote(noun);
                 } else if(verb.equals("examine")) {
                     room.examine(noun);
                 } else if(verb.equals("walk")) {
@@ -115,10 +249,12 @@ public class ZombieEncounters {
                         break;
                         }
                 }
-            } else {
+            } else if(splitUserInput.length == 1) {
                 String verb = splitUserInput[0];
                 if (verb.equals("lookaround")) {
                     room.lookAround();
+                } else if(verb.equals("checkhealth")) {
+                    player.checkHealth();
                 } else if(verb.equals("inventory")) {
                     player.getInventory();
                 } else if(verb.equals("clearnotes")) {
@@ -197,72 +333,14 @@ public class ZombieEncounters {
         }
         return null;
     }
+
+    private SuperRoom findId(SuperRoom[] room, int id) {
+        for(int i = 0; i < room.length; i++) {
+            if(room[i].getId() == id) {
+                return room[i];
+            }
+        }
+        return null;
+    }
 }
 
-
-
-
-
-
-
-
-
-
-
-               // else if (verb.equals("move")) {
-                //     if (noun.equals("east")) {
-                //         if (player.getXpos() + 2 <= grid[0].length - 1) {
-                //             if (grid[player.getYpos()][player.getXpos() + 2] == 0) {
-                //                 System.out.println("You take a step out of the " + room.getName());
-                //                 System.out.println("And move east");
-                //                 grid[player.getYpos()][player.getXpos()] = 0;
-                //                 player.moveRight(2);
-                //                 break;
-                //             }
-                //         } else {
-                //             System.out.println("You walked into the " + room.getName() + " wall");
-                //             System.out.println("and slammed your head. Ouch!");
-                //         }
-                //     } else if (noun.equals("west")) {
-                //         if (player.getXpos() - 2 >= 0) {
-                //             if (grid[player.getYpos()][player.getXpos() - 2] == 0) {
-                //                 System.out.println("You take a step out of the " + room.getName());
-                //                 System.out.println("And move west");
-                //                 grid[player.getYpos()][player.getXpos()] = 0;
-                //                 player.moveLeft(2);
-                //                 break;
-                //             }
-                //         } else {
-                //             System.out.println("You walked into the " + room.getName() + " wall");
-                //             System.out.println("and slammed your head. Ouch!");
-                //         }
-                //     } else if (noun.equals("south")) {
-                //         if (player.getYpos() + 2 <= grid[0].length - 1) {
-                //             if (grid[player.getYpos() + 2][player.getXpos()] == 0) {
-                //                 System.out.println("You take a step out of the " + room.getName());
-                //                 System.out.println("And move south");
-                //                 grid[player.getYpos()][player.getXpos()] = 0;
-                //                 player.moveDown(2);
-                //                 break;
-                //             }
-                //         } else {
-                //             System.out.println("You walked into the " + room.getName() + " wall");
-                //             System.out.println("and slammed your head. Ouch!");
-                //         }
-                //     } else if (noun.equals("north")) {
-                //         if (player.getYpos() - 2 >= 0) {
-                //             if (grid[player.getYpos() - 1][player.getXpos()] == 0) {
-                //                 System.out.println("You take a step out of the " + room.getName());
-                //                 System.out.println("And move south");
-                //                 grid[player.getYpos()][player.getXpos()] = 0;
-                //                 player.moveUp(2);
-                //                 break;
-                //             }
-                //         } else {
-                //             System.out.println("You walked into the " + room.getName() + " wall");
-                //             System.out.println("and slammed your head. Ouch!");
-                //         }
-                //     } else {
-                //         System.out.println("I don't know that noun");
-                //     }
-                // }

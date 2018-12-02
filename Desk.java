@@ -1,15 +1,15 @@
-public class Bed {
+public class Desk {
     private boolean isSheets;
     private int knife;
     private int food;
     private String note;
     private boolean doesExist;
     
-    public Bed() {
+    public Desk() {
         doesExist = false;
     }
 
-    public Bed(boolean isSheets, int knife, int food, String note) {
+    public Desk(boolean isSheets, int knife, int food, String note) {
         this.isSheets = isSheets;
         this.knife = knife;
         this.food = food;
@@ -74,7 +74,7 @@ public class Bed {
     }
 
     public void examine() {
-        System.out.println("Bed has a nice textured blanket");
+        System.out.println("Desk has a nice textured blanket");
     }
 
     public boolean getDoesExist() {

@@ -1,14 +1,16 @@
 public class Room {
     private int id;
     private String name;
-    private boolean isDoor;
+    private boolean isDoorOpen;
     private boolean isEnter;
+    private boolean isLocked;
     
-    public Room(int id, String name, boolean isDoor) {
+    public Room(int id, String name, boolean isDoorOpen, boolean isLocked) {
         this.name = name;
-        this.isDoor = isDoor;
+        this.isDoorOpen = isDoorOpen;
         this.isEnter = false;
         this.id = id;
+        this.isLocked = isLocked;
     }
 
  
@@ -20,8 +22,8 @@ public class Room {
         return name;
     }
 
-    public boolean haveDoor() {
-        return isDoor;
+    public boolean getIsDoorOpen() {
+        return isDoorOpen;
     }
 
     public void setObjectInPlay(String objectInPlay) {
@@ -33,12 +35,23 @@ public class Room {
     }
 
     public void open(String object) {
-        System.out.println("You can't open that!");
+        if(isLocked) {
+            System.out.println("the door is locked");
+        } else {
+            if(!isDoorOpen) {
+                if(object.equals("door")) {
+                    System.out.println("You turn the door knob");
+                    System.out.println("You have opened the door");
+                    isDoorOpen = true;
+                } else {
+                    System.out.println("You can't open that!");
+                } 
+            } else {
+                System.out.println("Door is open for bussiness");
+            }
+        }
     }
 
-    public void checkOut(String object) {
-        System.out.println("There' s nothing to checkout");
-    }
 
     public void read(String item) {
         System.out.println("You can't read that!");
@@ -58,10 +71,37 @@ public class Room {
 
     public void enter(String noun) {
         if(noun.equals(name.toLowerCase())) {
-            isEnter = true;
-            System.out.println("You have entered the " + name.toLowerCase());
+            if(isLocked) {
+                System.out.println("The door is locked");
+            } else {
+                isEnter = true;
+                System.out.println("You have entered the " + name.toLowerCase());
+            }
         } else {
             System.out.println("You can't enter into that friend");
+        }
+    }
+
+    public void unlock(String noun) {
+        isLocked = false;
+        System.out.println("You have unlocked the " + noun);
+    }
+
+    public int breakInto(String noun) {
+        if(noun.equals("door")) {
+            int chances = IR5.getRandomNumber(1, 5);
+            if(chances >= 3) {
+                isLocked = false;
+                System.out.println("You hear a click and the doorknob is loose");
+                System.out.println("but took some damage.");
+                return IR5.getRandomNumber(5, 8);
+            } else {
+                System.out.println("Your knife broke and you took some damage");
+                return IR5.getRandomNumber(12,15);
+            }
+        } else {
+            System.out.println("You can't break into there");
+            return -1;
         }
     }
 

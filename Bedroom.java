@@ -1,12 +1,11 @@
 public class Bedroom extends Room {
-    private boolean isDoor;
     private Bed bed;
     private Closet closet;
     private Vault vault;
     private String objectInPlay;
 
     public Bedroom() {
-        super(0,"Bedroom", true);
+        super(0,"Bedroom", false, false);
         this.objectInPlay = "";
         this.bed = new Bed();
         this.closet = new Closet();
@@ -14,10 +13,9 @@ public class Bedroom extends Room {
     }
     
     
-    public Bedroom(int id, boolean isDoor, Bed bed, Closet closet, Vault vault) {
-        super(id,"Bedroom", true);
+    public Bedroom(int id, boolean isDoor, Bed bed, Closet closet, Vault vault, boolean isLocked) {
+        super(id,"Bedroom", isDoor, isLocked);
         this.objectInPlay = "";
-        this.isDoor = isDoor;
         this.bed = bed;
         this.closet = closet;
         this.vault = vault;
@@ -45,7 +43,7 @@ public class Bedroom extends Room {
 
     @Override
     public void getItem(String item, Player player) {
-        if(super.getEnter() && isDoor) {
+        if(super.getEnter() && super.getIsDoorOpen()) {
             if(objectInPlay.equals("bed")) {
                 bed.getItem(item, player);
             } else if(objectInPlay.equals("closet")) {
@@ -57,7 +55,7 @@ public class Bedroom extends Room {
     }
 
     public void lookAround() {
-        if(isDoor && super.getEnter()) {
+        if(super.getIsDoorOpen() && super.getEnter()) {
             System.out.println("You look around and you see...");
 
             if(bed.getDoesExist() || closet.getDoesExist() || vault.getDoesExist()) {
@@ -74,13 +72,13 @@ public class Bedroom extends Room {
             }
 
         } else {
-            System.out.println("This door is a pleasure to look at");
+            super.getIsDoorOpen();
         }
     }
 
-
+    @Override
     public void open(String item) {
-        if(isDoor) {
+        if(super.getIsDoorOpen()) {
             if(super.getEnter()) {
 
                 if(item.equals("closet") && objectInPlay.equals("closet")) {
@@ -92,25 +90,46 @@ public class Bedroom extends Room {
                     super.open(item);
                 }
             } else {
-                System.out.println("I'm looking at door right now");
+                super.open(item);
             }
         } else {
-            isDoor = true;
-            System.out.println("You have opened the bedroom door");            
+            super.open(item);           
         }
     }
 
     public void unCover(String object) {
-        if(isDoor && super.getEnter()) {
+        if(super.getIsDoorOpen() && super.getEnter()) {
             if(object.equals("bed") && objectInPlay.equals("bed")) {
                 bed.unCoverBed();
             }
         } else {
-            if(isDoor) {
+            if(super.getIsDoorOpen()) {
                 System.out.println("You going to go in or something?");
             } else {
                 System.out.println("There's an angry door in your way");
             }
+        }
+    }
+    
+    @Override
+    public int breakInto(String noun) {
+        if(noun.equals("vault")) {
+            vault.breakInto();
+            return -1;
+        } else {
+            return super.breakInto(noun);
+        }
+    }
+
+    @Override
+    public void unlock(String noun) {
+        System.out.println("Noun: "+noun);
+        if(noun.equals("vault")) {
+            System.out.println("A prompt shows up on the vault");
+            String userPasscode = ZombieGame.getString("Enter Passcode: ");
+            vault.unlock(userPasscode);
+        } else {
+            super.unlock(noun);
         }
     }
 
@@ -118,7 +137,7 @@ public class Bedroom extends Room {
 
     @Override
     public void search(String item) {
-        if(isDoor && super.getEnter()) {
+        if(super.getIsDoorOpen() && super.getEnter()) {
             if(item.equals("bed")) { 
                 bed.search();
             } else if(item.equals("closet")) {
@@ -127,7 +146,7 @@ public class Bedroom extends Room {
                 vault.search();
             }
         } else {
-            if(isDoor) {
+            if(super.getIsDoorOpen()) {
                 System.out.println("You going to get in there or what?");
             } else {
                 System.out.println("There's a lovely door in your way");
@@ -139,7 +158,7 @@ public class Bedroom extends Room {
 
     @Override
     public void read(String item) {
-        if(isDoor && super.getEnter()) {
+        if(super.getIsDoorOpen() && super.getEnter()) {
             if(item.equals("note") && objectInPlay.equals("bed")) {
                 bed.read();
             } else if(item.equals("note") && objectInPlay.equals("vault")) { 
@@ -164,6 +183,8 @@ public class Bedroom extends Room {
             closet.examine();
         } else if(item.equals("vault")) {
             vault.examine();
+        } else {
+            super.examine(item);
         }
     }
 

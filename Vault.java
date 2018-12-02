@@ -4,20 +4,18 @@ public class Vault {
     private int food;
     private String note;
     private boolean doesExist;
+    private String passcode;
 
     public Vault() {
-        isOpen = false;
-        knife = 0;
-        food = 0;
-        note = "";
         doesExist = false;
     }
 
-    public Vault(boolean isOpen, int knife, int food, String note) {
+    public Vault(boolean isOpen,String passcode, int knife, int food, String note) {
         this.isOpen = isOpen;
         this.knife = knife;
         this.food = food;
         this.note = note;
+        this.passcode = passcode;
         doesExist = true;
     }
 
@@ -59,12 +57,39 @@ public class Vault {
         }
     }
 
+    public int breakInto() {
+        int chances = IR5.getRandomNumber(1, 5);
+        if(chances >= 3) {
+            isOpen = false;
+            System.out.println("You hear a click and the vault became loose");
+            System.out.println("but took some damage.");
+            return IR5.getRandomNumber(5, 8);
+        } else {
+            System.out.println("Your knife broke and you took some damage");
+            return IR5.getRandomNumber(12,15);
+        }
+    }
+
+    public void unlock(String usercode) {
+        if(passcode.equals("")) {
+            isOpen = true;
+        } else {
+            if(passcode.equals(usercode)) {
+                isOpen = true;
+                System.out.println("System processing...");
+                System.out.println("** Access Granted **");
+            } else {
+                System.out.println("System processing..");
+                System.out.println("! Access Denied !");
+            }
+        }
+    }
+
     public void open() {
         if(this.isOpen) {
             System.out.println("Vault is already open");
         } else {
-            isOpen = true;
-            System.out.println("You have opened the vault");
+            System.out.println("You try to open the vault like a monster but it does not open");
         }
     }
 

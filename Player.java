@@ -2,10 +2,11 @@ public class Player {
     private String username;
     private String password;
     private int hp;
-    private  int xpos;
-    private  int ypos;
+    private int xpos;
+    private int ypos;
     private int knifeCount;
     private int foodCount;
+    private int keyCount;
     private String notes;
 
     public Player() {
@@ -15,12 +16,13 @@ public class Player {
         this.knifeCount = 0;
         this.foodCount = 0;
         this.notes = "";
+        this.keyCount = 0;
         xpos = 0;
         ypos = 0;
     }
     
 
-    public Player(String username, String password, String notes, int hp, int knifeCount, int foodCount, int xpos, int ypos){
+    public Player(String username, String password, String notes, int hp, int keyCount,int knifeCount, int foodCount, int xpos, int ypos){
       this.username = username;
       this.password = password;
       this.hp = hp;
@@ -28,6 +30,7 @@ public class Player {
       this.ypos = ypos;
       this.knifeCount = knifeCount;
       this.foodCount = foodCount;
+      this.keyCount = keyCount;
       this.notes = notes;
     }
     
@@ -39,7 +42,7 @@ public class Player {
 
     public void writeNote(String note) {
         System.out.println("I'm jotting this down in my notes");
-        this.notes += note + " ";
+        this.notes += note;
     }
 
     public void clearNotes() {
@@ -57,6 +60,14 @@ public class Player {
         }
     }
 
+    public void useKey() {
+        keyCount--;
+    }
+
+    public int getKeyCount() {
+        return keyCount;
+    }
+
     public void getInventory() {
         System.out.println("-----------------------");
         System.out.println("       Inventory");
@@ -66,8 +77,20 @@ public class Player {
         System.out.println(" Knives    |    " + knifeCount);
         System.out.println(" Food      |    " + foodCount);
         System.out.println(" Notes     |    " + notes.split(" ").length);
+        System.out.println(" Keys      |    " + keyCount);
         System.out.println("-----------------------");
     }
+
+    public void checkHealth() {
+        System.out.println("-----------");
+        System.out.println(" HP: " + hp);
+        System.out.println("-----------");
+    }
+
+    public void decreaseKnifeCount() {
+        knifeCount--;    
+    }
+
 
     public String getNotes() {
         return notes;
@@ -100,6 +123,10 @@ public class Player {
     public int getYpos(){
       return ypos;
     }
+
+    public int getKnifeCount() {
+        return knifeCount;
+    }
     
     public void setUsername(String username){
       this.username = username;
@@ -113,7 +140,7 @@ public class Player {
         this.xpos = xpos;
     }
 
-    public void setYpos(int xpos) {
+    public void setYpos(int ypos) {
         this.ypos = ypos;
     }
     

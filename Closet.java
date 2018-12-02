@@ -5,9 +5,6 @@ public class Closet {
     private boolean doesExist;
 
     public Closet() {
-        isOpen = false;
-        knife = 0;
-        food = 0;
         doesExist = false;
     }
 
@@ -15,6 +12,7 @@ public class Closet {
         this.isOpen = isOpen;
         this.knife = knife;
         this.food = food;
+        doesExist = true;
     }
 
     public void getItem(String item, Player player) {
@@ -24,8 +22,8 @@ public class Closet {
             knife = 0;
         } else if(item.equals("food")) {
             System.out.println("Nice you put that piece of food in your pocket.");
-            player.addToItem("food", food);
             System.out.println("Are you proud of that? Might eat it for later.");
+            player.addToItem("food", food);
             food = 0;
         } else {
             System.out.println("You can't pick that up");
@@ -36,7 +34,7 @@ public class Closet {
         if(isOpen) {
             if(food > 0 || knife > 0) {
                 if(food > 0) {
-                    System.out.println("You found some scraps of food in the frideg");
+                    System.out.println("You find meat rotting in the closet.");
                     System.out.println("The food looks filthy! But I kind of want it");
                 }
                 if(knife > 0) {
