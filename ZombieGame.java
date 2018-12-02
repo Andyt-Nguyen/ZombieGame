@@ -11,6 +11,7 @@ class ZombieGame {
          * The Player construcotr
          * Player(String username, String password, String notes, int hp, int keyCount,int knifeCount, int foodCount, int xpos, int ypos)
          */
+
         Player player = new Player( "username",  "password", "", 100, 1, 1,1, 1,1);
 
         /**
@@ -20,22 +21,21 @@ class ZombieGame {
          * Vault(boolean isOpen,string passcode, int knife, int food, String note)
          * Fridge(boolean isOpen, int knife, int food)
          */
+        
         Closet closet1 = new Closet(false, 1,1);
         Fridge kitchen1 = new Fridge(false, 1, 1);
         Vault kitchen2 = new Vault(false, "blackjack",1, 1, "1");
-        // Kitchen k1 = new Kitchen(1 + KITCHEN, kitchen1, closet1, kitchen2, false);
-
+        
         Vault vault1 = new Vault(false, "jackblack",1, 1, "1");
         Closet closet2 = new Closet(false, 1,1);
         
-        Bed bed1 = new Bed(false, 1, 1,"You need to get of here now! I know you don't know me" +
+        Bed b2Bed = new Bed(false, 1, 1,"You need to get of here now! I know you don't know me" +
         "\nbut you are trapped in this place... Once you get out here there is room 5 steps south and 3 steps east " +
         "\nbut listen closely there is combination of four numbers you have to...\n(The note ends there)\nWeird I wonder what happen in here.");
-
-        // Bedroom b1 = new Bedroom(1 + BEDROOM, false, new Bed(), new Closet(), vault1, true);
-        // Bedroom b2 = new Bedroom(2 + BEDROOM, false, bed1, closet2, new Vault(), true);
         
-
+        // Kitchen k1 = new Kitchen(1 + KITCHEN, kitchen1, closet1, kitchen2, false);
+        // Bedroom b1 = new Bedroom(1 + BEDROOM, false, new Bed(), new Closet(), vault1, true);
+        // Bedroom b2 = new Bedroom(2 + BEDROOM, false, b2Bed, closet2, new Vault(), true);
         // Bedroom[] bArr = {b1,b2};
         // Kitchen[] kArr = {k1};
 
@@ -44,8 +44,6 @@ class ZombieGame {
            * The SuperRoom constructor here for reference
            * SuperRoom(int id, boolean isDoor, boolean isLocked, Bed bed, Closet closet, Fridge fridge, Vault vault)
         */
-
-
         SuperRoom superRoom = new SuperRoom(
             BEDROOM + 1,
             "Bedroom",
@@ -57,7 +55,7 @@ class ZombieGame {
             BEDROOM + 2,
             "Bedroom",
             false, false,
-            bed1, closet2, new Fridge(), new Vault()
+            b2Bed, closet2, new Fridge(), new Vault()
         );
 
         SuperRoom superRoom3 = new SuperRoom(
