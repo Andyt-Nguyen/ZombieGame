@@ -175,7 +175,7 @@ public class ZombieEncounters {
         }
         String userInput = "";
         while (player.getHp() > 0) {
-            userInput = ZombieGame.getString("\n(type help to see commands)>> ");
+            userInput = IR5Manipulate.getString("\n(type help to see commands)>> ");
             String[] splitUserInput = userInput.split(" ");
             String object = "";
             if (splitUserInput.length >= 2) {
@@ -258,7 +258,7 @@ public class ZombieEncounters {
                 } else if(verb.equals("eat")) {
                     player.eat();
                 } else if(verb.equals("help")) {
-                    ZombieGame.showHelpMenu();
+                    Menu.showHelpMenu();
                 } else {
                     System.out.println("I've never heard of this before");
                 }

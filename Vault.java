@@ -76,11 +76,11 @@ public class Vault {
         } else {
             if(passcode.equals(usercode)) {
                 isOpen = true;
-                System.out.println("System processing...");
-                System.out.println("** Access Granted **");
+                System.out.println("\nSystem processing...");
+                System.out.println("** Access Granted **\n");
             } else {
-                System.out.println("System processing..");
-                System.out.println("! Access Denied !");
+                System.out.println("\nSystem processing..");
+                System.out.println("! Access Denied !\n");
             }
         }
     }

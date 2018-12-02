@@ -113,7 +113,7 @@ public class SuperRoom  {
             if(isEnter) {
                 if(item.equals("closet") && objectInPlay.equals("closet")) {
                     closet.open();
-                } else if(item.equals("fridge")) {
+                } else if(item.equals("fridge") && objectInPlay.equals("fridge")) {
                     fridge.open();
                 } else if(item.equals("vault") && objectInPlay.equals("vault")) {
                     vault.open();
@@ -141,7 +141,11 @@ public class SuperRoom  {
                     System.out.println("You can't open that!");
                 } 
             } else {
-                System.out.println("Door is open for bussiness");
+                if(isDoorOpen && isEnter) {
+                    System.out.println("You can't do that. You are not by the " + object);
+                } else {
+                    System.out.println("Door is open for bussiness");
+                }
             }
         }
     }
@@ -188,7 +192,7 @@ public class SuperRoom  {
     public void unlock(String noun) {
         if(noun.equals("vault")) {
             System.out.println("A prompt shows up on the vault");
-            String userPasscode = ZombieGame.getString("Enter Passcode: ");
+            String userPasscode = IR5Manipulate.getString("Enter Passcode: ");
             vault.unlock(userPasscode);
         } else {
             isLocked = false;
