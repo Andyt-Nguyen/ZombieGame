@@ -5,16 +5,12 @@ public class ZombieEncounters {
     private Player player;
     private int PLAYER;
     private int[][] grid;
-    private Kitchen[] kiArr;
-    private Bedroom[] bArr;
     private SuperRoom[] superRooms;
 
-    public ZombieEncounters(int PLAYER, int[][] grid, Player player, Kitchen[] kiArr, Bedroom[] bArr, SuperRoom[] superRooms) {
+    public ZombieEncounters(int PLAYER, int[][] grid, Player player, SuperRoom[] superRooms) {
         this.PLAYER = PLAYER;
         this.grid = grid;
         this.player = player;
-        this.kiArr = kiArr;
-        this.bArr = bArr;
         this.superRooms = superRooms;
     }
 

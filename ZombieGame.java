@@ -8,31 +8,18 @@ class ZombieGame {
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) throws IOException {
         /**
+         * The Player construcotr
+         * Player(String username, String password, String notes, int hp, int keyCount,int knifeCount, int foodCount, int xpos, int ypos)
+         */
+        Player player = new Player( "username",  "password", "", 100, 1, 1,1, 1,1);
+
+        /**
          * The objects inside room constructors here for reference
          * Bed(boolean isSheets, int knife, int food, String note)
          * Closet(boolean isOpen, int knife, int food)
          * Vault(boolean isOpen,string passcode, int knife, int food, String note)
          * Fridge(boolean isOpen, int knife, int food)
          */
-
-         /**
-          * The Room constructor here for reference
-          * Kitchen(int id, Fridge fridge, Closet closet)
-          * Bedroom(int id, boolean isDoor, Bed bed, Closet closet, Vault vault) 
-          */
-
-        
-
-          /**
-           * The Player construcotr
-           * Player(String username, String password, String notes, int hp, int keyCount,int knifeCount, int foodCount, int xpos, int ypos)
-           */
-
-        
-
-        Player player = new Player( "username",  "password", "", 100, 1, 1,1, 1,1);
-
-        Map map = new Map();
         Closet closet1 = new Closet(false, 1,1);
         Fridge kitchen1 = new Fridge(false, 1, 1);
         Vault kitchen2 = new Vault(false, "blackjack",1, 1, "1");
@@ -41,12 +28,12 @@ class ZombieGame {
         Vault vault1 = new Vault(false, "jackblack",1, 1, "1");
         Closet closet2 = new Closet(false, 1,1);
         
-        Bed b2Bed = new Bed(false, 1, 1,"You need to get of here now! I know you don't know me" +
+        Bed bed1 = new Bed(false, 1, 1,"You need to get of here now! I know you don't know me" +
         "\nbut you are trapped in this place... Once you get out here there is room 5 steps south and 3 steps east " +
         "\nbut listen closely there is combination of four numbers you have to...\n(The note ends there)\nWeird I wonder what happen in here.");
 
         // Bedroom b1 = new Bedroom(1 + BEDROOM, false, new Bed(), new Closet(), vault1, true);
-        // Bedroom b2 = new Bedroom(2 + BEDROOM, false, b2Bed, closet2, new Vault(), true);
+        // Bedroom b2 = new Bedroom(2 + BEDROOM, false, bed1, closet2, new Vault(), true);
         
 
         // Bedroom[] bArr = {b1,b2};
@@ -70,7 +57,7 @@ class ZombieGame {
             BEDROOM + 2,
             "Bedroom",
             false, false,
-            b2Bed, closet2, new Fridge(), new Vault()
+            bed1, closet2, new Fridge(), new Vault()
         );
 
         SuperRoom superRoom3 = new SuperRoom(
@@ -83,11 +70,9 @@ class ZombieGame {
         SuperRoom[] superRoomsArr = {superRoom, superRoom2, superRoom3};
         
         // Set Grid
+        Map map = new Map();        
         map.setGrid(10,10);
         map.setPos(player.getYpos(),  player.getXpos(),  PLAYER);
-        // map.setPos(1, 0, k1.getId());
-        // map.setPos(2, 1, b2.getId());
-        // map.setPos(0, 1, b1.getId());
         map.setPos(1, 0, superRoom3.getId());
         map.setPos(2, 1, superRoom.getId());
         map.setPos(0, 1, superRoom2.getId());
@@ -95,7 +80,7 @@ class ZombieGame {
 
 
 
-        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, map.getGrid(), player, kArr, bArr, superRoomsArr);
+        ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, map.getGrid(), player, superRoomsArr);
         String userInput = "";
         while(player.getHp() > 0) {
             map.displayMap();
@@ -168,9 +153,10 @@ class ZombieGame {
         System.out.println(" examine [object]      |        to get more detail from things");
         System.out.println(" read [object]         |        to read");
         System.out.println(" uncover [object]      |        to uncover");
-        System.out.println(" enter [object]        |        to go into rooms");
-        System.out.println(" leave [object]        |        to leave rooms");
-        System.out.println(" writedown [words]     |        write down in your notes");
+        System.out.println(" enter [room name      |        to go into rooms");
+        System.out.println(" leave [room name      |        to leave rooms");
+        System.out.println(" writedown [text]      |        write down in your notes");
+        System.out.println(" code vault            |        getting into the vault");
         System.out.println(" breakinto [object]    |        you would use your knife to break into something");
         System.out.println(" readmy notes          |        read your notes");
         System.out.println(" lookaround            |        look around your area");
