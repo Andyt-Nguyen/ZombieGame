@@ -58,9 +58,9 @@ public class Vault {
     }
 
     public int breakInto() {
-        int chances = IR5.getRandomNumber(1, 5);
-        if(chances >= 3) {
-            isOpen = false;
+        int chances = IR5.getRandomNumber(1, 13);
+        if(chances >= 10) {
+            isOpen = true;
             System.out.println("You hear a click and the vault became loose");
             System.out.println("but took some damage.");
             return IR5.getRandomNumber(5, 8);
@@ -78,6 +78,7 @@ public class Vault {
                 isOpen = true;
                 System.out.println("\nSystem processing...");
                 System.out.println("** Access Granted **\n");
+                System.out.println("The vault door slowly opens...");
             } else {
                 System.out.println("\nSystem processing..");
                 System.out.println("! Access Denied !\n");

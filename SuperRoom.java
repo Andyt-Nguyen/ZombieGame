@@ -8,6 +8,7 @@ public class SuperRoom  {
     private Closet closet;
     private Vault vault;
     private Fridge fridge;
+    private Desk desk;
     private String objectInPlay;
 
     public SuperRoom() {
@@ -21,10 +22,11 @@ public class SuperRoom  {
         this.closet = new Closet();
         this.vault = new Vault();
         this.fridge = new Fridge();
+        this.desk = new Desk();
     }
     
     
-    public SuperRoom(int id, String name, boolean isDoor, boolean isLocked, Bed bed, Closet closet, Fridge fridge, Vault vault) {
+    public SuperRoom(int id, String name, boolean isDoor, boolean isLocked, Bed bed, Closet closet, Fridge fridge, Vault vault, Desk desk) {
         this.id = id;
         this.name = name;
         this.isDoorOpen = false;
@@ -35,6 +37,7 @@ public class SuperRoom  {
         this.closet = closet;
         this.vault = vault;
         this.fridge = fridge;
+        this.desk = desk;
     }
 
 
@@ -51,6 +54,9 @@ public class SuperRoom  {
                 this.objectInPlay = objectInPlay;
                 System.out.println("You walked to the " + objectInPlay);
             } else if(objectInPlay.equals("vault") && vault.getDoesExist()) {
+                System.out.println("You walked to the " + objectInPlay);
+                this.objectInPlay = objectInPlay;
+            } else if(objectInPlay.equals("desk")) {
                 System.out.println("You walked to the " + objectInPlay);
                 this.objectInPlay = objectInPlay;
             } else {
@@ -71,8 +77,9 @@ public class SuperRoom  {
             } else if(objectInPlay.equals("vault")) {
                 vault.getItem(item, player);
             } else if(objectInPlay.equals("fridge")) {
-                System.out.println("FRIDGEEE");
                 fridge.getItem(item, player);
+            } else if(objectInPlay.equals("desk")) {
+                desk.getItem(item, player);
             } else {
                 System.out.println("Theres nothing there to pick up");
             }
@@ -81,25 +88,59 @@ public class SuperRoom  {
 
     public void lookAround() {
         if(isDoorOpen && isEnter) {
-            System.out.println("You look around and you see...");
+            System.out.println("You look around and you say to yourself");
 
-            if(bed.getDoesExist() || closet.getDoesExist() || vault.getDoesExist() || fridge.getDoesExist()) {
+            if(bed.getDoesExist() || closet.getDoesExist() || vault.getDoesExist() || fridge.getDoesExist() || desk.getDoesExist()) {
                 if(bed.getDoesExist()) {
-                    System.out.println("A bed with some sheets over it.");  
+                    String[] bedFind = {
+                        "There a bed in this room",
+                        "Look it that there is bed in this room",
+                        "A bed with some sheets over it",
+                        "Hey there's a bed in here"
+                    };
+                    System.out.println(bedFind[IR5.getRandomNumber(0, bedFind.length - 1)]);  
                 }
                 if(closet.getDoesExist()) {
-                    System.out.println("A closet bigger than the average bear.");
+                    String[] closetFind = {
+                        "Whoa look at that closet",
+                        "There's a closet!",
+                        "This closet looks bigger than the average shark",
+                        "A closet bigger than the average bear."
+                    };
+                    System.out.println(closetFind[IR5.getRandomNumber(0, closetFind.length -1)]);
                 }
     
                 if(vault.getDoesExist()) {
-                    System.out.println("Theres a big metal vault in the room.");
+                    String[] vaultFind = {
+                        "That vault looks mezmorizing. I think that's the word I'm thinking of.",
+                        "That vault looks tiny",
+                        "Hey-o I hit the jackpot there's a vault in here!",
+                        "Theres a big metal vault in the room."
+                    };
+                    System.out.println(vaultFind[IR5.getRandomNumber(0, vaultFind.length-1)]);
                 }
                 
                 if(fridge.getDoesExist()) {
-                    System.out.println("A fridge with dirty red marks all of over it");
+                    String[] fridgeFind = {
+                        "I'm hungry.. Oh hey there's a fridge",
+                        "I want to go to that fridge now!",
+                        "I wonder if there is food in that fridge",
+                        "That fridge looks dirty I wonder what's inside it."
+                    };
+                    System.out.println(fridgeFind[IR5.getRandomNumber(0, fridgeFind.length - 1)]);
+                }
+
+                if(desk.getDoesExist()) {
+                    String[] deskFind = {
+                        "Theres a desk here",
+                        "That desk looks ancient",
+                        "There's a desk across the room",
+                        "There a desk here"
+                    };
+                    System.out.println(deskFind[IR5.getRandomNumber(0, deskFind.length - 1)]);
                 }
             } else {
-                System.out.println("Ther isn't anything in here");
+                System.out.println("There isn't anything in here");
             }
 
         } else {
@@ -117,8 +158,9 @@ public class SuperRoom  {
                     fridge.open();
                 } else if(item.equals("vault") && objectInPlay.equals("vault")) {
                     vault.open();
-                } 
-                else {
+                } else if(item.equals("desk") && objectInPlay.equals("desk")) {
+                    desk.open();
+                } else {
                     openDoor(item);
                 }
             } else {
@@ -126,6 +168,20 @@ public class SuperRoom  {
             }
         } else {
             openDoor(item);           
+        }
+    }
+
+    public void lookUnder(String item) {
+        if(isDoorOpen) {
+            if(isEnter) {
+                if(objectInPlay.equals("desk")) {
+                    desk.lookUnder(item);
+                }
+            } else {
+                System.out.println("You can't look under that");
+            }
+        } else {
+            System.out.println("You can't look under that");
         }
     }
 
@@ -212,6 +268,10 @@ public class SuperRoom  {
                 vault.search();
             } else if(item.equals("fridge")) {
                 fridge.search();
+            } else if(item.equals("desk")) {
+                desk.search();
+            } else {
+                System.out.println("That object does not exist");
             }
         } else {
             if(isDoorOpen) {
@@ -230,6 +290,10 @@ public class SuperRoom  {
                 bed.read();
             } else if(item.equals("note") && objectInPlay.equals("vault")) { 
                 vault.read();
+            } else if(item.equals("note") && objectInPlay.equals("desk")) {
+                desk.read();
+            } else if(item.equals("note") && objectInPlay.equals("fridge")) {
+                fridge.read();
             } else {
                 System.out.println("You can't read that!");
             }
@@ -248,29 +312,45 @@ public class SuperRoom  {
 
 
     public void examine(String item) {
-        if(item.equals("bed")) {
+        if(item.equals("bed") && objectInPlay.equals("bed")) {
             bed.examine();
-        } else if(item.equals("closet")){
+        } else if(item.equals("closet") && objectInPlay.equals("closet")){
             closet.examine();
-        } else if(item.equals("vault")) {
+        } else if(item.equals("vault") && objectInPlay.equals("vault")) {
             vault.examine();
-        } else if(item.equals("fridge")) {
+        } else if(item.equals("fridge") && objectInPlay.equals("fridge")) {
             fridge.examine();
+        } else if(item.equals("desk") && objectInPlay.equals("desk")) {
+            desk.examine(item);
+        } else if(objectInPlay.equals("desk") && item.equals("lamp")) {
+            desk.examine(item);
         } else {
-            System.out.println("The door has strange markings. Looks like a " + this.name.toLowerCase());
+            if(objectInPlay.toLowerCase().replace(" ", "").equals("kitchen")) {
+                System.out.println("The " + this.name.toLowerCase() + " looks so clean the floors has a squary pattern a bright light\nThat lights the golden room");
+            } else if(objectInPlay.toLowerCase().replace(" ", "").equals("bedroom")) {
+                System.out.println("The " + this.name.toLowerCase() + " is awesome so simple and not too much inside. Though it is a little dark it is still pretty neat");
+            } else if(objectInPlay.toLowerCase().replace(" ", "").equals("master bedroom")) {
+                System.out.println("The " + this.name.toLowerCase() + " has windows on the side of with a nice carpet floor");
+            } else {
+                System.out.println("You cannot examine that.");
+            }
         }
     }
 
     public void enter(String noun) {
-        if(noun.equals(name.toLowerCase())) {
-            if(isLocked) {
-                System.out.println("The door is locked");
+        if(isDoorOpen) {
+            if(noun.replace(" ", "").equals(name.toLowerCase().replace(" ", ""))) {
+                if(isLocked) {
+                    System.out.println("The door is locked");
+                } else {
+                    isEnter = true;
+                    System.out.println("You have entered the " + name.toLowerCase());
+                }
             } else {
-                isEnter = true;
-                System.out.println("You have entered the " + name.toLowerCase());
+                System.out.println("You can't enter into that friend");
             }
         } else {
-            System.out.println("You can't enter into that friend");
+            System.out.println("You walked into the door. Ouch!");
         }
     }
 
@@ -279,120 +359,86 @@ public class SuperRoom  {
     }
 
 
-
     public boolean getIsDoorOpen() {
         return isDoorOpen;
     }
-    /**
-     * @return the bed
-     */
+   
+
     public Bed getBed() {
         return bed;
     }
 
-    /**
-     * @return the closet
-     */
+   
     public Closet getCloset() {
         return closet;
     }
 
-    /**
-     * @return the fridge
-     */
+   
     public Fridge getFridge() {
         return fridge;
     }
 
-    /**
-     * @return the id
-     */
+  
     public int getId() {
         return id;
     }
 
-    /**
-     * @return the name
-     */
+
     public String getName() {
         return name;
     }
 
-    /**
-     * @return the objectInPlay
-     */
+ 
     public String getObjectInPlay() {
         return objectInPlay;
     }
 
-    /**
-     * @return the vault
-     */
+
     public Vault getVault() {
         return vault;
     }
 
-    /**
-     * @param bed the bed to set
-     */
+ 
     public void setBed(Bed bed) {
         this.bed = bed;
     }
 
-    /**
-     * @param closet the closet to set
-     */
+  
     public void setCloset(Closet closet) {
         this.closet = closet;
     }
 
-    /**
-     * @param fridge the fridge to set
-     */
+  
     public void setFridge(Fridge fridge) {
         this.fridge = fridge;
     }
 
 
-    /**
-     * @param id the id to set
-     */
     public void setId(int id) {
         this.id = id;
     }
 
 
-    /**
-     * @param isDoorOpen the isDoorOpen to set
-     */
     public void setIsDoorOpen(boolean isDoorOpen) {
         this.isDoorOpen = isDoorOpen;
     }
 
-    /**
-     * @param isEnter the isEnter to set
-     */
+
     public void setIsEnter(boolean isEnter) {
         this.isEnter = isEnter;
     }
 
-    /**
-     * @param isLocked the isLocked to set
-     */
+ 
     public void setIsLocked(boolean isLocked) {
         this.isLocked = isLocked;
     }
 
-    /**
-     * @param name the name to set
-     */
+
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @param vault the vault to set
-     */
+  
     public void setVault(Vault vault) {
         this.vault = vault;
     }

@@ -23,9 +23,14 @@ public class Bed {
             player.addToItem(item, knife);
             knife = 0;
         } else if(item.equals("food")) {
-            System.out.println("Nice you put that piece of food in your pocket.");
+            String[] foodPickupString = {
+                "Hey you picked up a piece of food. Yummy yummy",
+                "Yummy yummy food for me tummy",
+                "Yum yum tum tum",
+                "Kinda looks like a burger or a hotdog? I don't know lets put that in the pocket"
+            };
+            System.out.println(foodPickupString[IR5.getRandomNumber(0, foodPickupString.length -1)]);
             player.addToItem("food", food);
-            System.out.println("Are you proud of that? Might eat it for later.");
             food = 0;
         } else {
             System.out.println("You can't pick that up");
@@ -37,7 +42,13 @@ public class Bed {
             System.out.println("You already uncovered the sheets");
         } else {
             isSheets = true;
-            System.out.println("With great force you uncovered the bed sheets");
+            String[] uncoverStrings = {
+                "With great force you uncovered the bed sheets.",
+                "You roll on the bed and rap yourself like a burrito and unconver the bed.",
+                "You take your hands and grab the end of the sheet and rolled it in a shape of a churro.",
+                "You take the sheet and kicked it across the bed. Leaving the bed open."
+            };
+            System.out.println(uncoverStrings[IR5.getRandomNumber(0, uncoverStrings.length - 1)]);
         }
     }
 
@@ -45,25 +56,49 @@ public class Bed {
         if(isSheets) {
             if(!note.equals("") || knife > 0) {
                 if(!note.equals("")) {
-                    System.out.println("You found a note with words written on it. Looks like english");
+                    String[] findingNote = {
+                        "You found a note with words written on it. Looks like english",
+                        "A note was found and it has letters combined to it to make words. I wonder what it says.",
+                        "OH boyy you found a note!",
+                        "The note has writing on it. Sweeeet"
+                    };
+                    System.out.println(findingNote[IR5.getRandomNumber(0, findingNote.length - 1)]);
                 }
     
                 if(knife > 0) {
-                    System.out.println("Look at that there seems to be a knife stabbed into the sheets");
+                    String[] findingKnife = {
+                        "There is a knife just laying there. Weird.",
+                        "This thing looks shiny and has a handle. Oh my gosh it's a knife!",
+                        "The knife of thousands knives lies on this bed",
+                        "Look at that there seems to be a knife stabbed into the sheets"
+                    };
+                    System.out.println(findingKnife[IR5.getRandomNumber(0, findingKnife.length - 1)]);
                 }
             }
         } else {
             if(!note.equals("") || knife > 0) {
-                System.out.println("The bed has a hump on it.");
+                String[] underTheBedStrings = {
+                    "The bed looks like it has something on it",
+                    "Oh my gosh is there something under the bed. I'm afraid to look",
+                    "Is someone under that bed?",
+                    "The bed has a hump on it."
+                };
+                System.out.println(underTheBedStrings[IR5.getRandomNumber(0, underTheBedStrings.length - 1)]);
             } else {
-                System.out.println("Nothing suspicious here");
+                String[] nothingHereStrings = {
+                    "Nope nothing over here",
+                    "I don't see anything over here",
+                    "There is nothing over here",
+                    "Nothing suspicious here"
+                };
+                System.out.println(nothingHereStrings[IR5.getRandomNumber(0, nothingHereStrings.length - 1)]);
             }
         }
     }
 
     public void read() {
         if(note.equals("")) {
-            System.out.println("There's nother here");
+            System.out.println("There's nothing here");
         } else {
             if(isSheets) {
                 System.out.println(note);
