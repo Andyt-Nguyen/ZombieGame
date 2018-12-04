@@ -38,9 +38,15 @@ public class Player {
     
     public void addToItem(String item, int count) {
         if(count > 1) {
-            System.out.println(count + item + "'s has been added to your inventory.");
+            if(item == "knife") {
+                System.out.println(count + " knives has beed added to your inventory");
+            } else if(item == "food") {
+                System.out.println(count + " pieces of food has been added to your inventory");
+            } else if(item == "key") {
+                System.out.println(count + " keys has been added to your inventory.");
+            }
         } else {
-            System.out.println(item + " added to inventory.");
+            System.out.println(item + " has been added to your inventory.");
         }
         if(item.equals("knife")) this.knifeCount += count;
         else if(item.equals("food")) this.foodCount += count;
@@ -60,12 +66,13 @@ public class Player {
     public void eat() {
         if(foodCount > 0) {
             System.out.println("Chew... chomp.. chow... crackle... burp");
-            int healAmount = IR5.getRandomNumber(5, 20);
+            int healAmount = IR5.getRandomNumber(7, 20);
             if(healAmount > 15) {
                 System.out.println("Yum that was pretty big meal");
                 System.out.println("That was delicious!");
                 hp += healAmount;
             } else {
+                hp += healAmount;
                 System.out.println("Though it was a lttle amount of food particles it was still delicious");
             }
             foodCount--;

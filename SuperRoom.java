@@ -83,13 +83,13 @@ public class SuperRoom  {
 
     public void lookAround() {
         if(isDoorOpen && isEnter) {
-            System.out.println("You look around and you say to yourself");
+            System.out.println("You look around the room and you say to yourself..");
 
             if(bed.getDoesExist() || closet.getDoesExist() || vault.getDoesExist() || fridge.getDoesExist() || desk.getDoesExist()) {
                 if(bed.getDoesExist()) {
                     String[] bedFind = {
                         "There's a bed in this room",
-                        "Look it that there is bed in this room",
+                        "Look at that there's bed in this room",
                         "A bed with some sheets over it",
                         "Hey there's a bed in here"
                     };

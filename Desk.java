@@ -35,29 +35,37 @@ public class Desk {
             lamp.lookUnder();
         }
     }
-
     public void getItem(String item, Player player) {
-        if(item.equals("knife")) {
-            System.out.println("Oooo so nice and shiny.");
-            player.addToItem(item, knife);
-            knife = 0;
-        } else if(item.equals("food")) {
-            System.out.println("Nice you put that piece of food in your pocket.");
-            player.addToItem("food", food);
-            System.out.println("Are you proud of that? Might eat it for later.");
-            food = 0;
-        } else if(item.equals("key")) {
-            String[] foodPickupString = {
-                "You picked up the key nice!",
-                "This nice shiny will go into my pocket",
-                "Key is in pocket. Let me check...\n Yep it's there",
-                "I got the key!"
-            };
-            System.out.println(foodPickupString[IR5.getRandomNumber(0, foodPickupString.length -1)]);
-            player.addToItem("key", key);
-            key = 0;
+        if(knife > 0 || food > 0 || key > 0) {
+            if(item.equals("knife") && knife > 0) {
+                System.out.println("Oooo so nice and shiny.");
+                player.addToItem(item, knife);
+                knife = 0;
+            } else if(item.equals("food") && food > 0) {
+                String[] foodPickupString = {
+                    "Hey you picked up a piece of food. Yummy yummy",
+                    "Yummy yummy food for me tummy",
+                    "Yum yum tum tum",
+                    "Kinda looks like a burger or a hotdog? I don't know lets put that in the pocket"
+                };
+                System.out.println(foodPickupString[IR5.getRandomNumber(0, foodPickupString.length -1)]);
+                player.addToItem("food", food);
+                food = 0;
+            } else if(item.equals("key") && key > 0) {
+                String[] keyPickupString = {
+                    "You picked up the key nice!",
+                    "This nice shiny will go into my pocket",
+                    "Key is in pocket. Let me check. Yep it's there",
+                    "I got the key!"
+                };
+                System.out.println(keyPickupString[IR5.getRandomNumber(0, keyPickupString.length -1)]);
+                player.addToItem("key", key);
+                key = 0;
+            } else {
+                System.out.println("There is no item of that here");
+            }
         } else {
-            System.out.println("You can't pick that up");
+            System.out.println("There's nothing in here");
         }
     }
 
@@ -79,7 +87,7 @@ public class Desk {
                     String[] findingKnife = {
                         "There is a knife just laying there. Weird.",
                         "This thing looks shiny and has a handle. Oh my gosh it's a knife!",
-                        "It looks like the knife that has been used to open soup cans with. You know what I'm talking\nOk I'll stop talking.",
+                        "It looks like the knife that has been used to open soup cans with.\nYou know what I'm talking. Ok I'll stop talking.",
                         "Is that David Bowie's knife? The bowie knife? Eh probably not."
                     };
                     System.out.println(findingKnife[IR5.getRandomNumber(0, findingKnife.length - 1)]);
