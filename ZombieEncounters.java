@@ -1,7 +1,5 @@
-import java.util.Scanner;
 
 public class ZombieEncounters {
-    private static Scanner scanner = new Scanner(System.in);
     private Player player;
     private int PLAYER;
     private int[][] grid;
@@ -17,10 +15,15 @@ public class ZombieEncounters {
     // When a user encounters a zombie moving backwards
     public void moveLeft() {
         if (player.getXpos() - 1 < 0) {
-            System.out.println("* You hit a wall");
+            System.out.println("You ran into a wall. You unforunately took damage");
+            player.decreaseHp(IR5.getRandomNumber(5, 10));
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() - 1];
             if (playerPos >= 10 && playerPos <= 50) objectEncounter(grid, player, findId(superRooms, playerPos));
+            else if(playerPos == 100) {
+                System.out.println("You ran into a wall. You unforunately took damage");
+                player.decreaseHp(IR5.getRandomNumber(5, 10));
+            }
             // else if(playerPos >= 20 && playerPos < 30) objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move west", "left");
         }
@@ -30,10 +33,15 @@ public class ZombieEncounters {
     public void moveRight() {
         // Player Moves
         if (player.getXpos() + 1 > grid[0].length - 1) {
-            System.out.println("* You hit a wall");
+            System.out.println("You ran into a wall. You unforunately took damage");
+            player.decreaseHp(IR5.getRandomNumber(5, 10));
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() + 1];
             if (playerPos >= 10 && playerPos <= 50) objectEncounter(grid, player, findId(superRooms, playerPos));
+            else if(playerPos == 100) {
+                System.out.println("You ran into a wall. You unforunately took damage");
+                player.decreaseHp(IR5.getRandomNumber(5, 10));
+            }
             // else if (playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move east", "right");
         }
@@ -42,10 +50,15 @@ public class ZombieEncounters {
     // When a user encounters a zombie moving upwards
     public void moveUp() {
         if (player.getYpos() - 1 < 0) {
-            System.out.println("* You hit a wall");
+            System.out.println("You ran into a wall. You unforunately took damage");
+            player.decreaseHp(IR5.getRandomNumber(5, 10));
         } else {
             int playerPos = grid[player.getYpos() - 1][player.getXpos()];
             if (playerPos >= 10 && playerPos <= 50) objectEncounter(grid, player, findId(superRooms, playerPos));
+            else if(playerPos == 100) {
+                System.out.println("You ran into a wall. You unforunately took damage");
+                player.decreaseHp(IR5.getRandomNumber(5, 10));
+            }
             // else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move north", "up");
         }
@@ -58,6 +71,10 @@ public class ZombieEncounters {
         } else {
             int playerPos = grid[player.getYpos() + 1][player.getXpos()];
             if (playerPos >= 10 && playerPos <= 50) objectEncounter(grid, player, findId(superRooms, playerPos));
+            else if(playerPos == 100) {
+                System.out.println("You ran into a wall. You unforunately took damage");
+                player.decreaseHp(IR5.getRandomNumber(0, 10));
+            }
             // else if(playerPos >= 20 && playerPos < 30)objectEncounter(grid, player, findId(superRooms, playerPos));
             else mvmAndMsg("* You move south", "down");
         }
@@ -71,7 +88,20 @@ public class ZombieEncounters {
             System.out.println("You are about to step into the " + room.getName());
         }
         String userInput = "";
+        int toxicCounter = 0;
         while (player.getHp() > 0) {
+
+            if(room.isToxic()) {
+                toxicCounter++;
+                if(toxicCounter == 1 || toxicCounter == 5) {
+                    System.out.println("You breath heavily in this room.\n** Cough! Cough!");
+                }
+
+                if(player.getHp() < 40) {
+                    System.out.println("You feel weak my breaths are becoming so heavy");
+                }
+                player.decreaseHp(IR5.getRandomNumber(5, 7));
+            }
             userInput = IR5Manipulate.getString("\n(type help to see commands)>> ");
             String[] splitUserInput = userInput.split(" ");
             String object = "";
@@ -114,6 +144,7 @@ public class ZombieEncounters {
                     room.enter(userRoom);
                 } else if(verb.equals("leave")) {
                     room.leave(noun);
+                    toxicCounter = 0;
                     break;
                 } else if(verb.equals("unlock")) {
                     if(noun.equals("vault")) {
@@ -144,7 +175,7 @@ public class ZombieEncounters {
                        noun.equals("west") ||
                        noun.equals("north") ||
                        noun.equals("south")) {
-                           System.out.println("You back away from the door and now in the hallway");
+                           System.out.println("You walked " + noun + " and you found your self where you started where you entered the room");
                         break;
                         }
                 } else {
@@ -168,6 +199,44 @@ public class ZombieEncounters {
                     System.out.println("I've never heard of this before");
                 }
             }
+
+            if(player.getHp() < 0) {
+                System.out.println(
+                "Let me die a youngman's death\n" +
+                "not a clean and inbetween\n"     +
+                "the sheets holywater death\n"    +
+                "not a famous-last-words\n"       +
+                "peaceful out of breath death\n"  +
+                "\nWhen I'm 73\n"                 +
+                "and in constant good tumour\n"   +
+                "may I be mown down at dawn\n"    +
+                "by a bright red sports car\n"    +
+                "on my way home\n"                +
+                "from an allnight party\n"        +
+                
+                "\nOr when I'm 91\n"                   +
+                "with silver hair\n"                   +
+                "and sitting in a barber's chair\n"    +
+                "may rival gangsters\n"                +
+                "with hamfisted tommyguns burst in\n"    +
+                "and give me a short back and insides\n" +
+                
+                "\nOr when I'm 104\n"                    +
+                "and banned from the Cavern\n"           +
+                "may my mistress\n"                      +
+                "catching me in bed with her daughter\n" +
+                "and fearing for her son\n"              +
+                "cut me up into little pieces\n"         +
+                "and throw away every piece but one\n"   +
+                
+                "\nLet me die a youngman's death\n"      +
+                "not a free from sin tiptoe in\n"        +
+                "candle wax and waning death\n"          +
+                "not a curtains drawn by angels borne\n" +
+                "'what a nice way to go' death\n"        +
+                "- Dylan Thomas");
+                System.out.println("Game over");
+            }
         }
     }
 
@@ -176,36 +245,52 @@ public class ZombieEncounters {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() - 1];
-            if (playerPos >= 10 && playerPos <= 20)  System.out.println("You hear sounds of children playing inside a room west of you");
-            else if(playerPos >= 20 && playerPos < 30)System.out.println("You smell something great at the same time disgusting west of you");
+            if (playerPos >= 10 && playerPos <= 20)  System.out.println("You smell something great at the same time disgusting west of you");
+            else if(playerPos >= 20 && playerPos < 30) System.out.println("You hear sounds of children playing inside a room west of you");
             else if(playerPos >= 30 && playerPos < 40)System.out.println("You hear running water inside of a giant room west of you");
+            else if(playerPos == 100) System.out.println("You sense that there is a wall west of you");
+            else {
+                System.out.println("There is nothing west of you");
+            }
         }
 
         if (player.getXpos() + 1 > grid[0].length - 1) {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos()][player.getXpos() + 1];
-            if (playerPos >= 10 && playerPos <= 20) System.out.println("You hear sounds of children playing inside a room east of you");
-            else if (playerPos >= 20 && playerPos < 30)System.out.println("You smell something great at the same time disgusting east of you");
-            else if(playerPos >= 30 && playerPos < 40)System.out.println("You hear running water inside of a giant room east of you");
+            if (playerPos >= 10 && playerPos <= 20) System.out.println("You smell something great at the same time disgusting east of you");
+            else if (playerPos >= 20 && playerPos < 30) System.out.println("You hear sounds of children playing inside a room east of you");
+            else if(playerPos >= 30 && playerPos < 40) System.out.println("You hear running water inside of a giant room east of you");
+            else if(playerPos == 100) System.out.println("You sense that there is a wall east of you");
+            else {
+                System.out.println("There is nothing east of you");
+            }
         }
 
         if (player.getYpos() - 1 < 0) {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos() - 1][player.getXpos()];
-            if (playerPos >= 10 && playerPos <= 20) System.out.println("You hear sounds of children playing inside a room north of you");
-            else if(playerPos >= 20 && playerPos < 30)System.out.println("You smell something great at the same time disgusting north of you");
+            if (playerPos >= 10 && playerPos <= 20) System.out.println("You smell something great at the same time disgusting north of you"); 
+            else if(playerPos >= 20 && playerPos < 30) System.out.println("You hear sounds of children playing inside a room north of you");
             else if(playerPos >= 30 && playerPos < 40)System.out.println("You hear running water inside of a giant room north of you");
+            else if(playerPos == 100) System.out.println("You sense that there is a wall north of you");
+            else {
+                System.out.println("There is nothing north of you");
+            }
         }
 
         if (player.getYpos() + 1 > grid.length - 1) {
             System.out.print("");
         } else {
             int playerPos = grid[player.getYpos() + 1][player.getXpos()];
-            if (playerPos >= 10 && playerPos <= 20) System.out.println("You hear sounds of children playing inside a room south of you");
-            else if(playerPos >= 20 && playerPos < 30) System.out.println("You smell something great at the same time disgusting south of you");
+            if (playerPos >= 10 && playerPos <= 20) System.out.println("You smell something great at the same time disgusting south of you"); 
+            else if(playerPos >= 20 && playerPos < 30) System.out.println("You hear sounds of children playing inside a room south of you");
             else if(playerPos >= 30 && playerPos < 40)System.out.println("You hear running water inside of a giant room south of you");
+            else if(playerPos == 100) System.out.println("You sense that there is a wall south of you");
+            else {
+                System.out.println("There is nothing south of you");
+            }
         }
     }
 
@@ -228,15 +313,6 @@ public class ZombieEncounters {
         System.out.println(msg);
         playerMovements(mvm);
         System.out.println("");
-    }
-
-    private Room findId(Room[] room, int id) {
-        for(int i = 0; i < room.length; i++) {
-            if(room[i].getId() == id) {
-                return room[i];
-            }
-        }
-        return null;
     }
 
     private SuperRoom findId(SuperRoom[] room, int id) {

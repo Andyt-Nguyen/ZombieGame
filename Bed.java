@@ -2,6 +2,7 @@ public class Bed {
     private boolean isSheets;
     private int knife;
     private int food;
+    private int key;
     private String note;
     private boolean doesExist;
     
@@ -9,11 +10,12 @@ public class Bed {
         doesExist = false;
     }
 
-    public Bed(boolean isSheets, int knife, int food, String note) {
+    public Bed(boolean isSheets, int knife, int food, int key, String note) {
         this.isSheets = isSheets;
         this.knife = knife;
         this.food = food;
         this.note = note;
+        this.key = key;
         doesExist = true;
     }
 
@@ -32,6 +34,16 @@ public class Bed {
             System.out.println(foodPickupString[IR5.getRandomNumber(0, foodPickupString.length -1)]);
             player.addToItem("food", food);
             food = 0;
+        } else if(item.equals("key")) {
+            String[] keyPickupString = {
+                "You picked up the key nice!",
+                "This nice shiny will go into my pocket",
+                "Key is in pocket. Let me check...\n Yep it's there",
+                "I got the key!"
+            };
+            System.out.println(keyPickupString[IR5.getRandomNumber(0, keyPickupString.length -1)]);
+            player.addToItem("key", key);
+            key = 0;
         } else {
             System.out.println("You can't pick that up");
         }
@@ -54,7 +66,7 @@ public class Bed {
 
     public void search() {
         if(isSheets) {
-            if(!note.equals("") || knife > 0) {
+            if(!note.equals("") || knife > 0 || key > 0) {
                 if(!note.equals("")) {
                     String[] findingNote = {
                         "You found a note with words written on it. Looks like english",
@@ -73,6 +85,16 @@ public class Bed {
                         "Look at that there seems to be a knife stabbed into the sheets"
                     };
                     System.out.println(findingKnife[IR5.getRandomNumber(0, findingKnife.length - 1)]);
+                }
+
+                if(key > 0) {
+                    String[] findingKey = {
+                        "There's a key here!",
+                        "There's a piece of metal that has a unique design. It's a key",
+                        "There is a key that rains down with happiness",
+                        "This key looks like it can be used to open stuff right? Yea okay."
+                    };
+                    System.out.println(findingKey[IR5.getRandomNumber(0, findingKey.length - 1)]);
                 }
             }
         } else {

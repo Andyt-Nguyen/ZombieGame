@@ -35,9 +35,14 @@ public class Player {
     }
     
     public void addToItem(String item, int count) {
-        System.out.println(item + " added to inventory");
+        if(count > 1) {
+            System.out.println(count + item + "'s has been added to your inventory.");
+        } else {
+            System.out.println(item + " added to inventory.");
+        }
         if(item.equals("knife")) this.knifeCount += count;
         else if(item.equals("food")) this.foodCount += count;
+        else if(item.equals("key")) this.keyCount += count;
     }
 
     public void writeNote(String note) {
@@ -53,7 +58,14 @@ public class Player {
     public void eat() {
         if(foodCount > 0) {
             System.out.println("Chew... chomp.. chow... crackle... burp");
-            System.out.println("That was delicious!");
+            int healAmount = IR5.getRandomNumber(5, 20);
+            if(healAmount > 15) {
+                System.out.println("Yum that was pretty big meal");
+                System.out.println("That was delicious!");
+                hp += healAmount;
+            } else {
+                System.out.println("Though it was a lttle amount of food particles it was still delicious");
+            }
             foodCount--;
         } else {
             System.out.println("I don't have anything to eat");
@@ -76,7 +88,7 @@ public class Player {
         System.out.println("_______________________");
         System.out.println(" Knives    |    " + knifeCount);
         System.out.println(" Food      |    " + foodCount);
-        System.out.println(" Notes     |    " + notes.split(" ").length);
+        System.out.println(" Notes     |    " + (notes.split(" ").length - 1));
         System.out.println(" Keys      |    " + keyCount);
         System.out.println("-----------------------");
     }
@@ -93,6 +105,7 @@ public class Player {
 
 
     public String getNotes() {
+        System.out.println("You look in your back pocket and pull out your notebook.\n");
         return notes;
     }
 

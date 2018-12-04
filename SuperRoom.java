@@ -3,6 +3,7 @@ public class SuperRoom  {
     private String name;
     private boolean isDoorOpen;
     private boolean isEnter;
+    private boolean isToxic;
     private boolean isLocked;
     private Bed bed;
     private Closet closet;
@@ -10,6 +11,7 @@ public class SuperRoom  {
     private Fridge fridge;
     private Desk desk;
     private String objectInPlay;
+
 
     public SuperRoom() {
         this.id = 0;
@@ -23,10 +25,11 @@ public class SuperRoom  {
         this.vault = new Vault();
         this.fridge = new Fridge();
         this.desk = new Desk();
+        this.isToxic = false;
     }
     
     
-    public SuperRoom(int id, String name, boolean isDoor, boolean isLocked, Bed bed, Closet closet, Fridge fridge, Vault vault, Desk desk) {
+    public SuperRoom(int id, String name, boolean isDoor, boolean isLocked, boolean isToxic, Bed bed, Closet closet, Fridge fridge, Vault vault, Desk desk) {
         this.id = id;
         this.name = name;
         this.isDoorOpen = false;
@@ -38,6 +41,7 @@ public class SuperRoom  {
         this.vault = vault;
         this.fridge = fridge;
         this.desk = desk;
+        this.isToxic = isToxic;
     }
 
 
@@ -93,7 +97,7 @@ public class SuperRoom  {
             if(bed.getDoesExist() || closet.getDoesExist() || vault.getDoesExist() || fridge.getDoesExist() || desk.getDoesExist()) {
                 if(bed.getDoesExist()) {
                     String[] bedFind = {
-                        "There a bed in this room",
+                        "There's a bed in this room",
                         "Look it that there is bed in this room",
                         "A bed with some sheets over it",
                         "Hey there's a bed in here"
@@ -223,12 +227,11 @@ public class SuperRoom  {
 
     public int breakInto(String noun) {
         if(noun.equals("vault")) {
-            vault.breakInto();
-            return -1;
+            return vault.breakInto();
         } else {
             if(noun.equals("door")) {
-                int chances = IR5.getRandomNumber(1, 5);
-                if(chances >= 3) {
+                int chances = IR5.getRandomNumber(1, 7);
+                if(chances == IR5.getRandomNumber(1, 7)) {
                     isLocked = false;
                     System.out.println("You hear a click and the doorknob is loose");
                     System.out.println("but took some damage.");
@@ -287,13 +290,20 @@ public class SuperRoom  {
     public void read(String item) {
         if(isDoorOpen && isEnter) {
             if(item.equals("note") && objectInPlay.equals("bed")) {
+                System.out.println("The note reads:");
                 bed.read();
             } else if(item.equals("note") && objectInPlay.equals("vault")) { 
+                System.out.println("The note reads:");
                 vault.read();
             } else if(item.equals("note") && objectInPlay.equals("desk")) {
+                System.out.println("The note reads:");
                 desk.read();
             } else if(item.equals("note") && objectInPlay.equals("fridge")) {
+                System.out.println("The note reads:");
                 fridge.read();
+            } else if(item.equals("note") && objectInPlay.equals("closet")) {
+                System.out.println("The note reads:");
+                closet.read();
             } else {
                 System.out.println("You can't read that!");
             }
@@ -301,13 +311,9 @@ public class SuperRoom  {
     }
 
     public void leave(String noun) {
-        if(noun.equals(name.toLowerCase())) {
             isEnter = false;
             System.out.println("You have left the " + name.toLowerCase());
             System.out.println("and back in the hallway");
-        } else {
-            System.out.println("What?");
-        }
     }
 
 
@@ -339,7 +345,7 @@ public class SuperRoom  {
 
     public void enter(String noun) {
         if(isDoorOpen) {
-            if(noun.replace(" ", "").equals(name.toLowerCase().replace(" ", ""))) {
+            if(noun.replace(" ", "").equals(name.toLowerCase().replace(" ", "")) || noun.replace(" ", "").equals("room")) {
                 if(isLocked) {
                     System.out.println("The door is locked");
                 } else {
@@ -443,6 +449,9 @@ public class SuperRoom  {
         this.vault = vault;
     }
 
+    public boolean isToxic() {
+        return isToxic;
+    }
     
 
 

@@ -15,9 +15,10 @@ public class Map {
                 else if(curr >= 10 && curr < 20) System.out.print("K  ");
                 else if(curr >= 20 && curr < 30) System.out.print("B  ");
                 else if(curr >= 30 && curr < 40) System.out.print("MB ");
+                else if(curr == 100) System.out.print("W  ");
                 else System.out.print(".  ");
             }
-            System.out.println("");
+            System.out.println("\n");
         }
     }
 

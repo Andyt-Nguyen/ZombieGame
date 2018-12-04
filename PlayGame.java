@@ -44,6 +44,11 @@ public class PlayGame {
                 case "checkhealth":
                     player.checkHealth();
                     break;
+
+                case "leave":
+                System.out.println("AHAHAHAHA leave where? You are stuck in here!");
+                System.out.println("What was that?");
+                    break;
                 
                 
                 case "exit": // exit program
