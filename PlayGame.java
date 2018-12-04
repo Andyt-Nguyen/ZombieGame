@@ -1,7 +1,7 @@
 public class PlayGame {
     public static void initalizeGame(ZombieEncounters zombieEncounters, Map map, Player player) {
         String userInput = "";
-        while(player.getHp() > 0) {
+        while(player.getHp() > 0 && !player.getisWin()) {
             map.displayMap();
             userInput = IR5Manipulate.getString("\n(type help to see commands) >> ").toLowerCase();
             switch(userInput) {

@@ -50,7 +50,6 @@ public class Closet {
     }
 
     public void search() {
-        System.out.println("BITCH");
         if(isOpen) {
             if(food > 0 || knife > 0 || !note.equals("") || key > 0) {
                 

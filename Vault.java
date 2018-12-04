@@ -119,18 +119,21 @@ public class Vault {
         }
     }
 
-    public void unlock(String usercode) {
+    public boolean unlock(String usercode) {
         if(passcode.equals("")) {
             isOpen = true;
+            return true;
         } else {
             if(passcode.equals(usercode)) {
                 isOpen = true;
                 System.out.println("\nSystem processing...");
                 System.out.println("** Access Granted **\n");
                 System.out.println("The vault door slowly opens...");
+                return true;
             } else {
                 System.out.println("\nSystem processing..");
                 System.out.println("! Access Denied !\n");
+                return false;
             }
         }
     }

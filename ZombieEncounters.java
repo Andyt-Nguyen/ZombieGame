@@ -89,9 +89,9 @@ public class ZombieEncounters {
         }
         String userInput = "";
         int toxicCounter = 0;
-        while (player.getHp() > 0) {
+        while (player.getHp() > 0 && !player.getisWin()) {
 
-            if(room.isToxic()) {
+            if(room.getIsToxic() && room.getIsEnter()) {
                 toxicCounter++;
                 if(toxicCounter == 1 || toxicCounter == 5) {
                     System.out.println("You breath heavily in this room.\n** Cough! Cough!");
@@ -165,7 +165,52 @@ public class ZombieEncounters {
                     }
                     player.writeNote(userNotes + "\n");
                 } else if(verb.equals("code")) {
-                    room.unlock(noun);
+                    boolean isUnlocked = room.unlock(noun);
+                    if(isUnlocked && room.getId() == 35) {
+                        player.setIsWin(true);
+                        System.out.println("You opened the vault and you see a bright light as you breath for fresh air");
+                        System.out.println("you are still confused who you are and where you are and why you became a victim.");
+                        System.out.println("You walk with your shoulders and you remeber a poem");
+
+
+                        System.out.println(
+                        "Make it through make it true\n" +
+                        "Lay it bare if you dare\n"      +
+                        "Banish doubt make it count\n"   +
+                        "Look around you’ve made it there\n" +
+                        
+                        "\nShout it far show your scars\n"      +
+                        "Fill the day with twenty-four hours\n" +
+                        "This is it what we’ve got\n"           +
+                        "Looks like **** but it’s ours\n"       +
+                        
+                        "\nYou see this life filled with strife\n" +
+                        "So much hurt so much pain\n"              +
+                        "Now you win now you lose\n"               +
+                        "One man’s loss another’s gain\n"          +
+                        
+                        "\nIt wasn’t meant to be pretty\n" +
+                        "Empty towns ***** cities\n"       +
+                        "People all around have issues\n"  +
+                        "Insecure, lost and misused\n"     +
+                        
+                        "\nYou can choose to stay and fight\n" +
+                        "Assert yourself claim your rights\n"  +
+                        "Or decide to turn away\n"             +
+                        "Make your mark another day\n"         +
+                        
+                        "\nShowing up is half the battle\n"  +
+                        "Knocked down back in the saddle\n"  +
+                        "It’s not the wins and the losses\n" +
+                        "It’s the learning it’s a process\n" +
+                        
+                        "\nAt the end of the day\n" +
+                        "Stop and do the math\n"    +
+                        "Those who've made hay\n"   +
+                        "Don’t have to look back.\n");
+
+                        System.out.println("\n- Kim (Warring and Winning)\n");
+                    }
                 } else if(verb.equals("readmy") && noun.equals("notes")) {
                     System.out.println(player.getNotes());
                 } else if(verb.equals("examine")) {
@@ -235,7 +280,7 @@ public class ZombieEncounters {
                 "not a curtains drawn by angels borne\n" +
                 "'what a nice way to go' death\n"        +
                 "- Dylan Thomas");
-                System.out.println("Game over");
+                System.out.println("\nGame over");
             }
         }
     }

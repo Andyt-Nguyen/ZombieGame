@@ -8,6 +8,7 @@ public class Player {
     private int foodCount;
     private int keyCount;
     private String notes;
+    private boolean isWin;
 
     public Player() {
         this.username = "";
@@ -32,6 +33,7 @@ public class Player {
       this.foodCount = foodCount;
       this.keyCount = keyCount;
       this.notes = notes;
+      this.isWin = false;
     }
     
     public void addToItem(String item, int count) {
@@ -179,6 +181,14 @@ public class Player {
     public void moveUp(int steps) {
         if(steps == 0) this.ypos--;
         else this.ypos -= steps;
+    }
+
+    public boolean getisWin() {
+        return isWin;
+    }
+
+    public void setIsWin(boolean isWin) {
+        this.isWin = isWin;
     }
 
 }

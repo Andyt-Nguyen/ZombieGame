@@ -14,7 +14,7 @@ class ZombieGame {
          * Player(String username, String password, String notes, int hp, int keyCount,int knifeCount, int foodCount, int xpos, int ypos)
          */
 
-        Player player = new Player( "username",  "password", "", 100, 1, 1, 1, 1,1);
+        Player player = new Player( "username",  "password", "", 100, 100, 100, 100, 1,1);
 
         /**
          * The objects inside room constructors here for reference
@@ -44,7 +44,7 @@ class ZombieGame {
         Closet westBedroomCloset1 = new Closet(false, 2,0,0, "");
         SuperRoom westwestBedroom1 = new SuperRoom(
             BEDROOM + 1,
-            "Bedroom",
+            "Bedroom", 0, 5,
             false, false, false,
             westBedroom1, westBedroomCloset1, new Fridge(), new Vault(), new Desk()
         ); // westwestBedroom1
@@ -52,11 +52,11 @@ class ZombieGame {
 
 
         // East Bedroom Key
-        Bed eastBed1 = new Bed(false, 0, 0, 0, "Beware of the Master Bedroom... Breath fast and run.");
-        Closet eastBedroomCloset1 = new Closet(false, 1,1,1, "");
-        SuperRoom eastBedroom1 = new SuperRoom(
+        Bed eastBed1 =              new Bed(false, 0, 0, 0, "Beware of the Master Bedroom... Breath fast and run.");
+        Closet eastBedroomCloset1 = new Closet(false, 1,1,1, "2");
+        SuperRoom eastBedroom1 =    new SuperRoom(
             BEDROOM + 2,
-            "Bedroom",
+            "Bedroom", 0, 5,
             false, false, false,
             eastBed1, eastBedroomCloset1, new Fridge(), new Vault(), new Desk()
         ); // East Bedroom key
@@ -64,7 +64,7 @@ class ZombieGame {
 
         // northKitchen kitchen (vault)
         Closet northKitchenCloset1 = new Closet(false, 2, 2, 0, "");
-        Fridge northFridge1 = new Fridge(false, 2, 2, 0,
+        Fridge northFridge1 =        new Fridge(false, 2, 2, 0,
             "it doesn't interest Me\n" +
             "what you do for A living.\n" +
             "i want to know\n" +
@@ -72,12 +72,12 @@ class ZombieGame {
             "and if you Dare to dream\n" +
             "of meeting your heart's longing.\n" +
             "\n- Oriah Mountain Dreamer");
-        Vault northKithcen1 = new Vault(false, "MAD",1, 1, 0,"1");
+        Vault northVault1 =    new Vault(false, "MAD",1, 1, 0,"1");
         SuperRoom northKitchen = new SuperRoom(
             KITCHEN + 1,
-            "Kitchen",
+            "Kitchen", 1, 5,
             false, true, false,
-            new Bed(), northKitchenCloset1, northFridge1, northKithcen1, new Desk()
+            new Bed(), northKitchenCloset1, northFridge1, northVault1, new Desk()
         ); //  northKitchen(vault)
 
 
@@ -85,12 +85,24 @@ class ZombieGame {
         // Closet(boolean isOpen, int knife, int food, int key)
         // westKitchen1 kitchen (locked key)
         Closet westKitchenCloset1 = new Closet(false, 0, 0, 0, "Out of this room. Move all east.\nParadise awaits you.");
-        Fridge westFridge1 = new Fridge(false, 0, 2, 1,"The owner of this building really loved JoEscraBshacK. It was always the owners favorite restaurant");
-        SuperRoom westKitchen1 = new SuperRoom(
+        Fridge westFridge1 =        new Fridge(false, 0, 2, 1,"The owner of this building really loved JoEscraBshacK. It was always the owners favorite restaurant");
+        SuperRoom westKitchen1 =    new SuperRoom(
             KITCHEN + 2,
-            "Kitchen",
-            false, true, false,
+            "Kitchen", 1, 5,
+            false, true, true,
             new Bed(), westKitchenCloset1, westFridge1, new Vault(), new Desk()
+        ); //  westKitchen1 kitchen (locked key)
+
+
+        // Closet(boolean isOpen, int knife, int food, int key)
+        // southEastKitchen1 kitchen (locked key)
+        Closet southEastKitchenCloset1 = new Closet(false, 0, 3, 0, "");
+        Fridge southEastFridge1 =        new Fridge(false, 0, 2, 1,"");
+        SuperRoom southEastKitchen1 =    new SuperRoom(
+            KITCHEN + 3,
+            "Kitchen", 2, 5,
+            false, true, false,
+            new Bed(), southEastKitchenCloset1, southEastFridge1, new Vault(), new Desk()
         ); //  westKitchen1 kitchen (locked key)
 
         
@@ -118,36 +130,51 @@ class ZombieGame {
             "I know it's only a trick\n"             +
             "But why can't I breathe no more.\n"     +
             "- Victor Osorio");
-        Fridge westMasterFridge1 = new Fridge(false, 1, 1, 0,"So full of light, but always in shade");
+        Fridge westMasterFridge1 = new Fridge(false, 1, 1, 1,"So full of light, but always in shade");
         Closet westMasterCloset1 = new Closet(false, 1, 1, 0, "For those who have stepped in this room and have lived this long to see this note.\n " +
         "This room is dangerous it is highly toxic any mistakes whatsoever will cost you your life.\n" + 
         "Get out of here fast!");
-        Desk westMasterDesk1 = new Desk(false, 0, 0, 0,"", new Lamp("nuggets"));
-        Vault westMasterVault1 = new Vault(false, "nuggets", 0, 0, 0, "5");
+        Desk westMasterDesk1 =        new Desk(false, 0, 0, 0,"", new Lamp("nuggets"));
+        Vault westMasterVault1 =      new Vault(false, "nuggets", 0, 0, 1, "5");
         SuperRoom westMasterBedroom1 = new SuperRoom(
             MASTER_BEDROOM + 1,
-            "Master Bedroom",
+            "Master Bedroom", 1, 5,
             false, true, true,
             westMasterBed1, westMasterCloset1, westMasterFridge1, westMasterVault1, westMasterDesk1
         ); //  westwestMasterBedroom1 (vault)
 
         
         //  southMasterBedroom1 (vault)
-        Bed southMasterBed1 = new Bed(false, 0, 0, 0,"");
-        Fridge soutMasterFridge1 = new Fridge(false, 1, 1, 0,"");
-        Closet southMasterCloset1 = new Closet(false, 1, 1, 0, "");
-        Desk southMasterDesk1 = new Desk(false, 0, 0, 0,"What is 6x7", new Lamp(""));
-        Vault southMasterVault1 = new Vault(false, "fortytwo", 0, 0, 0, "5");
+        Bed southMasterBed1 =           new Bed(false, 0, 0, 0,"");
+        Fridge soutMasterFridge1 =      new Fridge(false, 1, 1, 0,"");
+        Closet southMasterCloset1 =     new Closet(false, 1, 1, 0, "");
+        Desk southMasterDesk1 =         new Desk(false, 0, 0, 0,"What is 6x7", new Lamp(""));
+        Vault southMasterVault1 =       new Vault(false, "fortytwo", 0, 0, 0, "4");
         SuperRoom southMasterBedroom1 = new SuperRoom(
             MASTER_BEDROOM + 1,
-            "Master Bedroom",
+            "Master Bedroom", 1, 5,
             false, true, true,
             southMasterBed1, southMasterCloset1, soutMasterFridge1, southMasterVault1, southMasterDesk1
         ); //  southMasterBedroom1 (vault)
 
 
+        //  finalRoom (vault)
+        Bed finalRoomMasterBed =       new Bed(false, 0, 0, 0,"");
+        Fridge finalMasterFridge =     new Fridge(false, 0, 0, 0,"");
+        Closet finalRoomMasterCloset = new Closet(false, 0, 0, 0, "");
+        Desk finalRoomMasterDesk =     new Desk(false, 0, 0, 0,"", new Lamp(""));
+        Vault finalRoomMasterVault =   new Vault(false, "1254", 0, 0, 0, "");
+        SuperRoom finalRoom =          new SuperRoom(
+            MASTER_BEDROOM + 5,
+            "Master Bedroom", 1, 10,
+            false, true, true,
+            finalRoomMasterBed, finalRoomMasterCloset, finalMasterFridge, finalRoomMasterVault, finalRoomMasterDesk
+        ); //  finalRoom (vault)
+
+
+        
         // SuperRoom Array
-        SuperRoom[] superRoomsArr = {westwestBedroom1, northKitchen, southMasterBedroom1, eastBedroom1, westKitchen1};
+        SuperRoom[] superRoomsArr = {westwestBedroom1, northKitchen, southMasterBedroom1, eastBedroom1, westKitchen1, southEastKitchen1, finalRoom};
         
         
         // Map layout
@@ -160,12 +187,16 @@ class ZombieGame {
         map.setPos(2,3, WALL);
         map.setPos(0,5, WALL);
         map.setPos(1,5, WALL);
+        map.setPos(4,3, WALL);
+        map.setPos(5,3, WALL);
         map.setPos(0, 1, westwestBedroom1.getId());
         map.setPos(1, 0, northKitchen.getId());
         map.setPos(0, 3, westMasterBedroom1.getId());
-        map.setPos(2,2, eastBedroom1.getId());
-        map.setPos(0,4, westKitchen1.getId());
-        map.setPos(3,3, southMasterBedroom1.getId());
+        map.setPos(2,2,  eastBedroom1.getId());
+        map.setPos(0,4,  westKitchen1.getId());
+        map.setPos(3,3,  southMasterBedroom1.getId());
+        map.setPos(3,5,  southEastKitchen1.getId());
+        map.setPos(5,5,  finalRoom.getId());
         
         // Setup for game
         ZombieEncounters zombieEncounters = new ZombieEncounters(PLAYER, map.getGrid(), player, superRoomsArr);

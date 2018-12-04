@@ -1,6 +1,8 @@
 public class SuperRoom  {
     private int id;
     private String name;
+    private int keysToUnlock;
+    private int doorDamage;
     private boolean isDoorOpen;
     private boolean isEnter;
     private boolean isToxic;
@@ -12,24 +14,11 @@ public class SuperRoom  {
     private Desk desk;
     private String objectInPlay;
 
-
-    public SuperRoom() {
-        this.id = 0;
-        this.name = "";
-        this.isDoorOpen = false;
-        this.isEnter = false;
-        this.isLocked = false;
-        this.objectInPlay = "";
-        this.bed = new Bed();
-        this.closet = new Closet();
-        this.vault = new Vault();
-        this.fridge = new Fridge();
-        this.desk = new Desk();
-        this.isToxic = false;
-    }
     
-    
-    public SuperRoom(int id, String name, boolean isDoor, boolean isLocked, boolean isToxic, Bed bed, Closet closet, Fridge fridge, Vault vault, Desk desk) {
+    public SuperRoom(int id, String name, 
+                     int keysToUnlock, int doorDamage,
+                     boolean isDoor, boolean isLocked, boolean isToxic, 
+                     Bed bed, Closet closet, Fridge fridge, Vault vault, Desk desk) {
         this.id = id;
         this.name = name;
         this.isDoorOpen = false;
@@ -42,6 +31,8 @@ public class SuperRoom  {
         this.fridge = fridge;
         this.desk = desk;
         this.isToxic = isToxic;
+        this.keysToUnlock = keysToUnlock;
+        this.doorDamage = doorDamage;
     }
 
 
@@ -230,32 +221,49 @@ public class SuperRoom  {
             return vault.breakInto();
         } else {
             if(noun.equals("door")) {
-                int chances = IR5.getRandomNumber(1, 7);
-                if(chances == IR5.getRandomNumber(1, 7)) {
-                    isLocked = false;
-                    System.out.println("You hear a click and the doorknob is loose");
-                    System.out.println("but took some damage.");
-                    return IR5.getRandomNumber(5, 8);
-                } else {
-                    System.out.println("Your knife broke and you took some damage");
-                    return IR5.getRandomNumber(12,15);
+                if(keysToUnlock > 0) {
+                    if(doorDamage > 0) {
+                        doorDamage--;
+                        System.out.println("You hear a click and the doorknob is became a little more loose");
+                        System.out.println("Your knife broke in the process and has damaged you.");
+                        return IR5.getRandomNumber(2, 5);
+                    } else if(doorDamage == 0) {
+                        isLocked = false;
+                        System.out.println("You hear a rattle when breaking into the door. The doorknob is completely loose");
+                        return 0;                        
+                    } else {
+                        return 0;
+                    }
+                }  else {
+                    System.out.println("The door is alread unlocked");
+                    return 0;
                 }
             } else {
-                System.out.println("You can't break into there");
-                return -1;
+                System.out.println("You cannot break into that");
+                return 0;
             }
         }
+        
     }
 
 
-    public void unlock(String noun) {
+    public boolean unlock(String noun) {
         if(noun.equals("vault")) {
             System.out.println("A prompt shows up on the vault");
             String userPasscode = IR5Manipulate.getString("Enter Passcode: ");
-            vault.unlock(userPasscode);
+            boolean isUnlocked = vault.unlock(userPasscode);
+            return isUnlocked;
         } else {
-            isLocked = false;
-            System.out.println("You have unlocked the " + noun);
+            keysToUnlock--;
+            if(keysToUnlock <= 0) {
+                isLocked = false;
+                System.out.println("You have unlocked the " + noun);
+                return true;
+            } else {
+                System.out.println("You hear the door unlock.");
+                System.out.println("Looks like this door requires another key to unlock.");
+                return false;
+            }
         }
     }
 
@@ -343,6 +351,7 @@ public class SuperRoom  {
         }
     }
 
+
     public void enter(String noun) {
         if(isDoorOpen) {
             if(noun.replace(" ", "").equals(name.toLowerCase().replace(" ", "")) || noun.replace(" ", "").equals("room")) {
@@ -360,6 +369,7 @@ public class SuperRoom  {
         }
     }
 
+    
     public void kick() {
         System.out.println("Hey! You can't kick that.");
     }
@@ -449,10 +459,13 @@ public class SuperRoom  {
         this.vault = vault;
     }
 
-    public boolean isToxic() {
+    public boolean getIsToxic() {
         return isToxic;
     }
     
+    public boolean getIsEnter() {
+        return isEnter;
+    }
 
 
 }
